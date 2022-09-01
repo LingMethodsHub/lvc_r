@@ -105,7 +105,7 @@ The best way to organize your tokens is in a spreadsheet in Microsoft *Excel*. T
 There are four or five ways to read data into *R*. Which method you choose is really up to you, but because I'm advocating the use of *R* script files and maximum replicability, I suggest using the following function at the top of your script file:
 
 ```{r eval=TRUE}
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 ```
 
 The function creates an *R* "object" called `td` and then uses the assignment operator `<-` to specify what that object is. In this case `td` is the contents of the tab-delimited text file called `deletiondata.txt` that is located in a folder called `Doing\_LVC\_with\_R`, in a folder called `R` in a folder called `Dropbox` on the root drive of my computer. This tab-delimited text file is my data file. You can download this same file [here](https://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt%7D%7Bhttps://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt). Wherever you save this file, write that file path in quotation marks inside the `read.delim()` function. On a PC this file path will likely begin `"C:/..."`. You can actually just read the file directly into *R* from the web link using the following function:
@@ -198,7 +198,7 @@ tail(td, n=10)
 There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
 
 | Data Type   | Description                                                           | Example                                                                               |
-|-------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+|--------------|--------------------------|--------------------------------|
 | `logical`   | either `TRUE` or `FALSE`                                              | The answer to a question like "is `x` a number?", etc.                                |
 | `numeric`   | any real number, positive or negative, with or without decimal values | Vowel formant measurements, position in an audio file, household income, etc.         |
 | `integer`   | whole numbers and their negative counterparts                         | year of birth, year of data collection, number of occurrences of something, etc.      |
@@ -325,7 +325,7 @@ The following code changes all the character class columns to factors.
 
 ```{r}
 # We start with a fresh import of the (t, d) data into R
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 # Now we convert each character column into a factor
 td$Dep.Var <- factor(td$Dep.Var)
 td$Stress <- factor(td$Stress)
@@ -414,7 +414,7 @@ The previous function sequence re-codes all `"H"` cells in the existing `After` 
 
 ```{r}
 # Start with a fresh import of the (t, d) data into R
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 # Convert each character column into a factor
 td$Dep.Var <- factor(td$Dep.Var)
 td$Stress <- factor(td$Stress)
@@ -609,7 +609,7 @@ summary(td.midmenblue)
 Below is the full code for loading the data file and then re-coding it. As you progress through the next sections, if for any reason you have a problem, it may be useful to recreate the *R* object `td` from scratch. Going forward in these instructions, the `td` object will be the object as it exists at the end of this code.
 
 ```{r echo=FALSE}
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 ```
 
 ```{r eval=FALSE}
@@ -740,7 +740,7 @@ The `dplyr` package is great for manipulating data in a data frame/tibble. Some 
 Lets redo all our data manipulation of `td` but with `dplyr` and its pipe `%>%` operator
 
 ```{r echo=FALSE}
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 ```
 
 ```{r eval=FALSE}
@@ -789,7 +789,7 @@ At this point we have done everything except partition the data and re-center YO
 All of the above code can be simplified as follows:
 
 ```{r echo=FALSE}
-td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+td <- read.delim("Data/deletiondata.txt")
 ```
 
 ```{r eval=FALSE}
