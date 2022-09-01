@@ -1,90 +1,27 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+---
+author:
+- Matt Hunt Gardner, PhD
+authors:
+- Matt Hunt Gardner, PhD
+date: 2022-09-01
+draft: false
+editor: visual
+header-includes:
+- |
+  <script src="Doing_LVC_with_R_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="Doing_LVC_with_R_files/libs/plotly-binding-4.10.0/plotly.js"></script>
+  <script src="Doing_LVC_with_R_files/libs/typedarray-0.1/typedarray.min.js"></script>
+  <script src="Doing_LVC_with_R_files/libs/jquery-3.5.1/jquery.min.js"></script>
+  <link href="Doing_LVC_with_R_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+  <script src="Doing_LVC_with_R_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+  <link href="Doing_LVC_with_R_files/libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+  <script src="Doing_LVC_with_R_files/libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+licence: CC-BY 4.0
+title: Doing LVC with R (updated and revised)
+toc-title: Table of contents
+weight: 50
+---
 
-<head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-0.9.649" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-
-<meta name="author" content="Matt Hunt Gardner, PhD" />
-<meta name="dcterms.date" content="2022-09-01" />
-
-<title>Doing LVC with R (updated and revised)</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<!-- htmldependencies:E3FAD763 -->
 <script src="Doing_LVC_with_R_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="Doing_LVC_with_R_files/libs/plotly-binding-4.10.0/plotly.js"></script>
 <script src="Doing_LVC_with_R_files/libs/typedarray-0.1/typedarray.min.js"></script>
@@ -94,185 +31,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="Doing_LVC_with_R_files/libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="Doing_LVC_with_R_files/libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-</head>
+# Getting Started
 
-<body>
+## Introduction
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-</div>
-<main class="content" id="quarto-document-content">
+These instructions are not intended to be a comprehensive overview of *R*'s functionality, which is myriad. Instead it is a set of very specific instructions for doing the kinds of things in *R* that variationist sociolinguists familiar with *Goldvarb* often want to do. This includes extracting summary statistics from a standard token spreadsheet and formatting those statistics in such a way that they can be graphed using the package **ggplot2**, as well as testing the trends in those summary statistics using mixed-effects logistic regression analysis. These instructions assume you have installed the latest version of *R* (4.1.3 or later ). Even though this guide does not show everything that *R* can do, after reading and working your way through this guide, you should be familiar enough with how *R* generally works to figure out how do something not covered.
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Doing LVC with R (updated and revised)</h1>
-</div>
+::: {#sidebar style="color: \#009fe3; background: \#d8f0fa;"} <strong>Note:</strong> The best way to learn how to use *R* is to play with it. Learn by doing. You can't break *R*. It doesn't bite. Even though *R* is a cutting edge statistical tool, I compare the experience working with it to fixing an old car. Sometimes you just need to keep tinkering until the engine starts and runs smoothly. Other times you just need to kick it. :::
 
+If you run into a problem you don't know how to solve, Google it. I guarantee someone has had the same question already. There are many, many online *R* tutorials. That's how I learned how to use *R*. That said, it still sometimes takes me many failed attempts before I get something right.
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Matt Hunt Gardner, PhD </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 1, 2022</p>
-    </div>
-  </div>
-    
-  </div>
-  
-
-</header>
-
-<section id="getting-started" class="level1">
-<h1>Getting Started</h1>
-<section id="introduction" class="level2">
-<h2>Introduction</h2>
-<p>These instructions are not intended to be a comprehensive overview of <em>R</em>’s functionality, which is myriad. Instead it is a set of very specific instructions for doing the kinds of things in <em>R</em> that variationist sociolinguists familiar with <em>Goldvarb</em> often want to do. This includes extracting summary statistics from a standard token spreadsheet and formatting those statistics in such a way that they can be graphed using the package <strong>ggplot2</strong>, as well as testing the trends in those summary statistics using mixed-effects logistic regression analysis. These instructions assume you have installed the latest version of <em>R</em> (4.1.3 or later ). Even though this guide does not show everything that <em>R</em> can do, after reading and working your way through this guide, you should be familiar enough with how <em>R</em> generally works to figure out how do something not covered.</p>
-<div id="sidebar" style="color: #009fe3; background: #d8f0fa;">
-<p><strong>Note:</strong> The best way to learn how to use <em>R</em> is to play with it. Learn by doing. You can’t break <em>R</em>. It doesn’t bite. Even though <em>R</em> is a cutting edge statistical tool, I compare the experience working with it to fixing an old car. Sometimes you just need to keep tinkering until the engine starts and runs smoothly. Other times you just need to kick it.</p>
-</div>
-<p>If you run into a problem you don’t know how to solve, Google it. I guarantee someone has had the same question already. There are many, many online <em>R</em> tutorials. That’s how I learned how to use <em>R</em>. That said, it still sometimes takes me many failed attempts before I get something right.</p>
 <center>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="images/tweet.png" class="img-fluid" /></p>
-<p><figcaption aria-hidden="true">(#fig:tweet) Actual tweet</figcaption></p>
-</figure>
-</div>
+
+![(#fig:tweet) Actual tweet](images/tweet.png)
+
 </center>
-<section id="r-and-goldvarb" class="level3">
-<h3><em>R</em> and <em>Goldvarb</em></h3>
-<p>In this guide I mention the program <a href="http://individual.utoronto.ca/tagliamonte/goldvarb.html"><em>Goldvarb</em></a> a lot. This is a well-known and widely-used program for doing multivariate analysis in the language variation and change literature. If you are are unfamiliar with <em>Goldvarb</em> you can learn more in Sali Tagliamonte’s (2006) <a href="https://doi.org/10.1017/CBO9780511801624"><em>Analysing Sociolingusitic Variation</em></a>. I remain agnostic as to whether <em>R</em> or <em>Goldvarb</em> or any other analysis tool is the one you must use for your research. Each tool has pros and cons. These instructions are simply a set of procedures you can use if you choose to use <em>R</em>.</p>
-</section>
-<section id="token-files" class="level3">
-<h3>Token Files</h3>
-<p>You should have one master Microsoft <em>Excel</em> spreadsheet for your data. From this master spreadsheet you can create other files that can be used in programs like <em>Goldvarb</em> and <em>R</em>. Each row of your spreadsheet should represent an individual token. Each column of your spreadsheet should represent a different, independent variable. The example token file for this guide is structured this way, as in Figure @ref(fig:excel)</p>
+
+### *R* and *Goldvarb*
+
+In this guide I mention the program [*Goldvarb*](http://individual.utoronto.ca/tagliamonte/goldvarb.html) a lot. This is a well-known and widely-used program for doing multivariate analysis in the language variation and change literature. If you are are unfamiliar with *Goldvarb* you can learn more in Sali Tagliamonte's (2006) [*Analysing Sociolingusitic Variation*](https://doi.org/10.1017/CBO9780511801624). I remain agnostic as to whether *R* or *Goldvarb* or any other analysis tool is the one you must use for your research. Each tool has pros and cons. These instructions are simply a set of procedures you can use if you choose to use *R*.
+
+### Token Files
+
+You should have one master Microsoft *Excel* spreadsheet for your data. From this master spreadsheet you can create other files that can be used in programs like *Goldvarb* and *R*. Each row of your spreadsheet should represent an individual token. Each column of your spreadsheet should represent a different, independent variable. The example token file for this guide is structured this way, as in Figure @ref(fig:excel)
+
 <center>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="images/tokenfile.png" class="img-fluid" /></p>
-<p><figcaption aria-hidden="true">(#fig:excel) Example token file deletiondata.txt</figcaption></p>
-</figure>
-</div>
+
+![(#fig:excel) Example token file deletiondata.txt](images/tokenfile.png)
+
 </center>
-<div style="color: #009fe3; background: #d8f0fa;">
-<p><strong>Note:</strong> Do not include anything in your token file that isn’t a token. Do not create sum columns. Do not add random notes to the right or the top of the data. <em>R</em> will try to interpret all of this as data.</p>
-</div>
-</section>
-<section id="r-script-files" class="level3">
-<h3>R Script Files</h3>
-<p>Anytime you are using <em>R</em> you should be using script files. Script files are very similar to <em>Goldvarb</em> condition files. They are files that include instructions that tell <em>R</em> what to do. By saving your command functions in script files you create replicability for your work in <em>R</em>. You may have <em>pseudo</em>-script files already. Many people keep a text file full of useful <em>R</em> command functions. An <em>R</em> script file is an <em>R</em>-specific file that does the same thing.</p>
-<p>I cannot stress enough the importance of replicability. You always want to be able to go back and see every step you took in your analysis. This is especially true in the frequent situation where a reviewer suggests you go back and double-check something in your data or tweak your analysis in some way. Using script files, which are essentially a log of all your steps, is an excellent way to ensure replicability.</p>
+
+::: {style="color: \#009fe3; background: \#d8f0fa;"} <strong>Note:</strong> Do not include anything in your token file that isn't a token. Do not create sum columns. Do not add random notes to the right or the top of the data. *R* will try to interpret all of this as data. :::
+
+### R Script Files
+
+Anytime you are using *R* you should be using script files. Script files are very similar to *Goldvarb* condition files. They are files that include instructions that tell *R* what to do. By saving your command functions in script files you create replicability for your work in *R*. You may have *pseudo*-script files already. Many people keep a text file full of useful *R* command functions. An *R* script file is an *R*-specific file that does the same thing.
+
+I cannot stress enough the importance of replicability. You always want to be able to go back and see every step you took in your analysis. This is especially true in the frequent situation where a reviewer suggests you go back and double-check something in your data or tweak your analysis in some way. Using script files, which are essentially a log of all your steps, is an excellent way to ensure replicability.
+
 <center>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="images/scriptfile.png" class="img-fluid" /></p>
-<p><figcaption aria-hidden="true">(#fig:scriptfile) Example <em>R</em> script file</figcaption></p>
-</figure>
-</div>
+![(#fig:scriptfile) Example *R* script file](images/scriptfile.png)
+
 </center>
-<p>Some people have one script file for an entire project — say, a paper. My co-author Derek Denis does this. Other people have specific script files for specific results — e.g., one script file for each graph with the complete instructions for making that one graph, and the script file and the graph it creates labelled identically. This is the method I prefer. You may choose to do either, or both, or choose not to use script files at all. It’s up to you.</p>
-<p>All of the functions discussed in this workshop are in a single <em>R</em> script file whichis replicated at the end of this guide.</p>
-<p>If you download this file and open it, <em>R</em> will automatically open for you. If you want to create a new <em>R</em> script file after you’ve opened <em>R</em> you can do so via the <strong>File</strong> menu: <strong>File&gt;New Document</strong>.</p>
-<p>##<em>R</em> and <em>R Studio</em></p>
-<p>The following instructions assume you are using the core <em>R</em> program, not <em>R Studio</em>. There is no real difference between these programs (at least in how <em>R</em> operates). <em>R Studio</em> is just an alternative user interface. Some of the external commands (e.g. creating a new <em>R</em> script file, etc.) may be different, but the actual <em>R</em> functions listed in this document will be the same. There is no advantage to using the <em>R</em> core program or <em>R Studio</em>. The choice is simply personal preference. I prefer the core <em>R</em> program because I like to be able to see multiple script files at the same time. <em>R Studio</em> organizes script files in tabs.</p>
-<p>To execute a command function that is in a script file simply put your cursor on the same line as that command and press the execution or <strong>Run</strong> command depending on your operating system and editor. In Figure @ref(fig:scriptfile) the cursor is placed in the middle of line 2; pressing <code>Control+Return</code> on my Mac executes the command function highlighted in grey. You can also highlight a large portion, or even all of your script file, and press the execution command to execute multiple commands at once. There is also an execute all or <strong>Source</strong> command that will execute the entire script file.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Execute</th>
-<th>Mac OSX</th>
-<th>Windows PC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>R</em> Editor</td>
-<td><code>Command+Return</code></td>
-<td><code>CTRL+R</code></td>
-</tr>
-<tr class="even">
-<td><em>R Studio</em></td>
-<td><code>Command+Return</code></td>
-<td><code>CTRL+Enter</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<table>
-<thead>
-<tr class="header">
-<th>Execute</th>
-<th>Mac OSX</th>
-<th>Windows PC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>R</em> Editor</td>
-<td><code>Command+E</code></td>
-<td><code>CTRL+Shift+R</code></td>
-</tr>
-<tr class="even">
-<td><em>R Studio</em></td>
-<td><code>Command+Option+R</code></td>
-<td><code>CTRL+Alt+R</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="installing-packages" class="level3">
-<h3>Installing Packages</h3>
-<p>Before you begin doing any kind of analysis in <em>R</em>, you’ll first need several `packages.’ Packages are simply additional sets of instructions that can do things above and beyond <em>R</em>’s core functionality. Packages are created by academics and are made available to everyone. <em>R</em> doesn’t automatically download every package, so if you want to use a specific package, you must download it. You only need to do this one time. You also need to be connected to the internet to do it. Type the following function into <em>R</em>’s console window and press <strong>Enter/Return</strong> or type it into a script file and press <strong>CTRL+Enter/Command+Return</strong>:</p>
-<div class="cell">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;vcd&quot;</span>, <span class="st">&quot;reshape2&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;partykit&quot;</span>, <span class="st">&quot;lme4&quot;</span>, <span class="st">&quot;car&quot;</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;multcomp&quot;</span>, <span class="st">&quot;MuMIn&quot;</span>), <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-</div>
-<p>Above <code>install.packages()</code> is a function for installing packages. Inside the parentheses you tell <em>R</em> which packages to install. In this case you want to install multiple packages. Any time you need to combine multiple things in <em>R</em> you use the concatenating function <code>c()</code>. So the above function says combine the package names <code>dplyr</code>,<code>vcd</code>, <code>reshape2</code>, <code>ggplot2</code>, <code>partykit</code>, <code>lme4</code>, <code>car</code>, <code>multcomp</code>, and<code>MuNIn</code> and then install the packages with those names. The <code>dependencies = TRUE</code> specification tells <em>R</em> to install any additional packages that these packages depend on to function.</p>
-<p>When you execute this function, <em>R</em> might ask you to pick a <strong>CRAN Mirror</strong>. This is just <em>R</em> asking you from where you want to download the packages. <em>CRAN</em> is the <em>Comprehensive R Archive Network</em> and mirrors are simply different institutions that offer identical copies of <em>R</em> files for downloading. Usually I just pick the option closest to me, which is the University of Toronto in Canada. If you’ve downloaded packages in the past you’ve likely already set your <strong>CRAN Mirror</strong>, and won’t be prompted to do it again.</p>
-<p>Once you’ve selected your <strong>CRAN Mirror</strong>, if necessary, and executed the <strong>install.packages()</strong> function, you may see a bunch of text scroll across your <em>R</em> console window. This is just <em>R</em> telling you that it is downloading and installing these packages. You can also install packages by selecting <strong>Packages &amp; Data &gt; Package Installer</strong>. In this window click <strong>Get List</strong>, then search/browse for the required packages one by one. When you find a package, highlight it and click <strong>Install Selected</strong>. Make sure the <strong>Install Dependencies</strong> option is checked.</p>
-<p>As <em>R</em> updates over time, so too must these packages. But packages don’t update automatically. Therefore it’s a good idea to periodically execute the function below. Do this now. These instructions assume that you have the most up to date version of <em>R</em> and its packages. The <code>ask=FALSE</code> option for the <code>update.packages()</code> function just means that <em>R</em> will run the update ’silently”, or rather, it won’t ask you whether or not you want to update each individual package you’ve installed.</p>
-<div class="cell">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>(<span class="at">ask =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="getting-your-data-into-r" class="level2">
-<h2>Getting your data into <em>R</em></h2>
-<p>The best way to organize your tokens is in a spreadsheet in Microsoft <em>Excel</em>. There are a lot of useful tools in Microsoft <em>Excel</em> for automatically coding and re-coding your data. Some of those tools overlap with what I present here for <em>R</em>. If you want to explore <em>Excel</em>’s functionality, I recommend this website as a springboard: <a href="https://support.office.com/en-us/article/Excel-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb" class="uri">https://support.office.com/en-us/article/Excel-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb</a>. There are other programs for spreadsheet management: <em>Numbers</em> in OSX, or Google’s <em>Sheets</em>, for example. They generally function similarly to <em>Excel</em>. <em>R</em> does not easily read <em>Excel</em>’s default file type (<strong>.xls</strong> or <strong>.xlsx</strong>, <a href="https://cran.r-project.org/web/packages/xlsx/xlsx.pdf">though it can be done</a>) therefore, you must save your token file as a tab-delimited-text file (<strong>.txt</strong>) or a comma-separated-values (<strong>.csv</strong>) file.</p>
-<div style="color: #009fe3; background: #d8f0fa;">
-<p><strong>Note:</strong> I recommend NOT saving your token files as a .<strong>csv file</strong>. Often your token files will include a column of cells containing the broader context the token was extracted from. For example, the sentence in which it appears in a transcript. This broader context usually includes commas. If this is the case, when you save your file as a <strong>.csv file</strong>, it will appear as if there are column breaks in the middle of your broader context because commas are used as the column delimiter.</p>
-</div>
-<p>There are four or five ways to read data into <em>R</em>. Which method you choose is really up to you, but because I’m advocating the use of <em>R</em> script files and maximum replicability, I suggest using the following function at the top of your script file:</p>
-<div class="cell">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt&quot;</span>)</span></code></pre></div>
-</div>
-<p>The function creates an <em>R</em> “object” called <code>td</code> and then uses the assignment operator <code>&lt;-</code> to specify what that object is. In this case <code>td</code> is the contents of the tab-delimited text file called <code>deletiondata.txt</code> that is located in a folder called <code>Doing\_LVC\_with\_R</code>, in a folder called <code>R</code> in a folder called <code>Dropbox</code> on the root drive of my computer. This tab-delimited text file is my data file. You can download this same file <a href="https://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt%7D%7Bhttps://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt">here</a>. Wherever you save this file, write that file path in quotation marks inside the <code>read.delim()</code> function. On a PC this file path will likely begin <code>"C:/..."</code>. You can actually just read the file directly into <em>R</em> from the web link using the following function:</p>
-<div class="cell">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1&quot;</span>)</span></code></pre></div>
-</div>
-<p>This data file is a token file for a project studying the rates of word-final (t, d) deletion collected for Gardner (2010; 2017) among English speakers on Cape Breton Island, Nova Scotia, Canada.</p>
-<p>If you prefer to save your data files as comma-separated-values files (even though you shouldn’t, see above), you can read them into <em>R</em> using the function <code>read.csv2()</code>. If you find it tricky to figure out the file path of your data file you can instead write <code>file.choose()</code> (OS X) or <code>choose.files()</code> (PC) instead of the file path inside the <code>read.delim()</code>/<code>read.csv2()</code> function, with no quotation marks. This will create a pop-up window where you can browse through your files and select one. While this <em>seems</em> easier, it is not worth it. By not explicitly writing out the file path you introduce a non-replicable element in your script file because there is no record of what you browse to in the actual script file. This means that if you return to your project a year later, or someone else is looking over your code, it might not be clear which data file is supposed to be used. If you choose to use an <em>R</em> script file you can actually just drag and drop your data file (or any file) into the script window itself and the full file path will be automatically inserted.</p>
-<p>You can also copy a file’s filepath to the clipboard on a Mac by pressing <strong>Control</strong> while clicking on the file, then pressing <strong>Option</strong> and selecting <strong>Copy “[your file]” as Pathname</strong>. On a PC you can do the same thing by right-clicking on a file, or (if using Windows 10) using the <strong>Copy path</strong> button on the <strong>Home</strong> tab ribbon in <em>Windows File Explorer</em>.</p>
-<p>For more information about reading files into <em>R</em>, go <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html">here</a></p>
-<p>##Getting to know the data</p>
-<section id="getting-a-snapshot-of-the-data" class="level3">
-<h3>Getting a Snapshot of the Data</h3>
-<p>Now that you have some data loaded into <em>R</em> you can start exploring it. At any time you can type <code>td</code> into the console window to see what that object actually represents. Try it.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>td</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>      Dep.Var     Stress Category Morph.Type          Before     After Speaker  YOB Sex    Education     Job    Phoneme.Dep.Var
+
+Some people have one script file for an entire project --- say, a paper. My co-author Derek Denis does this. Other people have specific script files for specific results --- e.g., one script file for each graph with the complete instructions for making that one graph, and the script file and the graph it creates labelled identically. This is the method I prefer. You may choose to do either, or both, or choose not to use script files at all. It's up to you.
+
+All of the functions discussed in this workshop are in a single *R* script file whichis replicated at the end of this guide.
+
+If you download this file and open it, *R* will automatically open for you. If you want to create a new *R* script file after you've opened *R* you can do so via the **File** menu: **File\>New Document**.
+
+\##*R* and *R Studio*
+
+The following instructions assume you are using the core *R* program, not *R Studio*. There is no real difference between these programs (at least in how *R* operates). *R Studio* is just an alternative user interface. Some of the external commands (e.g. creating a new *R* script file, etc.) may be different, but the actual *R* functions listed in this document will be the same. There is no advantage to using the *R* core program or *R Studio*. The choice is simply personal preference. I prefer the core *R* program because I like to be able to see multiple script files at the same time. *R Studio* organizes script files in tabs.
+
+To execute a command function that is in a script file simply put your cursor on the same line as that command and press the execution or **Run** command depending on your operating system and editor. In Figure @ref(fig:scriptfile) the cursor is placed in the middle of line 2; pressing `Control+Return` on my Mac executes the command function highlighted in grey. You can also highlight a large portion, or even all of your script file, and press the execution command to execute multiple commands at once. There is also an execute all or **Source** command that will execute the entire script file.
+
+| Execute    | Mac OSX          | Windows PC   |
+|------------|------------------|--------------|
+| *R* Editor | `Command+Return` | `CTRL+R`     |
+| *R Studio* | `Command+Return` | `CTRL+Enter` |
+
+------------------------------------------------------------------------
+
+| Execute    | Mac OSX            | Windows PC     |
+|------------|--------------------|----------------|
+| *R* Editor | `Command+E`        | `CTRL+Shift+R` |
+| *R Studio* | `Command+Option+R` | `CTRL+Alt+R`   |
+
+### Installing Packages
+
+Before you begin doing any kind of analysis in *R*, you'll first need several \`packages.' Packages are simply additional sets of instructions that can do things above and beyond *R*'s core functionality. Packages are created by academics and are made available to everyone. *R* doesn't automatically download every package, so if you want to use a specific package, you must download it. You only need to do this one time. You also need to be connected to the internet to do it. Type the following function into *R*'s console window and press **Enter/Return** or type it into a script file and press **CTRL+Enter/Command+Return**:
+
+``` r
+install.packages(c("dplyr", "vcd", "reshape2", "ggplot2", "partykit", "lme4", "car",
+    "multcomp", "MuMIn"), dependencies = TRUE)
+```
+
+Above `install.packages()` is a function for installing packages. Inside the parentheses you tell *R* which packages to install. In this case you want to install multiple packages. Any time you need to combine multiple things in *R* you use the concatenating function `c()`. So the above function says combine the package names `dplyr`,`vcd`, `reshape2`, `ggplot2`, `partykit`, `lme4`, `car`, `multcomp`, and`MuNIn` and then install the packages with those names. The `dependencies = TRUE` specification tells *R* to install any additional packages that these packages depend on to function.
+
+When you execute this function, *R* might ask you to pick a **CRAN Mirror**. This is just *R* asking you from where you want to download the packages. *CRAN* is the *Comprehensive R Archive Network* and mirrors are simply different institutions that offer identical copies of *R* files for downloading. Usually I just pick the option closest to me, which is the University of Toronto in Canada. If you've downloaded packages in the past you've likely already set your **CRAN Mirror**, and won't be prompted to do it again.
+
+Once you've selected your **CRAN Mirror**, if necessary, and executed the **install.packages()** function, you may see a bunch of text scroll across your *R* console window. This is just *R* telling you that it is downloading and installing these packages. You can also install packages by selecting **Packages & Data \> Package Installer**. In this window click **Get List**, then search/browse for the required packages one by one. When you find a package, highlight it and click **Install Selected**. Make sure the **Install Dependencies** option is checked.
+
+As *R* updates over time, so too must these packages. But packages don't update automatically. Therefore it's a good idea to periodically execute the function below. Do this now. These instructions assume that you have the most up to date version of *R* and its packages. The `ask=FALSE` option for the `update.packages()` function just means that *R* will run the update 'silently", or rather, it won't ask you whether or not you want to update each individual package you've installed.
+
+``` r
+update.packages(ask = FALSE)
+```
+
+## Getting your data into *R*
+
+The best way to organize your tokens is in a spreadsheet in Microsoft *Excel*. There are a lot of useful tools in Microsoft *Excel* for automatically coding and re-coding your data. Some of those tools overlap with what I present here for *R*. If you want to explore *Excel*'s functionality, I recommend this website as a springboard: <https://support.office.com/en-us/article/Excel-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb>. There are other programs for spreadsheet management: *Numbers* in OSX, or Google's *Sheets*, for example. They generally function similarly to *Excel*. *R* does not easily read *Excel*'s default file type (**.xls** or **.xlsx**, [though it can be done](https://cran.r-project.org/web/packages/xlsx/xlsx.pdf)) therefore, you must save your token file as a tab-delimited-text file (**.txt**) or a comma-separated-values (**.csv**) file.
+
+::: {style="color: \#009fe3; background: \#d8f0fa;"} <strong>Note:</strong> I recommend NOT saving your token files as a .**csv file**. Often your token files will include a column of cells containing the broader context the token was extracted from. For example, the sentence in which it appears in a transcript. This broader context usually includes commas. If this is the case, when you save your file as a **.csv file**, it will appear as if there are column breaks in the middle of your broader context because commas are used as the column delimiter. :::
+
+There are four or five ways to read data into *R*. Which method you choose is really up to you, but because I'm advocating the use of *R* script files and maximum replicability, I suggest using the following function at the top of your script file:
+
+``` r
+td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+```
+
+The function creates an *R* "object" called `td` and then uses the assignment operator `<-` to specify what that object is. In this case `td` is the contents of the tab-delimited text file called `deletiondata.txt` that is located in a folder called `Doing\_LVC\_with\_R`, in a folder called `R` in a folder called `Dropbox` on the root drive of my computer. This tab-delimited text file is my data file. You can download this same file [here](https://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt%7D%7Bhttps://www.dropbox.com/s/hynh5uqxqi8azlb/deletiondata.txt). Wherever you save this file, write that file path in quotation marks inside the `read.delim()` function. On a PC this file path will likely begin `"C:/..."`. You can actually just read the file directly into *R* from the web link using the following function:
+
+``` r
+td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+```
+
+This data file is a token file for a project studying the rates of word-final (t, d) deletion collected for Gardner (2010; 2017) among English speakers on Cape Breton Island, Nova Scotia, Canada.
+
+If you prefer to save your data files as comma-separated-values files (even though you shouldn't, see above), you can read them into *R* using the function `read.csv2()`. If you find it tricky to figure out the file path of your data file you can instead write `file.choose()` (OS X) or `choose.files()` (PC) instead of the file path inside the `read.delim()`/`read.csv2()` function, with no quotation marks. This will create a pop-up window where you can browse through your files and select one. While this *seems* easier, it is not worth it. By not explicitly writing out the file path you introduce a non-replicable element in your script file because there is no record of what you browse to in the actual script file. This means that if you return to your project a year later, or someone else is looking over your code, it might not be clear which data file is supposed to be used. If you choose to use an *R* script file you can actually just drag and drop your data file (or any file) into the script window itself and the full file path will be automatically inserted.
+
+You can also copy a file's filepath to the clipboard on a Mac by pressing **Control** while clicking on the file, then pressing **Option** and selecting **Copy "\[your file\]" as Pathname**. On a PC you can do the same thing by right-clicking on a file, or (if using Windows 10) using the **Copy path** button on the **Home** tab ribbon in *Windows File Explorer*.
+
+For more information about reading files into *R*, go [here](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html)
+
+\##Getting to know the data
+
+### Getting a Snapshot of the Data
+
+Now that you have some data loaded into *R* you can start exploring it. At any time you can type `td` into the console window to see what that object actually represents. Try it.
+
+``` r
+td
+```
+
+```
+      Dep.Var     Stress Category Morph.Type          Before     After Speaker  YOB Sex    Education     Job    Phoneme.Dep.Var
 1    Realized   Stressed Function       Mono           Vowel     Pause  BOUF65 1965   F     Educated   White       t--Affricate
 2    Realized   Stressed Function       Mono           Vowel     Pause  CHIF55 1955   F     Educated   White       t--Fricative
 3    Realized   Stressed Function       Mono           Vowel     Pause  CLAF52 1952   F     Educated Service       t--Affricate
@@ -7261,121 +7146,142 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 6986 Realized   Stressed Function       Mono           Vowel     Pause  GARF16 1916   F Not Educated Service       t--Fricative
 6987 Realized   Stressed  Lexical       Mono           Vowel     Pause  GARF87 1987   F     Educated   White               d--T
 6988 Deletion   Stressed  Lexical       Mono           Vowel     Pause  GARF87 1987   F     Educated   White        d--Deletion
-6989 Realized   Stressed  Lexical       Mono           Vowel     Pause  GARF87 1987   F     Educated   White               d--D</code></pre>
-</div>
-</div>
-<p>To find out how many columns there are in your data frame (this is what <em>R</em> calls spreadsheets), use the function <code>nrow()</code>. Similarly, to find out how many columns are in the data frame, use the function <code>ncol()</code>. The function <code>dim()</code> gives both.</p>
-<div class="cell">
-<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6989</code></pre>
-</div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 12</code></pre>
-</div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6989   12</code></pre>
-</div>
-</div>
-<p>There are 6,989 rows and 12 columns in this data frame.</p>
-<p>The <code>summary()</code> function is one of the most useful functions you’ll use in R. It gives you a quick snapshot of a data frame.</p>
-<div class="cell">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Dep.Var             Stress            Category          Morph.Type       
- Length:6989        Length:6989        Length:6989        Length:6989       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            
-    Before             After             Speaker               YOB      
- Length:6989        Length:6989        Length:6989        Min.   :1915  
- Class :character   Class :character   Class :character   1st Qu.:1952  
- Mode  :character   Mode  :character   Mode  :character   Median :1965  
-                                                          Mean   :1967  
-                                                          3rd Qu.:1991  
-                                                          Max.   :1999  
-     Sex             Education             Job            Phoneme.Dep.Var   
- Length:6989        Length:6989        Length:6989        Length:6989       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            </code></pre>
-</div>
-</div>
-<p>The <code>summary()</code> function shows you the name of all the columns in the data frame and what each column contains.</p>
-<p>When you import a data frame into <em>R</em>, <em>R</em> automatically decides what type of data each column contains. Any data frame columns where all cells contain only numbers are assumed to <code>numeric</code> or <code>integer</code> data (depending on if there are decimal values). Any columns that include letters will be assumed to be <code>character</code> data.</p>
-<p>For <code>numeric</code> or <code>integer</code> data, the <code>summary()</code> function it will tell you the mean, the median, the minimum value, the maximum value, and the values of the first and third quartiles. The mean is the arithmetic mean, which is the sum of all the values in a column divided by the number of values in a column. Fifty percent of the values in the column are equal to or less than the mean and 50% of the values in the column are greater than or less than the mean. The mean can also be thought of as the 2nd quartile. The median is the most frequent value in the column. For <em>normally distributed</em> data, the mean and the median should be close to the same value. Not all data, however, is normally distributed, which is sometimes a problem, and sometimes not a problem. If a certain test expects numerical data to be normally distributed these instructions will explain what to do, but for now, it’s just good to know what mean and median indicate. Twenty-five percent of the values in the column are equal to or less than the 1st quartile and 75% of the values in the column are equal to or less. The minimum value is the lowest value in a column; the maximum value is the highest number in a column. These values can be used to construct a <strong>box and whisker</strong> plot:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="htmlwidget-2951e2330c8990032c5b" style="width:100%;height:464px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2951e2330c8990032c5b">{"x":{"data":[{"y":[1965,1955,1952,1973,1915,1941,1953,1953,1958,1946,1929,1961,1992,1916,1937,1987,1987,1942,1922,1945,1983,1983,1949,1952,1922,1984,1984,1984,1987,1987,1929,1929,1953,1966,1992,1992,1955,1984,1949,1994,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1965,1955,1955,1952,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1984,1937,1992,1991,1991,1987,1985,1987,1922,1993,1989,1958,1958,1916,1916,1966,1992,1992,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1942,1990,1991,1945,1983,1957,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1984,1949,1957,1991,1964,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1987,1922,1922,1984,1987,1922,1987,1987,1987,1987,1985,1985,1985,1915,1961,1992,1937,1922,1992,1992,1992,1994,1965,1955,1955,1952,1915,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1985,1987,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1955,1955,1952,1952,1989,1990,1990,1991,1991,1915,1953,1958,1958,1946,1946,1929,1961,1961,1992,1992,1993,1937,1937,1987,1942,1942,1993,1990,1990,1991,1991,1922,1922,1945,1945,1990,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1992,1992,1955,1991,1991,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1991,1973,1973,1961,1961,1990,1990,1958,1958,1961,1999,1942,1942,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1987,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1987,1987,1993,1945,1983,1983,1957,1990,1949,1952,1922,1984,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1991,1964,1991,1973,1961,1990,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1987,1987,1922,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1992,1941,1929,1991,1994,1949,1991,1991,1965,1991,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1987,1942,1993,1991,1945,1983,1983,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1952,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1987,1942,1993,1990,1990,1991,1945,1983,1957,1990,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1953,1991,1955,1991,1984,1949,1994,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1987,1922,1992,1992,1916,1990,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1993,1990,1990,1991,1945,1983,1983,1957,1990,1949,1949,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1922,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1952,1992,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1921,1999,1942,1965,1915,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1987,1922,1987,1987,1987,1987,1922,1991,1991,1965,1991,1955,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1965,1955,1952,1941,1953,1958,1946,1929,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1922,1987,1922,1973,1987,1990,1987,1922,1973,1915,1915,1915,1916,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1987,1922,1915,1991,1991,1965,1965,1991,1955,1955,1952,1952,1973,1990,1990,1991,1915,1915,1915,1915,1941,1953,1958,1946,1946,1929,1961,1993,1916,1916,1916,1987,1942,1993,1990,1991,1945,1983,1983,1957,1957,1990,1949,1949,1952,1984,1984,1984,1984,1984,1991,1991,1929,1929,1929,1929,1953,1991,1966,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1955,1991,1984,1984,1949,1949,1994,1957,1957,1991,1964,1991,1973,1973,1961,1961,1990,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1987,1922,1915,1937,1992,1991,1915,1915,1965,1955,1952,1941,1953,1958,1946,1929,1961,1916,1937,1987,1942,1990,1945,1983,1983,1957,1957,1949,1949,1952,1922,1922,1984,1987,1929,1929,1953,1966,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1973,1987,1922,1987,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1922,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1961,1921,1999,1942,1965,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1991,1922,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1955,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1958,1961,1921,1999,1942,1965,1991,1991,1990,1991,1991,1991,1990,1991,1961,1993,1987,1993,1990,1991,1990,1922,1984,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1991,1991,1990,1990,1991,1961,1993,1987,1987,1985,1993,1991,1990,1922,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1922,1984,1965,1965,1955,1955,1955,1952,1952,1953,1953,1958,1958,1946,1946,1929,1929,1942,1945,1949,1949,1952,1952,1984,1984,1987,1987,1929,1929,1929,1953,1953,1966,1966,1955,1984,1984,1949,1949,1957,1957,1964,1964,1973,1973,1961,1961,1958,1958,1961,1961,1999,1999,1942,1942,1961,1992,1937,1922,1922,1992,1994,1987,1922,1987,1987,1937,1992,1991,1991,1987,1990,1957,1922,1991,1991,1991,1991,1965,1991,1991,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1961,1993,1993,1937,1987,1987,1987,1993,1993,1993,1990,1990,1991,1991,1990,1990,1949,1952,1922,1987,1991,1991,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1994,1957,1991,1991,1964,1991,1991,1973,1990,1990,1958,1961,1961,1999,1942,1991,1991,1991,1991,1961,1992,1937,1922,1922,1992,1994,1990,1915,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1916,1937,1942,1993,1991,1922,1945,1983,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1987,1987,1965,1955,1952,1973,1941,1953,1958,1929,1916,1987,1942,1945,1983,1983,1957,1949,1952,1984,1984,1987,1929,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1987,1942,1985,1985,1987,1922,1987,1987,1985,1991,1991,1965,1991,1955,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1993,1937,1942,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1965,1955,1955,1952,1953,1958,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1984,1916,1987,1987,1942,1984,1984,1965,1955,1952,1915,1915,1953,1958,1946,1929,1945,1949,1952,1984,1987,1929,1929,1953,1966,1966,1984,1949,1957,1973,1961,1958,1961,1999,1942,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1949,1952,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1915,1916,1937,1992,1992,1992,1991,1991,1991,1991,1965,1991,1955,1955,1952,1973,1973,1989,1990,1991,1915,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1992,1992,1992,1992,1993,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1993,1990,1991,1945,1983,1983,1957,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1952,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1984,1987,1929,1929,1953,1966,1955,1984,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1991,1955,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1915,1915,1916,1957,1984,1984,1965,1955,1952,1973,1941,1953,1958,1946,1916,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1929,1953,1966,1984,1949,1957,1964,1961,1958,1921,1999,1942,1965,1915,1987,1987,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1992,1993,1937,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1958,1961,1921,1999,1942,1965,1915,1915,1991,1991,1991,1990,1991,1961,1993,1993,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1965,1965,1991,1955,1955,1952,1952,1991,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1993,1937,1942,1993,1990,1991,1945,1990,1949,1949,1952,1952,1984,1984,1987,1987,1991,1929,1929,1929,1929,1953,1953,1966,1966,1992,1955,1984,1984,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1999,1999,1942,1942,1991,1991,1987,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1916,1942,1993,1990,1991,1945,1983,1983,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1961,1990,1958,1961,1961,1921,1999,1942,1965,1991,1991,1991,1987,1985,1984,1984,1984,1966,1992,1992,1916,1984,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1990,1991,1922,1945,1945,1990,1949,1952,1984,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1957,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1990,1991,1922,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1955,1991,1984,1949,1994,1994,1957,1991,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1965,1965,1965,1991,1991,1955,1955,1955,1952,1952,1952,1973,1989,1990,1991,1991,1941,1953,1953,1953,1958,1958,1958,1946,1946,1946,1929,1929,1929,1961,1961,1961,1992,1993,1993,1916,1937,1937,1942,1993,1993,1990,1990,1991,1991,1922,1922,1922,1945,1945,1983,1983,1957,1990,1990,1949,1949,1949,1952,1952,1952,1984,1984,1984,1987,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1953,1953,1953,1991,1966,1966,1966,1992,1992,1955,1955,1991,1991,1984,1984,1984,1949,1949,1949,1994,1994,1957,1957,1957,1991,1991,1964,1964,1964,1991,1991,1973,1973,1973,1961,1961,1961,1990,1990,1958,1961,1961,1961,1921,1999,1999,1999,1942,1942,1942,1965,1991,1991,1991,1991,1991,1992,1987,1922,1961,1992,1937,1922,1984,1984,1992,1994,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1985,1915,1916,1987,1985,1987,1922,1916,1916,1916,1987,1987,1985,1985,1984,1992,1992,1992,1992,1992,1992,1987,1922,1991,1991,1991,1991,1991,1965,1991,1991,1955,1952,1989,1990,1991,1991,1953,1958,1946,1929,1961,1961,1992,1993,1993,1937,1987,1942,1993,1993,1990,1990,1991,1991,1922,1945,1990,1990,1949,1952,1922,1984,1987,1991,1991,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1991,1984,1949,1994,1957,1991,1991,1964,1991,1991,1973,1961,1990,1990,1990,1958,1961,1999,1942,1991,1991,1991,1991,1991,1991,1987,1984,1966,1966,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1987,1987,1942,1993,1990,1991,1922,1945,1983,1983,1957,1990,1949,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1992,1992,1955,1991,1984,1949,1994,1994,1957,1991,1964,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1989,1990,1991,1991,1915,1915,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1961,1992,1993,1916,1937,1987,1987,1942,1985,1993,1993,1990,1990,1990,1991,1991,1922,1945,1945,1945,1983,1983,1957,1990,1990,1949,1949,1952,1952,1922,1984,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1992,1992,1955,1955,1991,1991,1991,1984,1984,1949,1949,1994,1957,1957,1991,1991,1964,1964,1991,1973,1973,1961,1961,1990,1990,1958,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1991,1991,1973,1987,1987,1987,1922,1915,1916,1987,1987,1922,1987,1987,1922,1961,1937,1922,1922,1992,1994,1994,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1955,1984,1949,1957,1964,1958,1961,1921,1999,1942,1965,1984,1991,1991,1991,1990,1991,1946,1961,1993,1993,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1991,1991,1991,1965,1965,1965,1991,1991,1955,1955,1955,1955,1955,1952,1952,1973,1973,1989,1990,1990,1991,1991,1991,1915,1915,1941,1953,1953,1953,1958,1958,1958,1946,1946,1929,1929,1929,1961,1961,1992,1993,1993,1916,1916,1916,1916,1916,1937,1937,1942,1942,1942,1993,1993,1990,1991,1991,1922,1945,1945,1945,1983,1983,1957,1990,1990,1949,1949,1949,1949,1952,1952,1952,1984,1984,1984,1984,1987,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1929,1953,1953,1953,1991,1991,1966,1966,1966,1992,1992,1955,1955,1955,1991,1991,1984,1984,1949,1949,1949,1994,1957,1957,1957,1991,1991,1991,1964,1964,1964,1991,1991,1991,1973,1973,1973,1961,1961,1990,1990,1958,1958,1958,1961,1961,1961,1921,1999,1999,1999,1942,1942,1942,1965,1991,1991,1991,1991,1991,1991,1987,1987,1922,1984,1984,1965,1955,1952,1953,1958,1946,1929,1987,1987,1942,1945,1949,1952,1922,1984,1987,1929,1929,1953,1966,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1991,1991,1991,1990,1991,1961,1993,1987,1987,1993,1991,1990,1922,1991,1991,1991,1992,1992,1992,1991,1994,1991,1991,1991,1990,1991,1991,1991,1966,1991,1991,1965,1991,1955,1973,1990,1941,1953,1958,1946,1929,1961,1993,1942,1985,1993,1990,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1991,1953,1929,1961,1992,1993,1937,1993,1990,1991,1922,1945,1949,1952,1984,1987,1991,1991,1929,1929,1953,1992,1955,1991,1949,1957,1964,1991,1961,1990,1958,1961,1999,1942,1991,1991,1987,1922,1915,1966,1987,1987,1985,1987,1987,1987,1990,1922,1991,1991,1965,1991,1955,1952,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1916,1987,1942,1993,1990,1991,1945,1983,1983,1990,1949,1952,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1921,1991,1991,1990,1991,1961,1993,1916,1993,1991,1990,1991,1991,1991,1991,1994,1991,1991,1991,1990,1991,1991,1991,1991,1990,1966,1964,1916,1987,1987,1922,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1937,1992,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1965,1955,1952,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1922,1922,1922,1922,1922,1922,1922,1922,1922,1984,1984,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1922,1945,1990,1949,1952,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1991,1984,1984,1915,1965,1991,1991,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1961,1992,1993,1916,1916,1916,1916,1937,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1942,1942,1942,1985,1990,1991,1922,1945,1949,1984,1984,1984,1984,1984,1984,1984,1987,1991,1929,1929,1966,1966,1992,1992,1992,1992,1992,1992,1992,1992,1955,1984,1984,1949,1949,1957,1973,1961,1990,1958,1942,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1984,1961,1992,1937,1922,1992,1994,1957,1984,1987,1992,1992,1992,1992,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1965,1955,1952,1973,1941,1953,1958,1946,1929,1942,1945,1983,1983,1957,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1992,1991,1991,1965,1965,1991,1955,1955,1952,1952,1973,1989,1991,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1992,1993,1916,1916,1937,1942,1942,1993,1990,1991,1922,1945,1945,1983,1983,1957,1990,1949,1949,1949,1952,1952,1984,1984,1987,1987,1991,1929,1929,1929,1929,1953,1953,1966,1966,1992,1955,1955,1991,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1990,1987,1922,1991,1991,1985,1965,1955,1952,1953,1958,1946,1929,1945,1949,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1987,1987,1984,1984,1915,1987,1985,1915,1916,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1953,1966,1992,1955,1984,1957,1964,1973,1961,1958,1921,1999,1942,1965,1949,1916,1987,1966,1949,1915,1915,1915,1915,1916,1916,1987,1991,1991,1991,1990,1991,1961,1993,1987,1987,1985,1985,1993,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1961,1990,1991,1991,1991,1916,1916,1987,1992,1992,1992,1992,1992,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1991,1922,1945,1983,1983,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1989,1991,1915,1961,1992,1993,1916,1937,1937,1990,1991,1922,1945,1990,1984,1991,1991,1992,1955,1991,1991,1991,1991,1991,1990,1991,1991,1916,1916,1987,1987,1921,1987,1987,1922,1922,1987,1922,1987,1987,1987,1922,1921,1987,1987,1987,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1916,1984,1992,1987,1922,1941,1941,1941,1987,1915,1916,1984,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1915,1941,1953,1958,1946,1929,1961,1993,1916,1987,1942,1985,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1921,1999,1942,1965,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1955,1955,1952,1953,1958,1946,1942,1942,1945,1949,1952,1984,1984,1929,1929,1953,1966,1992,1992,1992,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1953,1958,1946,1929,1961,1993,1916,1942,1942,1993,1990,1991,1945,1983,1983,1957,1990,1984,1987,1991,1991,1929,1929,1953,1991,1966,1991,1984,1949,1957,1991,1964,1991,1973,1990,1961,1921,1999,1942,1965,1991,1991,1991,1929,1991,1991,1965,1965,1991,1955,1955,1955,1952,1952,1973,1989,1991,1915,1915,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1993,1916,1937,1987,1987,1942,1942,1993,1990,1991,1922,1945,1945,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1955,1955,1991,1984,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1999,1999,1942,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1989,1990,1991,1915,1915,1915,1941,1953,1953,1958,1946,1929,1961,1961,1992,1993,1916,1916,1937,1937,1987,1987,1987,1942,1993,1990,1990,1991,1922,1922,1922,1945,1983,1957,1990,1949,1952,1952,1922,1984,1984,1984,1984,1984,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1992,1992,1992,1992,1992,1992,1955,1955,1991,1984,1949,1994,1957,1991,1991,1964,1991,1991,1973,1961,1990,1958,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1990,1991,1961,1961,1992,1993,1937,1993,1990,1991,1922,1990,1922,1984,1991,1991,1991,1992,1991,1994,1991,1991,1990,1991,1991,1915,1915,1987,1991,1991,1991,1965,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1964,1991,1973,1961,1990,1961,1921,1999,1942,1965,1991,1991,1991,1945,1984,1991,1991,1965,1991,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1922,1987,1987,1984,1984,1991,1991,1991,1965,1991,1952,1973,1990,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1953,1966,1992,1955,1991,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1987,1991,1965,1991,1955,1952,1973,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1929,1916,1942,1945,1983,1983,1957,1949,1952,1922,1984,1987,1929,1953,1966,1955,1949,1957,1964,1973,1961,1961,1921,1999,1942,1965,1991,1991,1991,1991,1990,1991,1961,1961,1992,1993,1937,1993,1990,1991,1922,1990,1922,1991,1991,1991,1992,1991,1994,1991,1991,1990,1991,1991,1991,1915,1916,1916,1916,1916,1991,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1991,1991,1991,1990,1991,1991,1987,1922,1984,1991,1991,1991,1965,1991,1955,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1987,1922,1965,1991,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1942,1965,1991,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1973,1989,1990,1991,1991,1915,1915,1915,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1961,1992,1993,1993,1916,1937,1942,1942,1993,1993,1990,1990,1991,1991,1922,1945,1945,1983,1983,1990,1990,1949,1949,1952,1952,1922,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1953,1953,1991,1966,1966,1992,1955,1955,1991,1991,1984,1984,1949,1949,1994,1957,1957,1991,1991,1964,1964,1991,1991,1973,1961,1961,1990,1990,1958,1958,1961,1961,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1991,1991,1965,1955,1952,1915,1953,1958,1946,1929,1916,1949,1952,1984,1987,1929,1929,1953,1966,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1922,1915,1987,1922,1987,1987,1922,1987,1922,1987,1945,1922,1955,1949,1984,1949,1937,1992,1991,1991,1937,1992,1991,1991,1984,1984,1987,1965,1955,1952,1973,1915,1915,1915,1941,1953,1958,1946,1929,1916,1916,1916,1987,1987,1987,1987,1987,1942,1945,1983,1983,1957,1949,1952,1984,1984,1984,1984,1987,1929,1929,1953,1966,1955,1984,1949,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1987,1922,1961,1992,1937,1922,1922,1992,1961,1937,1987,1922,1922,1994,1987,1987,1985,1984,1984,1984,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1915,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1984,1984,1984,1916,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1994,1957,1991,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1984,1987,1991,1991,1965,1991,1955,1991,1915,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1949,1957,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1957,1949,1952,1984,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1984,1984,1991,1991,1991,1965,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1993,1990,1990,1991,1945,1983,1983,1990,1949,1952,1922,1984,1987,1991,1991,1991,1929,1929,1953,1991,1966,1991,1984,1994,1957,1991,1964,1991,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1991,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1965,1991,1991,1955,1952,1973,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1955,1991,1984,1949,1949,1957,1991,1964,1991,1973,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1961,1992,1937,1922,1922,1992,1994,1987,1987,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1990,1949,1952,1987,1991,1929,1929,1953,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1916,1937,1942,1993,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1991,1964,1991,1991,1973,1961,1990,1958,1921,1942,1965,1991,1991,1991,1987,1985,1991,1991,1991,1990,1991,1961,1993,1993,1990,1990,1990,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1984,1984,1915,1991,1987,1915,1987,1984,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1987,1961,1992,1937,1922,1922,1992,1992,1994,1987,1984,1965,1955,1952,1973,1941,1953,1946,1929,1916,1942,1945,1983,1983,1957,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1958,1949,1991,1991,1991,1952,1989,1990,1991,1961,1992,1993,1937,1993,1990,1991,1922,1990,1949,1991,1991,1991,1966,1992,1992,1992,1991,1991,1991,1990,1991,1991,1991,1915,1987,1922,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1961,1992,1937,1922,1957,1922,1992,1994,1987,1991,1991,1965,1965,1965,1991,1955,1955,1955,1955,1955,1955,1952,1952,1952,1989,1991,1915,1953,1953,1953,1958,1958,1958,1946,1946,1946,1929,1929,1929,1961,1992,1993,1937,1942,1942,1942,1993,1990,1991,1922,1945,1945,1945,1990,1949,1949,1949,1952,1952,1952,1984,1984,1984,1987,1987,1987,1991,1991,1929,1929,1929,1929,1929,1929,1953,1953,1953,1966,1966,1966,1992,1992,1955,1955,1955,1991,1984,1984,1984,1949,1949,1949,1957,1957,1957,1991,1964,1964,1964,1991,1973,1973,1973,1973,1961,1961,1961,1990,1958,1958,1958,1961,1961,1961,1999,1999,1999,1942,1942,1942,1991,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1937,1992,1992,1991,1991,1984,1984,1987,1984,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1990,1992,1915,1987,1922,1984,1993,1966,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1973,1989,1989,1991,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1958,1946,1929,1961,1992,1992,1993,1993,1916,1916,1916,1916,1916,1937,1987,1987,1942,1942,1942,1942,1993,1990,1991,1991,1922,1945,1990,1949,1949,1949,1952,1984,1984,1984,1984,1984,1987,1987,1987,1991,1991,1929,1929,1929,1953,1966,1966,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1955,1955,1991,1991,1984,1949,1949,1957,1957,1991,1991,1964,1991,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1999,1999,1942,1942,1991,1991,1991,1991,1991,1991,1937,1987,1987,1922,1922,1992,1991,1991,1915,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1946,1929,1993,1916,1942,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1953,1991,1955,1991,1984,1949,1991,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1958,1961,1987,1922,1991,1991,1965,1991,1952,1952,1973,1990,1991,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1993,1993,1916,1916,1942,1942,1990,1991,1945,1945,1983,1957,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1929,1929,1929,1929,1953,1953,1991,1966,1966,1955,1955,1991,1984,1984,1949,1949,1957,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1987,1922,1916,1916,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1922,1992,1984,1992,1937,1992,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1915,1984,1916,1992,1984,1987,1987,1992,1916,1916,1916,1916,1916,1987,1922,1915,1987,1922,1992,1987,1915,1987,1987,1985,1984,1992,1992,1987,1985,1961,1984,1987,1937,1992,1991,1991,1991,1961,1992,1937,1987,1922,1922,1992,1994,1961,1992,1937,1922,1922,1992,1987,1987,1987,1915,1991,1965,1965,1991,1955,1952,1952,1989,1915,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1990,1952,1984,1984,1984,1984,1987,1987,1991,1991,1991,1929,1929,1953,1953,1966,1966,1992,1991,1984,1984,1949,1949,1949,1994,1957,1957,1991,1964,1991,1973,1973,1961,1961,1990,1958,1999,1999,1942,1942,1991,1991,1994,1984,1984,1916,1987,1987,1987],"hoverinfo":"y","type":"box","fillcolor":"rgba(191,239,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(30,144,255,1)","width":1.88976377952756},"showlegend":false,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":27.1581569115816,"r":7.97011207970112,"b":15.1432129514321,"l":53.3997509339975},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.4125,0.4125],"tickmode":"array","ticktext":["-0.4","-0.2","0.0","0.2","0.4"],"tickvals":[-0.4,-0.2,0,0.2,0.4],"categoryorder":"array","categoryarray":["-0.4","-0.2","0.0","0.2","0.4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.98505603985056,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1910.8,2003.2],"tickmode":"array","ticktext":["1920","1940","1960","1980","2000"],"tickvals":[1920,1940,1960,1980,2000],"categoryorder":"array","categoryarray":["1920","1940","1960","1980","2000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(190,190,190,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"x","title":{"text":"YOB","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"10bb06bd37287":{"y":{},"type":"box"}},"cur_data":"10bb06bd37287","visdat":{"10bb06bd37287":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<p>Box and whisker plot of <code>YOB</code> (Year of Birth) in the <code>td</code> data frame</p>
-</div>
-</div>
-<p>The bottom <strong>whisker</strong> displays the minimum value of 1910. The bottom line of the <strong>box</strong> displays the first quartile value of 1952. The black bar in the middle of the <strong>box</strong> displays the second quartile value/mean of 1965. The top line of the <em>box</em> displays the third quartile value of 1991. The range from the first quartile to the third quartile is called the <strong>interquartile range</strong>. The top <strong>whisker</strong> displays the maximum value of 1999.</p>
-<p>The function <code>names()</code> returns a vector (a series of items in a line, separated by commas) of the column names. This function can be useful as a quick way to get the names of each column. You will need to use these names quite often when writing other commands. <code>colnames()</code> returns the same information; <code>ls()</code> returns the same information, but ordered alphabetically.</p>
-<div class="cell">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;Dep.Var&quot;         &quot;Stress&quot;          &quot;Category&quot;        &quot;Morph.Type&quot;     
- [5] &quot;Before&quot;          &quot;After&quot;           &quot;Speaker&quot;         &quot;YOB&quot;            
- [9] &quot;Sex&quot;             &quot;Education&quot;       &quot;Job&quot;             &quot;Phoneme.Dep.Var&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;Dep.Var&quot;         &quot;Stress&quot;          &quot;Category&quot;        &quot;Morph.Type&quot;     
- [5] &quot;Before&quot;          &quot;After&quot;           &quot;Speaker&quot;         &quot;YOB&quot;            
- [9] &quot;Sex&quot;             &quot;Education&quot;       &quot;Job&quot;             &quot;Phoneme.Dep.Var&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;After&quot;           &quot;Before&quot;          &quot;Category&quot;        &quot;Dep.Var&quot;        
- [5] &quot;Education&quot;       &quot;Job&quot;             &quot;Morph.Type&quot;      &quot;Phoneme.Dep.Var&quot;
- [9] &quot;Sex&quot;             &quot;Speaker&quot;         &quot;Stress&quot;          &quot;YOB&quot;            </code></pre>
-</div>
-</div>
-<p>The function <code>str()</code> describes the structure of a data frame. It reports similar information as <code>summary()</code> but does not include descriptions of each column; however, the layout of the information is sometimes a little easier to read, especially if your data frame has many columns. Here we can see that <code>YOB</code> is categorized as <code>int</code> (integer) data and all the other columns are <code>chr</code> (character) data.</p>
-<div class="cell">
-<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&#39;data.frame&#39;:   6989 obs. of  12 variables:
- $ Dep.Var        : chr  &quot;Realized&quot; &quot;Realized&quot; &quot;Realized&quot; &quot;Deletion&quot; ...
- $ Stress         : chr  &quot;Stressed&quot; &quot;Stressed&quot; &quot;Stressed&quot; &quot;Stressed&quot; ...
- $ Category       : chr  &quot;Function&quot; &quot;Function&quot; &quot;Function&quot; &quot;Function&quot; ...
- $ Morph.Type     : chr  &quot;Mono&quot; &quot;Mono&quot; &quot;Mono&quot; &quot;Mono&quot; ...
- $ Before         : chr  &quot;Vowel&quot; &quot;Vowel&quot; &quot;Vowel&quot; &quot;Vowel&quot; ...
- $ After          : chr  &quot;Pause&quot; &quot;Pause&quot; &quot;Pause&quot; &quot;Pause&quot; ...
- $ Speaker        : chr  &quot;BOUF65&quot; &quot;CHIF55&quot; &quot;CLAF52&quot; &quot;CLAM73&quot; ...
- $ YOB            : int  1965 1955 1952 1973 1915 1941 1953 1953 1958 1946 ...
- $ Sex            : chr  &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;M&quot; ...
- $ Education      : chr  &quot;Educated&quot; &quot;Educated&quot; &quot;Educated&quot; &quot;Not Educated&quot; ...
- $ Job            : chr  &quot;White&quot; &quot;White&quot; &quot;Service&quot; &quot;Blue&quot; ...
- $ Phoneme.Dep.Var: chr  &quot;t--Affricate&quot; &quot;t--Fricative&quot; &quot;t--Affricate&quot; &quot;t--Deletion&quot; ...</code></pre>
-</div>
-</div>
-<p><code>head()</code> will return the first six lines of the data frame. <code>tail()</code> provides the last six. For either you can change the number of lines reported using the option <code>n=</code>.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>   Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
+6989 Realized   Stressed  Lexical       Mono           Vowel     Pause  GARF87 1987   F     Educated   White               d--D
+```
+
+To find out how many columns there are in your data frame (this is what *R* calls spreadsheets), use the function `nrow()`. Similarly, to find out how many columns are in the data frame, use the function `ncol()`. The function `dim()` gives both.
+
+``` r
+nrow(td)
+```
+
+    [1] 6989
+
+``` r
+ncol(td)
+```
+
+    [1] 12
+
+``` r
+dim(td)
+```
+
+    [1] 6989   12
+
+There are 6,989 rows and 12 columns in this data frame.
+
+The `summary()` function is one of the most useful functions you'll use in R. It gives you a quick snapshot of a data frame.
+
+``` r
+summary(td)
+```
+
+       Dep.Var             Stress            Category          Morph.Type       
+     Length:6989        Length:6989        Length:6989        Length:6989       
+     Class :character   Class :character   Class :character   Class :character  
+     Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                                
+                                                                                
+                                                                                
+        Before             After             Speaker               YOB      
+     Length:6989        Length:6989        Length:6989        Min.   :1915  
+     Class :character   Class :character   Class :character   1st Qu.:1952  
+     Mode  :character   Mode  :character   Mode  :character   Median :1965  
+                                                              Mean   :1967  
+                                                              3rd Qu.:1991  
+                                                              Max.   :1999  
+         Sex             Education             Job            Phoneme.Dep.Var   
+     Length:6989        Length:6989        Length:6989        Length:6989       
+     Class :character   Class :character   Class :character   Class :character  
+     Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                                
+                                                                                
+                                                                                
+
+The `summary()` function shows you the name of all the columns in the data frame and what each column contains.
+
+When you import a data frame into *R*, *R* automatically decides what type of data each column contains. Any data frame columns where all cells contain only numbers are assumed to `numeric` or `integer` data (depending on if there are decimal values). Any columns that include letters will be assumed to be `character` data.
+
+For `numeric` or `integer` data, the `summary()` function it will tell you the mean, the median, the minimum value, the maximum value, and the values of the first and third quartiles. The mean is the arithmetic mean, which is the sum of all the values in a column divided by the number of values in a column. Fifty percent of the values in the column are equal to or less than the mean and 50% of the values in the column are greater than or less than the mean. The mean can also be thought of as the 2nd quartile. The median is the most frequent value in the column. For *normally distributed* data, the mean and the median should be close to the same value. Not all data, however, is normally distributed, which is sometimes a problem, and sometimes not a problem. If a certain test expects numerical data to be normally distributed these instructions will explain what to do, but for now, it's just good to know what mean and median indicate. Twenty-five percent of the values in the column are equal to or less than the 1st quartile and 75% of the values in the column are equal to or less. The minimum value is the lowest value in a column; the maximum value is the highest number in a column. These values can be used to construct a **box and whisker** plot:
+
+<div id="htmlwidget-c8707bc0a7ea836c47e2" style="width:768px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c8707bc0a7ea836c47e2">{"x":{"data":[{"y":[1965,1955,1952,1973,1915,1941,1953,1953,1958,1946,1929,1961,1992,1916,1937,1987,1987,1942,1922,1945,1983,1983,1949,1952,1922,1984,1984,1984,1987,1987,1929,1929,1953,1966,1992,1992,1955,1984,1949,1994,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1965,1955,1955,1952,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1984,1937,1992,1991,1991,1987,1985,1987,1922,1993,1989,1958,1958,1916,1916,1966,1992,1992,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1942,1990,1991,1945,1983,1957,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1984,1949,1957,1991,1964,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1987,1922,1922,1984,1987,1922,1987,1987,1987,1987,1985,1985,1985,1915,1961,1992,1937,1922,1992,1992,1992,1994,1965,1955,1955,1952,1915,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1985,1987,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1955,1955,1952,1952,1989,1990,1990,1991,1991,1915,1953,1958,1958,1946,1946,1929,1961,1961,1992,1992,1993,1937,1937,1987,1942,1942,1993,1990,1990,1991,1991,1922,1922,1945,1945,1990,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1992,1992,1955,1991,1991,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1991,1973,1973,1961,1961,1990,1990,1958,1958,1961,1999,1942,1942,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1987,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1987,1987,1993,1945,1983,1983,1957,1990,1949,1952,1922,1984,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1991,1964,1991,1973,1961,1990,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1987,1987,1922,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1992,1941,1929,1991,1994,1949,1991,1991,1965,1991,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1987,1942,1993,1991,1945,1983,1983,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1952,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1987,1942,1993,1990,1990,1991,1945,1983,1957,1990,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1953,1991,1955,1991,1984,1949,1994,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1987,1922,1992,1992,1916,1990,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1993,1990,1990,1991,1945,1983,1983,1957,1990,1949,1949,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1922,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1952,1992,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1921,1999,1942,1965,1915,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1987,1922,1987,1987,1987,1987,1922,1991,1991,1965,1991,1955,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1965,1955,1952,1941,1953,1958,1946,1929,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1922,1987,1922,1973,1987,1990,1987,1922,1973,1915,1915,1915,1916,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1987,1922,1915,1991,1991,1965,1965,1991,1955,1955,1952,1952,1973,1990,1990,1991,1915,1915,1915,1915,1941,1953,1958,1946,1946,1929,1961,1993,1916,1916,1916,1987,1942,1993,1990,1991,1945,1983,1983,1957,1957,1990,1949,1949,1952,1984,1984,1984,1984,1984,1991,1991,1929,1929,1929,1929,1953,1991,1966,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1955,1991,1984,1984,1949,1949,1994,1957,1957,1991,1964,1991,1973,1973,1961,1961,1990,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1987,1922,1915,1937,1992,1991,1915,1915,1965,1955,1952,1941,1953,1958,1946,1929,1961,1916,1937,1987,1942,1990,1945,1983,1983,1957,1957,1949,1949,1952,1922,1922,1984,1987,1929,1929,1953,1966,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1973,1987,1922,1987,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1922,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1961,1921,1999,1942,1965,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1991,1922,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1955,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1958,1961,1921,1999,1942,1965,1991,1991,1990,1991,1991,1991,1990,1991,1961,1993,1987,1993,1990,1991,1990,1922,1984,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1991,1991,1990,1990,1991,1961,1993,1987,1987,1985,1993,1991,1990,1922,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1922,1984,1965,1965,1955,1955,1955,1952,1952,1953,1953,1958,1958,1946,1946,1929,1929,1942,1945,1949,1949,1952,1952,1984,1984,1987,1987,1929,1929,1929,1953,1953,1966,1966,1955,1984,1984,1949,1949,1957,1957,1964,1964,1973,1973,1961,1961,1958,1958,1961,1961,1999,1999,1942,1942,1961,1992,1937,1922,1922,1992,1994,1987,1922,1987,1987,1937,1992,1991,1991,1987,1990,1957,1922,1991,1991,1991,1991,1965,1991,1991,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1961,1993,1993,1937,1987,1987,1987,1993,1993,1993,1990,1990,1991,1991,1990,1990,1949,1952,1922,1987,1991,1991,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1994,1957,1991,1991,1964,1991,1991,1973,1990,1990,1958,1961,1961,1999,1942,1991,1991,1991,1991,1961,1992,1937,1922,1922,1992,1994,1990,1915,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1916,1937,1942,1993,1991,1922,1945,1983,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1987,1987,1965,1955,1952,1973,1941,1953,1958,1929,1916,1987,1942,1945,1983,1983,1957,1949,1952,1984,1984,1987,1929,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1987,1942,1985,1985,1987,1922,1987,1987,1985,1991,1991,1965,1991,1955,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1993,1937,1942,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1965,1955,1955,1952,1953,1958,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1984,1916,1987,1987,1942,1984,1984,1965,1955,1952,1915,1915,1953,1958,1946,1929,1945,1949,1952,1984,1987,1929,1929,1953,1966,1966,1984,1949,1957,1973,1961,1958,1961,1999,1942,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1949,1952,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1915,1916,1937,1992,1992,1992,1991,1991,1991,1991,1965,1991,1955,1955,1952,1973,1973,1989,1990,1991,1915,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1992,1992,1992,1992,1993,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1993,1990,1991,1945,1983,1983,1957,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1952,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1984,1987,1929,1929,1953,1966,1955,1984,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1991,1955,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1915,1915,1916,1957,1984,1984,1965,1955,1952,1973,1941,1953,1958,1946,1916,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1929,1953,1966,1984,1949,1957,1964,1961,1958,1921,1999,1942,1965,1915,1987,1987,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1992,1993,1937,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1958,1961,1921,1999,1942,1965,1915,1915,1991,1991,1991,1990,1991,1961,1993,1993,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1965,1965,1991,1955,1955,1952,1952,1991,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1993,1937,1942,1993,1990,1991,1945,1990,1949,1949,1952,1952,1984,1984,1987,1987,1991,1929,1929,1929,1929,1953,1953,1966,1966,1992,1955,1984,1984,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1999,1999,1942,1942,1991,1991,1987,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1916,1942,1993,1990,1991,1945,1983,1983,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1961,1990,1958,1961,1961,1921,1999,1942,1965,1991,1991,1991,1987,1985,1984,1984,1984,1966,1992,1992,1916,1984,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1990,1991,1922,1945,1945,1990,1949,1952,1984,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1957,1987,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1990,1991,1922,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1955,1991,1984,1949,1994,1994,1957,1991,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1965,1965,1965,1991,1991,1955,1955,1955,1952,1952,1952,1973,1989,1990,1991,1991,1941,1953,1953,1953,1958,1958,1958,1946,1946,1946,1929,1929,1929,1961,1961,1961,1992,1993,1993,1916,1937,1937,1942,1993,1993,1990,1990,1991,1991,1922,1922,1922,1945,1945,1983,1983,1957,1990,1990,1949,1949,1949,1952,1952,1952,1984,1984,1984,1987,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1953,1953,1953,1991,1966,1966,1966,1992,1992,1955,1955,1991,1991,1984,1984,1984,1949,1949,1949,1994,1994,1957,1957,1957,1991,1991,1964,1964,1964,1991,1991,1973,1973,1973,1961,1961,1961,1990,1990,1958,1961,1961,1961,1921,1999,1999,1999,1942,1942,1942,1965,1991,1991,1991,1991,1991,1992,1987,1922,1961,1992,1937,1922,1984,1984,1992,1994,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1985,1915,1916,1987,1985,1987,1922,1916,1916,1916,1987,1987,1985,1985,1984,1992,1992,1992,1992,1992,1992,1987,1922,1991,1991,1991,1991,1991,1965,1991,1991,1955,1952,1989,1990,1991,1991,1953,1958,1946,1929,1961,1961,1992,1993,1993,1937,1987,1942,1993,1993,1990,1990,1991,1991,1922,1945,1990,1990,1949,1952,1922,1984,1987,1991,1991,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1991,1984,1949,1994,1957,1991,1991,1964,1991,1991,1973,1961,1990,1990,1990,1958,1961,1999,1942,1991,1991,1991,1991,1991,1991,1987,1984,1966,1966,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1987,1987,1942,1993,1990,1991,1922,1945,1983,1983,1957,1990,1949,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1992,1992,1955,1991,1984,1949,1994,1994,1957,1991,1964,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1989,1990,1991,1991,1915,1915,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1961,1992,1993,1916,1937,1987,1987,1942,1985,1993,1993,1990,1990,1990,1991,1991,1922,1945,1945,1945,1983,1983,1957,1990,1990,1949,1949,1952,1952,1922,1984,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1992,1992,1955,1955,1991,1991,1991,1984,1984,1949,1949,1994,1957,1957,1991,1991,1964,1964,1991,1973,1973,1961,1961,1990,1990,1958,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1991,1991,1973,1987,1987,1987,1922,1915,1916,1987,1987,1922,1987,1987,1922,1961,1937,1922,1922,1992,1994,1994,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1953,1966,1955,1955,1984,1949,1957,1964,1958,1961,1921,1999,1942,1965,1984,1991,1991,1991,1990,1991,1946,1961,1993,1993,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1991,1991,1991,1991,1965,1965,1965,1991,1991,1955,1955,1955,1955,1955,1952,1952,1973,1973,1989,1990,1990,1991,1991,1991,1915,1915,1941,1953,1953,1953,1958,1958,1958,1946,1946,1929,1929,1929,1961,1961,1992,1993,1993,1916,1916,1916,1916,1916,1937,1937,1942,1942,1942,1993,1993,1990,1991,1991,1922,1945,1945,1945,1983,1983,1957,1990,1990,1949,1949,1949,1949,1952,1952,1952,1984,1984,1984,1984,1987,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1929,1953,1953,1953,1991,1991,1966,1966,1966,1992,1992,1955,1955,1955,1991,1991,1984,1984,1949,1949,1949,1994,1957,1957,1957,1991,1991,1991,1964,1964,1964,1991,1991,1991,1973,1973,1973,1961,1961,1990,1990,1958,1958,1958,1961,1961,1961,1921,1999,1999,1999,1942,1942,1942,1965,1991,1991,1991,1991,1991,1991,1987,1987,1922,1984,1984,1965,1955,1952,1953,1958,1946,1929,1987,1987,1942,1945,1949,1952,1922,1984,1987,1929,1929,1953,1966,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1991,1991,1991,1990,1991,1961,1993,1987,1987,1993,1991,1990,1922,1991,1991,1991,1992,1992,1992,1991,1994,1991,1991,1991,1990,1991,1991,1991,1966,1991,1991,1965,1991,1955,1973,1990,1941,1953,1958,1946,1929,1961,1993,1942,1985,1993,1990,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1991,1953,1929,1961,1992,1993,1937,1993,1990,1991,1922,1945,1949,1952,1984,1987,1991,1991,1929,1929,1953,1992,1955,1991,1949,1957,1964,1991,1961,1990,1958,1961,1999,1942,1991,1991,1987,1922,1915,1966,1987,1987,1985,1987,1987,1987,1990,1922,1991,1991,1965,1991,1955,1952,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1916,1987,1942,1993,1990,1991,1945,1983,1983,1990,1949,1952,1984,1987,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1921,1991,1991,1990,1991,1961,1993,1916,1993,1991,1990,1991,1991,1991,1991,1994,1991,1991,1991,1990,1991,1991,1991,1991,1990,1966,1964,1916,1987,1987,1922,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1937,1992,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1965,1955,1952,1953,1958,1946,1929,1942,1945,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1922,1922,1922,1922,1922,1922,1922,1922,1922,1984,1984,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1922,1945,1990,1949,1952,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1991,1984,1984,1915,1965,1991,1991,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1961,1992,1993,1916,1916,1916,1916,1937,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1942,1942,1942,1985,1990,1991,1922,1945,1949,1984,1984,1984,1984,1984,1984,1984,1987,1991,1929,1929,1966,1966,1992,1992,1992,1992,1992,1992,1992,1992,1955,1984,1984,1949,1949,1957,1973,1961,1990,1958,1942,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1984,1961,1992,1937,1922,1992,1994,1957,1984,1987,1992,1992,1992,1992,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1965,1955,1952,1973,1941,1953,1958,1946,1929,1942,1945,1983,1983,1957,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1992,1991,1991,1965,1965,1991,1955,1955,1952,1952,1973,1989,1991,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1992,1993,1916,1916,1937,1942,1942,1993,1990,1991,1922,1945,1945,1983,1983,1957,1990,1949,1949,1949,1952,1952,1984,1984,1987,1987,1991,1929,1929,1929,1929,1953,1953,1966,1966,1992,1955,1955,1991,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1990,1987,1922,1991,1991,1985,1965,1955,1952,1953,1958,1946,1929,1945,1949,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1987,1987,1984,1984,1915,1987,1985,1915,1916,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1953,1966,1992,1955,1984,1957,1964,1973,1961,1958,1921,1999,1942,1965,1949,1916,1987,1966,1949,1915,1915,1915,1915,1916,1916,1987,1991,1991,1991,1990,1991,1961,1993,1987,1987,1985,1985,1993,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1961,1990,1991,1991,1991,1916,1916,1987,1992,1992,1992,1992,1992,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1961,1992,1993,1916,1937,1942,1993,1990,1991,1922,1945,1983,1983,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1989,1991,1915,1961,1992,1993,1916,1937,1937,1990,1991,1922,1945,1990,1984,1991,1991,1992,1955,1991,1991,1991,1991,1991,1990,1991,1991,1916,1916,1987,1987,1921,1987,1987,1922,1922,1987,1922,1987,1987,1987,1922,1921,1987,1987,1987,1922,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1916,1984,1992,1987,1922,1941,1941,1941,1987,1915,1916,1984,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1915,1941,1953,1958,1946,1929,1961,1993,1916,1987,1942,1985,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1921,1999,1942,1965,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1955,1955,1952,1953,1958,1946,1942,1942,1945,1949,1952,1984,1984,1929,1929,1953,1966,1992,1992,1992,1992,1955,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1953,1958,1946,1929,1961,1993,1916,1942,1942,1993,1990,1991,1945,1983,1983,1957,1990,1984,1987,1991,1991,1929,1929,1953,1991,1966,1991,1984,1949,1957,1991,1964,1991,1973,1990,1961,1921,1999,1942,1965,1991,1991,1991,1929,1991,1991,1965,1965,1991,1955,1955,1955,1952,1952,1973,1989,1991,1915,1915,1953,1953,1958,1958,1946,1946,1929,1929,1961,1992,1993,1916,1937,1987,1987,1942,1942,1993,1990,1991,1922,1945,1945,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1929,1929,1929,1953,1953,1991,1966,1966,1992,1955,1955,1991,1984,1984,1984,1949,1949,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1999,1999,1942,1991,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1989,1990,1991,1915,1915,1915,1941,1953,1953,1958,1946,1929,1961,1961,1992,1993,1916,1916,1937,1937,1987,1987,1987,1942,1993,1990,1990,1991,1922,1922,1922,1945,1983,1957,1990,1949,1952,1952,1922,1984,1984,1984,1984,1984,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1992,1992,1992,1992,1992,1992,1992,1955,1955,1991,1984,1949,1994,1957,1991,1991,1964,1991,1991,1973,1961,1990,1958,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1990,1991,1961,1961,1992,1993,1937,1993,1990,1991,1922,1990,1922,1984,1991,1991,1991,1992,1991,1994,1991,1991,1990,1991,1991,1915,1915,1987,1991,1991,1991,1965,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1964,1991,1973,1961,1990,1961,1921,1999,1942,1965,1991,1991,1991,1945,1984,1991,1991,1965,1991,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1987,1922,1987,1987,1984,1984,1991,1991,1991,1965,1991,1952,1973,1990,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1953,1966,1992,1955,1991,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1987,1991,1965,1991,1955,1952,1973,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1929,1916,1942,1945,1983,1983,1957,1949,1952,1922,1984,1987,1929,1953,1966,1955,1949,1957,1964,1973,1961,1961,1921,1999,1942,1965,1991,1991,1991,1991,1990,1991,1961,1961,1992,1993,1937,1993,1990,1991,1922,1990,1922,1991,1991,1991,1992,1991,1994,1991,1991,1990,1991,1991,1991,1915,1916,1916,1916,1916,1991,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1991,1991,1991,1990,1991,1991,1987,1922,1984,1991,1991,1991,1965,1991,1955,1955,1952,1989,1990,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1987,1922,1965,1991,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1942,1965,1991,1991,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1973,1989,1990,1991,1991,1915,1915,1915,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1961,1992,1993,1993,1916,1937,1942,1942,1993,1993,1990,1990,1991,1991,1922,1945,1945,1983,1983,1990,1990,1949,1949,1952,1952,1922,1984,1984,1987,1987,1991,1991,1991,1991,1929,1929,1929,1929,1929,1953,1953,1991,1966,1966,1992,1955,1955,1991,1991,1984,1984,1949,1949,1994,1957,1957,1991,1991,1964,1964,1991,1991,1973,1961,1961,1990,1990,1958,1958,1961,1961,1961,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1991,1991,1991,1965,1955,1952,1915,1953,1958,1946,1929,1916,1949,1952,1984,1987,1929,1929,1953,1966,1984,1949,1957,1964,1973,1961,1958,1961,1999,1942,1987,1922,1915,1987,1922,1987,1987,1922,1987,1922,1987,1945,1922,1955,1949,1984,1949,1937,1992,1991,1991,1937,1992,1991,1991,1984,1984,1987,1965,1955,1952,1973,1915,1915,1915,1941,1953,1958,1946,1929,1916,1916,1916,1987,1987,1987,1987,1987,1942,1945,1983,1983,1957,1949,1952,1984,1984,1984,1984,1987,1929,1929,1953,1966,1955,1984,1949,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1987,1922,1961,1992,1937,1922,1922,1992,1961,1937,1987,1922,1922,1994,1987,1987,1985,1984,1984,1984,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1915,1915,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1987,1984,1984,1984,1916,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1994,1957,1991,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1984,1987,1991,1991,1965,1991,1955,1991,1915,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1949,1957,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1957,1949,1952,1984,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1984,1984,1991,1991,1991,1965,1955,1952,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1993,1990,1990,1991,1945,1983,1983,1990,1949,1952,1922,1984,1987,1991,1991,1991,1929,1929,1953,1991,1966,1991,1984,1994,1957,1991,1964,1991,1961,1990,1958,1961,1921,1999,1999,1942,1965,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1987,1987,1942,1993,1991,1983,1983,1957,1990,1949,1952,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1991,1991,1991,1991,1965,1991,1991,1955,1952,1973,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1987,1987,1942,1942,1993,1991,1945,1983,1983,1957,1990,1949,1952,1922,1922,1984,1987,1991,1991,1929,1929,1953,1991,1966,1955,1955,1991,1984,1949,1949,1957,1991,1964,1991,1973,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1961,1992,1937,1922,1922,1992,1994,1987,1987,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1942,1993,1991,1945,1983,1983,1990,1949,1952,1987,1991,1929,1929,1953,1966,1955,1991,1984,1949,1994,1957,1991,1964,1991,1973,1961,1990,1958,1961,1921,1942,1965,1991,1991,1991,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1958,1946,1929,1961,1993,1916,1916,1937,1942,1993,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1991,1966,1992,1955,1991,1984,1949,1957,1991,1991,1964,1991,1991,1973,1961,1990,1958,1921,1942,1965,1991,1991,1991,1987,1985,1991,1991,1991,1990,1991,1961,1993,1993,1990,1990,1990,1990,1991,1990,1991,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1984,1984,1915,1991,1987,1915,1987,1984,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1991,1991,1987,1961,1992,1937,1922,1922,1992,1992,1994,1987,1984,1965,1955,1952,1973,1941,1953,1946,1929,1916,1942,1945,1983,1983,1957,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1958,1949,1991,1991,1991,1952,1989,1990,1991,1961,1992,1993,1937,1993,1990,1991,1922,1990,1949,1991,1991,1991,1966,1992,1992,1992,1991,1991,1991,1990,1991,1991,1991,1915,1987,1922,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1961,1992,1937,1922,1957,1922,1992,1994,1987,1991,1991,1965,1965,1965,1991,1955,1955,1955,1955,1955,1955,1952,1952,1952,1989,1991,1915,1953,1953,1953,1958,1958,1958,1946,1946,1946,1929,1929,1929,1961,1992,1993,1937,1942,1942,1942,1993,1990,1991,1922,1945,1945,1945,1990,1949,1949,1949,1952,1952,1952,1984,1984,1984,1987,1987,1987,1991,1991,1929,1929,1929,1929,1929,1929,1953,1953,1953,1966,1966,1966,1992,1992,1955,1955,1955,1991,1984,1984,1984,1949,1949,1949,1957,1957,1957,1991,1964,1964,1964,1991,1973,1973,1973,1973,1961,1961,1961,1990,1958,1958,1958,1961,1961,1961,1999,1999,1999,1942,1942,1942,1991,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1937,1992,1992,1991,1991,1984,1984,1987,1984,1991,1991,1991,1990,1991,1961,1993,1993,1990,1991,1990,1991,1991,1991,1994,1991,1991,1990,1991,1990,1992,1915,1987,1922,1984,1993,1966,1991,1991,1991,1965,1965,1991,1991,1955,1955,1952,1952,1973,1989,1989,1991,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1915,1958,1946,1929,1961,1992,1992,1993,1993,1916,1916,1916,1916,1916,1937,1987,1987,1942,1942,1942,1942,1993,1990,1991,1991,1922,1945,1990,1949,1949,1949,1952,1984,1984,1984,1984,1984,1987,1987,1987,1991,1991,1929,1929,1929,1953,1966,1966,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1992,1955,1955,1991,1991,1984,1949,1949,1957,1957,1991,1991,1964,1991,1991,1973,1973,1961,1961,1990,1958,1958,1961,1961,1999,1999,1942,1942,1991,1991,1991,1991,1991,1991,1937,1987,1987,1922,1922,1992,1991,1991,1915,1991,1991,1991,1965,1991,1955,1952,1973,1990,1991,1941,1953,1946,1929,1993,1916,1942,1942,1993,1990,1991,1945,1983,1983,1957,1990,1949,1952,1984,1987,1991,1991,1953,1991,1955,1991,1984,1949,1991,1991,1973,1990,1958,1961,1921,1999,1942,1965,1991,1991,1991,1958,1961,1987,1922,1991,1991,1965,1991,1952,1952,1973,1990,1991,1941,1953,1953,1958,1958,1946,1946,1929,1929,1961,1993,1993,1916,1916,1942,1942,1990,1991,1945,1945,1983,1957,1990,1949,1952,1952,1984,1984,1987,1987,1991,1991,1929,1929,1929,1929,1953,1953,1991,1966,1966,1955,1955,1991,1984,1984,1949,1949,1957,1957,1957,1991,1964,1964,1991,1973,1973,1961,1961,1990,1958,1958,1961,1921,1999,1999,1942,1942,1965,1991,1991,1991,1987,1922,1916,1916,1991,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1949,1952,1984,1987,1929,1953,1966,1955,1984,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1922,1945,1990,1949,1952,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1992,1965,1955,1952,1973,1941,1953,1958,1946,1929,1916,1942,1945,1983,1983,1957,1949,1952,1984,1987,1929,1929,1953,1966,1955,1949,1957,1964,1973,1961,1958,1961,1921,1999,1942,1965,1987,1922,1992,1984,1992,1937,1992,1991,1991,1991,1991,1965,1991,1955,1952,1989,1991,1953,1958,1946,1929,1992,1993,1937,1942,1993,1990,1991,1922,1945,1990,1949,1952,1984,1984,1987,1991,1991,1929,1929,1953,1966,1992,1955,1991,1984,1949,1957,1991,1964,1991,1973,1961,1990,1958,1961,1999,1942,1991,1991,1991,1915,1915,1984,1916,1992,1984,1987,1987,1992,1916,1916,1916,1916,1916,1987,1922,1915,1987,1922,1992,1987,1915,1987,1987,1985,1984,1992,1992,1987,1985,1961,1984,1987,1937,1992,1991,1991,1991,1961,1992,1937,1987,1922,1922,1992,1994,1961,1992,1937,1922,1922,1992,1987,1987,1987,1915,1991,1965,1965,1991,1955,1952,1952,1989,1915,1953,1958,1946,1929,1961,1992,1993,1937,1993,1991,1990,1952,1984,1984,1984,1984,1987,1987,1991,1991,1991,1929,1929,1953,1953,1966,1966,1992,1991,1984,1984,1949,1949,1949,1994,1957,1957,1991,1964,1991,1973,1973,1961,1961,1990,1958,1999,1999,1942,1942,1991,1991,1994,1984,1984,1916,1987,1987,1987],"hoverinfo":"y","type":"box","fillcolor":"rgba(191,239,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(30,144,255,1)","width":1.88976377952756},"showlegend":false,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":28.7521793275218,"r":7.97011207970112,"b":16.7372353673724,"l":53.3997509339975},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.4125,0.4125],"tickmode":"array","ticktext":["-0.4","-0.2","0.0","0.2","0.4"],"tickvals":[-0.4,-0.2,0,0.2,0.4],"categoryorder":"array","categoryarray":["-0.4","-0.2","0.0","0.2","0.4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.98505603985056,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1910.8,2003.2],"tickmode":"array","ticktext":["1920","1940","1960","1980","2000"],"tickvals":[1920,1940,1960,1980,2000],"categoryorder":"array","categoryarray":["1920","1940","1960","1980","2000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(190,190,190,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"x","title":{"text":"YOB","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"10d1c4e4af3e6":{"y":{},"type":"box"}},"cur_data":"10d1c4e4af3e6","visdat":{"10d1c4e4af3e6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+Box and whisker plot of `YOB` (Year of Birth) in the `td` data frame
+
+The bottom **whisker** displays the minimum value of 1910. The bottom line of the **box** displays the first quartile value of 1952. The black bar in the middle of the **box** displays the second quartile value/mean of 1965. The top line of the *box* displays the third quartile value of 1991. The range from the first quartile to the third quartile is called the **interquartile range**. The top **whisker** displays the maximum value of 1999.
+
+The function `names()` returns a vector (a series of items in a line, separated by commas) of the column names. This function can be useful as a quick way to get the names of each column. You will need to use these names quite often when writing other commands. `colnames()` returns the same information; `ls()` returns the same information, but ordered alphabetically.
+
+``` r
+names(td)
+```
+
+     [1] "Dep.Var"         "Stress"          "Category"        "Morph.Type"     
+     [5] "Before"          "After"           "Speaker"         "YOB"            
+     [9] "Sex"             "Education"       "Job"             "Phoneme.Dep.Var"
+
+``` r
+colnames(td)
+```
+
+     [1] "Dep.Var"         "Stress"          "Category"        "Morph.Type"     
+     [5] "Before"          "After"           "Speaker"         "YOB"            
+     [9] "Sex"             "Education"       "Job"             "Phoneme.Dep.Var"
+
+``` r
+ls(td)
+```
+
+     [1] "After"           "Before"          "Category"        "Dep.Var"        
+     [5] "Education"       "Job"             "Morph.Type"      "Phoneme.Dep.Var"
+     [9] "Sex"             "Speaker"         "Stress"          "YOB"            
+
+The function `str()` describes the structure of a data frame. It reports similar information as `summary()` but does not include descriptions of each column; however, the layout of the information is sometimes a little easier to read, especially if your data frame has many columns. Here we can see that `YOB` is categorized as `int` (integer) data and all the other columns are `chr` (character) data.
+
+``` r
+str(td)
+```
+
+    'data.frame':   6989 obs. of  12 variables:
+     $ Dep.Var        : chr  "Realized" "Realized" "Realized" "Deletion" ...
+     $ Stress         : chr  "Stressed" "Stressed" "Stressed" "Stressed" ...
+     $ Category       : chr  "Function" "Function" "Function" "Function" ...
+     $ Morph.Type     : chr  "Mono" "Mono" "Mono" "Mono" ...
+     $ Before         : chr  "Vowel" "Vowel" "Vowel" "Vowel" ...
+     $ After          : chr  "Pause" "Pause" "Pause" "Pause" ...
+     $ Speaker        : chr  "BOUF65" "CHIF55" "CLAF52" "CLAM73" ...
+     $ YOB            : int  1965 1955 1952 1973 1915 1941 1953 1953 1958 1946 ...
+     $ Sex            : chr  "F" "F" "F" "M" ...
+     $ Education      : chr  "Educated" "Educated" "Educated" "Not Educated" ...
+     $ Job            : chr  "White" "White" "Service" "Blue" ...
+     $ Phoneme.Dep.Var: chr  "t--Affricate" "t--Fricative" "t--Affricate" "t--Deletion" ...
+
+`head()` will return the first six lines of the data frame. `tail()` provides the last six. For either you can change the number of lines reported using the option `n=`.
+
+``` r
+head(td)
+```
+
+```
+   Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
 1 Realized Stressed Function       Mono  Vowel Pause  BOUF65 1965   F     Educated   White    t--Affricate
 2 Realized Stressed Function       Mono  Vowel Pause  CHIF55 1955   F     Educated   White    t--Fricative
 3 Realized Stressed Function       Mono  Vowel Pause  CLAF52 1952   F     Educated Service    t--Affricate
 4 Deletion Stressed Function       Mono  Vowel Pause  CLAM73 1973   M Not Educated    Blue     t--Deletion
 5 Realized Stressed Function       Mono  Vowel Pause  DONF15 1915   F Not Educated Service    t--Fricative
-6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative</code></pre>
-</div>
-</div>
-<p>The numbers on the left side of the output are the row number in the data frame.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(td, <span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>      Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
+6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative
+```
+
+The numbers on the left side of the output are the row number in the data frame.
+
+``` r
+tail(td, n = 10)
+```
+
+```
+      Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
 6980 Realized Stressed Function       Mono  Vowel Vowel  STEM42 1942   M Not Educated Service d--Glottal Stop
 6981 Realized Stressed Function       Mono  Vowel Vowel  VIKF91 1991   F      Student Student         d--Flap
 6982 Realized Stressed Function       Mono  Vowel Vowel  VIKF91 1991   F      Student Student         d--Flap
@@ -7385,125 +7291,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 6986 Realized Stressed Function       Mono  Vowel Pause  GARF16 1916   F Not Educated Service    t--Fricative
 6987 Realized Stressed  Lexical       Mono  Vowel Pause  GARF87 1987   F     Educated   White            d--T
 6988 Deletion Stressed  Lexical       Mono  Vowel Pause  GARF87 1987   F     Educated   White     d--Deletion
-6989 Realized Stressed  Lexical       Mono  Vowel Pause  GARF87 1987   F     Educated   White            d--D</code></pre>
-</div>
-</div>
-</section>
-<section id="types-of-data" class="level3">
-<h3>Types of Data</h3>
-<p>There are other types of data beside <code>numerical</code> (like <code>YOB</code> in the <code>td</code> data) and <code>character</code> (like all other columns in the <code>td</code> data).</p>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 40%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Data Type</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>logical</code></td>
-<td>either <code>TRUE</code> or <code>FALSE</code></td>
-<td>The answer to a question like “is <code>x</code> a number?”, etc.</td>
-</tr>
-<tr class="even">
-<td><code>numeric</code></td>
-<td>any real number, positive or negative, with or without decimal values</td>
-<td>Vowel formant measurements, position in an audio file, household income, etc.</td>
-</tr>
-<tr class="odd">
-<td><code>integer</code></td>
-<td>whole numbers and their negative counterparts</td>
-<td>year of birth, year of data collection, number of occurrences of something, etc.</td>
-</tr>
-<tr class="even">
-<td><code>complex</code></td>
-<td>data that includes imaginary or unknown elements</td>
-<td>the pythagorian theroem, i.e., <code>a^2 + b^2 = c^2</code>, where <code>a</code>, <code>b</code>, and <code>c</code> are unknown</td>
-</tr>
-<tr class="odd">
-<td><code>character</code></td>
-<td>single characters (like <code>'F'</code>) or <strong>strings</strong> (like <code>"female"</code>)</td>
-<td>gender, speaker name, etc.</td>
-</tr>
-<tr class="even">
-<td><code>raw</code></td>
-<td>raw bytes</td>
-<td>Anything expressed in bytes</td>
-</tr>
-</tbody>
-</table>
-<div style="color: #009fe3; background: #d8f0fa;">
-<p><strong> Note: </strong> Character data is always enclosed in either single quotes <code>' '</code> or double quotes <code>" "</code>. It is common practice to use single quotes for single characters and double quotes fro stringer, though either will work with either.</p>
-</div>
-<p>It is uncommon to use <code>raw</code> data in sociolinguistics. Anything can be expressed in bytes. There are two functions to convert from characters to bytes, and bytes to characters. To go from characters to bytes:</p>
-<div class="cell">
-<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>raw_variable <span class="ot">&lt;-</span> <span class="fu">charToRaw</span>(<span class="st">&quot;Sociolinguistics is fun&quot;</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(raw_variable)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 53 6f 63 69 6f 6c 69 6e 67 75 69 73 74 69 63 73 20 69 73 20 66 75 6e</code></pre>
-</div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(raw_variable))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;raw&quot;</code></pre>
-</div>
-</div>
-<p>Above the function <code>charToRaw()</code> converts the string <code>"Sociolinguistics is fun"</code> to bytes and assigns that raw data to the object <code>raw_variable</code>. Next the <code>print()</code> function displays in <em>R</em> the contents of the variable <code>raw_variable</code>. The <code>class()</code> function returns the type of data contained within a variable. To convert back to characters:</p>
-<div class="cell">
-<div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>char_variable <span class="ot">&lt;-</span> <span class="fu">rawToChar</span>(raw_variable)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(char_variable)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Sociolinguistics is fun&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(char_variable))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;character&quot;</code></pre>
-</div>
-</div>
-</section>
-<section id="types-of-data-structures" class="level3">
-<h3>Types of Data Structures</h3>
-<p>A <strong>vectors</strong> and <strong>lists</strong> are the most basic types of data structures. A <strong>vector</strong> is a collection of elements, most commonly a collection of <code>character</code>, <code>logical</code>, <code>integer</code>, or <code>numeric</code> values. Values can be combined into a vector using the concatenating function <code>c()</code></p>
-<div class="cell">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>simple.vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Labov&quot;</span>, <span class="st">&quot;Fishman&quot;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(simple.vector)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Labov&quot;   &quot;Fishman&quot;</code></pre>
-</div>
-</div>
-<p>We can explore the vector using some of the same functions we’ve already seen.</p>
-<div class="cell">
-<div class="sourceCode" id="cb37"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(simple.vector)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(simple.vector)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;character&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(simple.vector)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> chr [1:2] &quot;Labov&quot; &quot;Fishman&quot;</code></pre>
-</div>
-</div>
-<p><strong>Lists</strong> are like <strong>vectors</strong> but can contain a mixture of different data types. Characters must be in quotation marks. Numbers in quotation marks will be categorized as characters. Numeric data is numbers without quotation marks. Integers are specificed by adding <code>L</code> after the number. Logical values are either <code>TRUE</code> or <code>FALSE</code> in all capital letters.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>simple.list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Labov&quot;</span>, <span class="st">&quot;Fishman&quot;</span>, <span class="st">&quot;2001&quot;</span>, <span class="dv">1963</span>, <span class="fl">1.5</span>, 1974L, <span class="cn">TRUE</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(simple.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>[[1]]
-[1] &quot;Labov&quot;
+6989 Realized Stressed  Lexical       Mono  Vowel Pause  GARF87 1987   F     Educated   White            d--D
+```
+
+### Types of Data
+
+There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
+
+| Data Type   | Description                                                           | Example                                                                               |
+|-------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `logical`   | either `TRUE` or `FALSE`                                              | The answer to a question like "is `x` a number?", etc.                                |
+| `numeric`   | any real number, positive or negative, with or without decimal values | Vowel formant measurements, position in an audio file, household income, etc.         |
+| `integer`   | whole numbers and their negative counterparts                         | year of birth, year of data collection, number of occurrences of something, etc.      |
+| `complex`   | data that includes imaginary or unknown elements                      | the pythagorian theroem, i.e., `a^2 + b^2 = c^2`, where `a`, `b`, and `c` are unknown |
+| `character` | single characters (like `'F'`) or **strings** (like `"female"`)       | gender, speaker name, etc.                                                            |
+| `raw`       | raw bytes                                                             | Anything expressed in bytes                                                           |
+
+::: {style="color: \#009fe3; background: \#d8f0fa;"} <strong> Note: </strong> Character data is always enclosed in either single quotes `' '` or double quotes `" "`. It is common practice to use single quotes for single characters and double quotes fro stringer, though either will work with either. :::
+
+It is uncommon to use `raw` data in sociolinguistics. Anything can be expressed in bytes. There are two functions to convert from characters to bytes, and bytes to characters. To go from characters to bytes:
+
+``` r
+raw_variable <- charToRaw("Sociolinguistics is fun")
+print(raw_variable)
+```
+
+     [1] 53 6f 63 69 6f 6c 69 6e 67 75 69 73 74 69 63 73 20 69 73 20 66 75 6e
+
+``` r
+print(class(raw_variable))
+```
+
+    [1] "raw"
+
+Above the function `charToRaw()` converts the string `"Sociolinguistics is fun"` to bytes and assigns that raw data to the object `raw_variable`. Next the `print()` function displays in *R* the contents of the variable `raw_variable`. The `class()` function returns the type of data contained within a variable. To convert back to characters:
+
+``` r
+char_variable <- rawToChar(raw_variable)
+print(char_variable)
+```
+
+    [1] "Sociolinguistics is fun"
+
+``` r
+print(class(char_variable))
+```
+
+    [1] "character"
+
+### Types of Data Structures
+
+A **vectors** and **lists** are the most basic types of data structures. A **vector** is a collection of elements, most commonly a collection of `character`, `logical`, `integer`, or `numeric` values. Values can be combined into a vector using the concatenating function `c()`
+
+``` r
+simple.vector <- c("Labov", "Fishman")
+print(simple.vector)
+```
+
+    [1] "Labov"   "Fishman"
+
+We can explore the vector using some of the same functions we've already seen.
+
+``` r
+length(simple.vector)
+```
+
+    [1] 2
+
+``` r
+class(simple.vector)
+```
+
+    [1] "character"
+
+``` r
+str(simple.vector)
+```
+
+     chr [1:2] "Labov" "Fishman"
+
+**Lists** are like **vectors** but can contain a mixture of different data types. Characters must be in quotation marks. Numbers in quotation marks will be categorized as characters. Numeric data is numbers without quotation marks. Integers are specificed by adding `L` after the number. Logical values are either `TRUE` or `FALSE` in all capital letters.
+
+``` r
+simple.list <- list("Labov", "Fishman", "2001", 1963, 1.5, 1974L, TRUE)
+print(simple.list)
+```
+
+```
+[[1]]
+[1] "Labov"
 
 [[2]]
-[1] &quot;Fishman&quot;
+[1] "Fishman"
 
 [[3]]
-[1] &quot;2001&quot;
+[1] "2001"
 
 [[4]]
 [1] 1963
@@ -7515,49 +7397,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [1] 1974
 
 [[7]]
-[1] TRUE</code></pre>
-</div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(simple.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>[1] 7</code></pre>
-</div>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(simple.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>[1] &quot;list&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(simple.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>List of 7
- $ : chr &quot;Labov&quot;
- $ : chr &quot;Fishman&quot;
- $ : chr &quot;2001&quot;
+[1] TRUE
+```
+
+``` r
+length(simple.list)
+```
+
+```
+[1] 7
+```
+
+``` r
+class(simple.list)
+```
+
+```
+[1] "list"
+```
+
+``` r
+str(simple.list)
+```
+
+```
+List of 7
+ $ : chr "Labov"
+ $ : chr "Fishman"
+ $ : chr "2001"
  $ : num 1963
  $ : num 1.5
  $ : int 1974
- $ : logi TRUE</code></pre>
-</div>
-</div>
-<p>You will notice that the results of the <code>str()</code> function show that <code>Labov</code>, <code>Fishman</code> and <code>2001</code> are all categorized as <code>chr</code> (character); <code>1963</code> and <code>1.5</code> are categorized as <code>num</code> (numeric); <code>1974</code> is categorized as <code>int</code> (integer); and <code>TRUE</code> is categorized as <code>logi</code> (logical).</p>
-<p>Lists can be bigger than just one group of data. Items in a list can also be more complex than a single value.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb51"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>complex.list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="st">&quot;John Baugh&quot;</span>, <span class="at">b =</span> simple.vector, <span class="at">c =</span> simple.list, <span class="at">d =</span> <span class="fu">head</span>(td))</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(complex.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>$a
-[1] &quot;John Baugh&quot;
+ $ : logi TRUE
+```
+
+You will notice that the results of the `str()` function show that `Labov`, `Fishman` and `2001` are all categorized as `chr` (character); `1963` and `1.5` are categorized as `num` (numeric); `1974` is categorized as `int` (integer); and `TRUE` is categorized as `logi` (logical).
+
+Lists can be bigger than just one group of data. Items in a list can also be more complex than a single value.
+
+``` r
+complex.list <- list(a = "John Baugh", b = simple.vector, c = simple.list, d = head(td))
+print(complex.list)
+```
+
+```
+$a
+[1] "John Baugh"
 
 $b
-[1] &quot;Labov&quot;   &quot;Fishman&quot;
+[1] "Labov"   "Fishman"
 
 $c
 $c[[1]]
-[1] &quot;Labov&quot;
+[1] "Labov"
 
 $c[[2]]
-[1] &quot;Fishman&quot;
+[1] "Fishman"
 
 $c[[3]]
-[1] &quot;2001&quot;
+[1] "2001"
 
 $c[[4]]
 [1] 1963
@@ -7579,706 +7477,798 @@ $d
 3 Realized Stressed Function       Mono  Vowel Pause  CLAF52 1952   F     Educated Service    t--Affricate
 4 Deletion Stressed Function       Mono  Vowel Pause  CLAM73 1973   M Not Educated    Blue     t--Deletion
 5 Realized Stressed Function       Mono  Vowel Pause  DONF15 1915   F Not Educated Service    t--Fricative
-6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative</code></pre>
-</div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(complex.list)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>List of 4
- $ a: chr &quot;John Baugh&quot;
- $ b: chr [1:2] &quot;Labov&quot; &quot;Fishman&quot;
+6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative
+```
+
+``` r
+str(complex.list)
+```
+
+```
+List of 4
+ $ a: chr "John Baugh"
+ $ b: chr [1:2] "Labov" "Fishman"
  $ c:List of 7
-  ..$ : chr &quot;Labov&quot;
-  ..$ : chr &quot;Fishman&quot;
-  ..$ : chr &quot;2001&quot;
+  ..$ : chr "Labov"
+  ..$ : chr "Fishman"
+  ..$ : chr "2001"
   ..$ : num 1963
   ..$ : num 1.5
   ..$ : int 1974
   ..$ : logi TRUE
- $ d:&#39;data.frame&#39;:  6 obs. of  12 variables:
-  ..$ Dep.Var        : chr [1:6] &quot;Realized&quot; &quot;Realized&quot; &quot;Realized&quot; &quot;Deletion&quot; ...
-  ..$ Stress         : chr [1:6] &quot;Stressed&quot; &quot;Stressed&quot; &quot;Stressed&quot; &quot;Stressed&quot; ...
-  ..$ Category       : chr [1:6] &quot;Function&quot; &quot;Function&quot; &quot;Function&quot; &quot;Function&quot; ...
-  ..$ Morph.Type     : chr [1:6] &quot;Mono&quot; &quot;Mono&quot; &quot;Mono&quot; &quot;Mono&quot; ...
-  ..$ Before         : chr [1:6] &quot;Vowel&quot; &quot;Vowel&quot; &quot;Vowel&quot; &quot;Vowel&quot; ...
-  ..$ After          : chr [1:6] &quot;Pause&quot; &quot;Pause&quot; &quot;Pause&quot; &quot;Pause&quot; ...
-  ..$ Speaker        : chr [1:6] &quot;BOUF65&quot; &quot;CHIF55&quot; &quot;CLAF52&quot; &quot;CLAM73&quot; ...
+ $ d:'data.frame':  6 obs. of  12 variables:
+  ..$ Dep.Var        : chr [1:6] "Realized" "Realized" "Realized" "Deletion" ...
+  ..$ Stress         : chr [1:6] "Stressed" "Stressed" "Stressed" "Stressed" ...
+  ..$ Category       : chr [1:6] "Function" "Function" "Function" "Function" ...
+  ..$ Morph.Type     : chr [1:6] "Mono" "Mono" "Mono" "Mono" ...
+  ..$ Before         : chr [1:6] "Vowel" "Vowel" "Vowel" "Vowel" ...
+  ..$ After          : chr [1:6] "Pause" "Pause" "Pause" "Pause" ...
+  ..$ Speaker        : chr [1:6] "BOUF65" "CHIF55" "CLAF52" "CLAM73" ...
   ..$ YOB            : int [1:6] 1965 1955 1952 1973 1915 1941
-  ..$ Sex            : chr [1:6] &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;M&quot; ...
-  ..$ Education      : chr [1:6] &quot;Educated&quot; &quot;Educated&quot; &quot;Educated&quot; &quot;Not Educated&quot; ...
-  ..$ Job            : chr [1:6] &quot;White&quot; &quot;White&quot; &quot;Service&quot; &quot;Blue&quot; ...
-  ..$ Phoneme.Dep.Var: chr [1:6] &quot;t--Affricate&quot; &quot;t--Fricative&quot; &quot;t--Affricate&quot; &quot;t--Deletion&quot; ...</code></pre>
-</div>
-</div>
-<p>In the list <code>complex.list</code> column <code>a</code> contains only one value: <code>John Baugh</code>. Column <code>b</code> contains our <code>simple.vector</code>, column <code>c</code> contains our <code>simple.list</code>, and column <code>d</code> includes the first six rows of the <code>td</code> data (which itself has columns). To access the values from columns within columns you can use multiple <code>$</code> operators.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb55"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(complex.list<span class="sc">$</span>a)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>[1] &quot;John Baugh&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(complex.list<span class="sc">$</span>d)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>   Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
+  ..$ Sex            : chr [1:6] "F" "F" "F" "M" ...
+  ..$ Education      : chr [1:6] "Educated" "Educated" "Educated" "Not Educated" ...
+  ..$ Job            : chr [1:6] "White" "White" "Service" "Blue" ...
+  ..$ Phoneme.Dep.Var: chr [1:6] "t--Affricate" "t--Fricative" "t--Affricate" "t--Deletion" ...
+```
+
+In the list `complex.list` column `a` contains only one value: `John Baugh`. Column `b` contains our `simple.vector`, column `c` contains our `simple.list`, and column `d` includes the first six rows of the `td` data (which itself has columns). To access the values from columns within columns you can use multiple `$` operators.
+
+``` r
+print(complex.list$a)
+```
+
+```
+[1] "John Baugh"
+```
+
+``` r
+print(complex.list$d)
+```
+
+```
+   Dep.Var   Stress Category Morph.Type Before After Speaker  YOB Sex    Education     Job Phoneme.Dep.Var
 1 Realized Stressed Function       Mono  Vowel Pause  BOUF65 1965   F     Educated   White    t--Affricate
 2 Realized Stressed Function       Mono  Vowel Pause  CHIF55 1955   F     Educated   White    t--Fricative
 3 Realized Stressed Function       Mono  Vowel Pause  CLAF52 1952   F     Educated Service    t--Affricate
 4 Deletion Stressed Function       Mono  Vowel Pause  CLAM73 1973   M Not Educated    Blue     t--Deletion
 5 Realized Stressed Function       Mono  Vowel Pause  DONF15 1915   F Not Educated Service    t--Fricative
-6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative</code></pre>
-</div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(complex.list<span class="sc">$</span>d<span class="sc">$</span>Job)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 100px;"><code>[1] &quot;White&quot;   &quot;White&quot;   &quot;Service&quot; &quot;Blue&quot;    &quot;Service&quot; &quot;Blue&quot;   </code></pre>
-</div>
-</div>
-<p>Generally, in LVC analysis we do not deal often with either simple vectors or lists; instead, most of our data is in a spreadsheet-like format, which in <em>R</em> is a <strong>data frame</strong>.</p>
-<p><strong>Data frames</strong> are a special type of <strong>list</strong> in which every element in the <strong>list</strong> has the same length (unlike, for example, the <code>complex.list</code> above). <strong>Data frames</strong> can have additional annotations, like <code>rownames()</code>. Some statisticians use <code>rownames()</code> for things like <code>participantID</code>, <code>sampleID</code>, or some other unique identifier. Most of the time (and for our purposes), <code>rownames()</code> are not useful given that we have multiple rows from the same speaker/interview, etc.</p>
-</section>
-<section id="factors-and-comments" class="level3">
-<h3>Factors and Comments</h3>
-<p>A <em>factor</em> in <em>R</em> is a special type of variable or data type that, in theory, has a limited number of values. Each value is called a <em>level</em>. Any <strong>vector</strong> or <strong>data frame</strong> column of <code>character</code> or <code>integer</code> values can be a <strong>factor</strong>. Most non-numerical data in LVC is generally thought of as a <strong>factor</strong> already, so knowing how to convert <strong>vectors</strong> or <strong>data frame</strong> columns to factors is important. For example, in the <code>td</code> data, the column <code>Stress</code> contains only two options: <code>Stressed</code> and <code>Unstressed</code>. Because this column contains letters, when we imported it into <em>R</em>, it was automatically categorized as <code>character</code> data. This is probably the best option for a column that, for example, contained the broader context of a token. For <code>Stressed</code>, however, it is better for our purposes for <em>R</em> to consider the column as containing a <strong>factor</strong> with two discrete levels. Below is the code to convert <code>Stress</code> into a <strong>factor</strong>.</p>
-<div class="cell">
-<div class="sourceCode" id="cb61"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine the class of the column Stress in the date frame td</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(td<span class="sc">$</span>Stress)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;character&quot;</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb63"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Stress to a column to a factor</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Stress <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Stress)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(td<span class="sc">$</span>Stress)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;factor&quot;</code></pre>
-</div>
-</div>
-<p>Notice the <strong>comments</strong> in the code above. In <em>R</em> any line that begins with a <code>#</code> is not evaluated. This is called <em>commenting out</em> a line. We use <code>#</code> to include notes in our codes, or to keep code in our script file but have <em>R</em> ignore it. This can be useful in order to keep track of the steps you are taking in an analysis (see also <a href="https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections-in-the-RStudio-IDE">this tutorial</a> on organizing code using <code>#</code>)</p>
-<p>Columns within a data frame can be specified using the <code>$</code> operator So, above, we tell <em>R</em> to assign (using the assignment operator <code>&lt;-</code>) the values of the original <code>td$Stress</code> column, converted into <strong>factors</strong>, back to the column <code>td$Stress</code>. In other words, we are replacing the original column <code>td$Stress</code> with a converted version of itself. Now, look how the output of the <code>summary()</code> function changes.</p>
-<div class="cell">
-<div class="sourceCode" id="cb65"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Dep.Var                 Stress       Category          Morph.Type       
- Length:6989        Stressed  :6555   Length:6989        Length:6989       
- Class :character   Unstressed: 434   Class :character   Class :character  
- Mode  :character                     Mode  :character   Mode  :character  
-                                                                           
-                                                                           
-                                                                           
-    Before             After             Speaker               YOB      
- Length:6989        Length:6989        Length:6989        Min.   :1915  
- Class :character   Class :character   Class :character   1st Qu.:1952  
- Mode  :character   Mode  :character   Mode  :character   Median :1965  
-                                                          Mean   :1967  
-                                                          3rd Qu.:1991  
-                                                          Max.   :1999  
-     Sex             Education             Job            Phoneme.Dep.Var   
- Length:6989        Length:6989        Length:6989        Length:6989       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            </code></pre>
-</div>
-</div>
-<p>We get the number of observations of each level of <code>td$Stress</code> instead of just the number of rows (i.e. the <code>length</code> of the column).</p>
-<p>To get the levels of a <strong>factor</strong> we can use the function <code>levels()</code> and to get the number of levels, we can use the function <code>nlevels(</code>)`</p>
-<div class="cell">
-<div class="sourceCode" id="cb67"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Stress)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Stressed&quot;   &quot;Unstressed&quot;</code></pre>
-</div>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(td<span class="sc">$</span>Stress)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="more-exploring" class="level2">
-<h2>More Exploring</h2>
-<p>If you only want information from a single column of the data frame, you can use the operator <code>$</code> to specify which column of <code>td</code> you want. Here the column `Sex’ is specified.</p>
-<div class="cell">
-<div class="sourceCode" id="cb71"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td<span class="sc">$</span>Sex)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Length     Class      Mode 
-     6989 character character </code></pre>
-</div>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Sex)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-</div>
-<p>The <code>Sex</code> column is still categorized as <code>character</code> data and so <code>summary()</code> only return the number of rows (<code>length</code>) of the column and there are no levels. To get the information we want about the <code>Sex</code> column (i.e., how many tokens are from male speakers and how many are from women speakers) we need to convert it to a factor first. We can either convert the the column to a factor column, or we can use the <code>as.factor()</code> function to have <em>R</em> treat is as a factor in just the following code.</p>
-<div class="cell">
-<div class="sourceCode" id="cb75"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">as.factor</span>(td<span class="sc">$</span>Sex))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   F    M 
-3776 3213 </code></pre>
-</div>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as.factor</span>(td<span class="sc">$</span>Sex))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;F&quot; &quot;M&quot;</code></pre>
-</div>
-</div>
-<p>The following code changes all the character class columns to factors.</p>
-<div class="cell">
-<div class="sourceCode" id="cb79"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We start with a fresh import of the (t, d) data into R</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt&quot;</span>)</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we convert each character column into a factor</span></span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Dep.Var <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Dep.Var)</span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Stress <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Stress)</span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Category <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Category)</span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Morph.Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Morph.Type)</span>
-<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>After)</span>
-<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Speaker <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Speaker)</span>
-<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Sex)</span>
-<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Education <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Education)</span>
-<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Job <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Job)</span>
-<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Phoneme.Dep.Var <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Phoneme.Dep.Var)</span></code></pre></div>
-</div>
-</section>
-<section id="the-td-data" class="level2">
-<h2>The (t/d) Data</h2>
-<p>Let’s look at the data now that all the character columns are factors.</p>
-<div class="cell">
-<div class="sourceCode" id="cb80"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var            Stress         Category        Morph.Type  
- Deletion:1747   Stressed  :6555   Function: 739   Mono     :5236  
- Realized:5242   Unstressed: 434   Lexical :6250   Past     : 782  
-                                                   Semi-Weak: 971  
-                                                                   
-                                                                   
-                                                                   
-                                                                   
-             Before           After         Speaker          YOB       Sex     
- Liquid         : 269   Consonant: 709   GARF87 : 224   Min.   :1915   F:3776  
- Nasal          : 209   H        : 246   INGM84 : 212   1st Qu.:1952   M:3213  
- Other Fricative: 130   Pause    :5248   MARM92 : 176   Median :1965           
- S              : 332   Vowel    : 786   HANF83 : 139   Mean   :1967           
- Stop           : 249                    CHIF55 : 135   3rd Qu.:1991           
- Vowel          :5800                    GARF16 : 132   Max.   :1999           
-                                         (Other):5971                          
-        Education         Job           Phoneme.Dep.Var
- Educated    :3006   Blue   :1068   t--Deletion : 981  
- Not Educated:2184   Service:2895   t--Fricative: 973  
- Student     :1799   Student:1799   t--T        : 830  
-                     White  :1227   d--Deletion : 766  
-                                    t--Affricate: 667  
-                                    d--T        : 583  
-                                    (Other)     :2189  </code></pre>
-</div>
-</div>
-<p>As shown in the <code>summary(td)</code> results above, the first column in the (t, d) deletion data is called <code>Dep.Var</code> and it includes two levels: <code>Realized</code> and <code>Deletion</code>. These two levels represent the two options for each token of (t, d). The values after each level are how many rows are coded with that level. In other words, there are 1,747 rows (or tokens) of <code>Deletion</code> and there are 5,242 rows (or tokens) of <code>Realized</code>. Notice that the order of the factor levels is alphabetical. There is a column labelled <code>Stress</code> which indicates if the (t, d) token is in a stressed or unstressed syllable. The <code>Category</code> column indicates if the word in which the (t, d) token appears is a function or lexical word. <code>Morph.Type</code> indicates if the (t, d) occurs in a monomorpheme (like <em>fist</em>), a semi-weak simple past-tense verb (like <em>dealt</em> ) in which there is a vowel change and a (t,d) sound is added, or a weak simple past-tense verb (like <em>walked</em>) in which just /<em>-ed</em>/ is added. <code>Before</code> indicates the type of sound preceding the (t, d) and <code>After</code> indicates the sound following the (t, d). <code>Speaker</code> is a unique identifier for each participant in the data (only the first six are displayed, though); <code>YOB</code> indicates the speaker’s year of birth, <code>Sex</code> his or her sex<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, <code>Education</code> his or her education level, and <code>Job</code> his or her job type. Finally, <code>Phoneme.Dep.Var</code> indicates the canonical underlying phoneme of the (t, d) token and a more detailed coding of the dependent variable.</p>
-</section>
-</section>
-<section id="modifying-data" class="level1">
-<h1>Modifying Data</h1>
-<p>Deleting tokens, recoding tokens, combining factor groups, etc. is, in my opinion, easier to do in <em>Excel</em>. But, if you want to do this in <em>R</em>, or you only want to perform the modification for a specific analysis or graph, you may find the following functions useful.</p>
-<section id="removing-rows" class="level2">
-<h2>Removing Rows</h2>
-<p>This (t, d) deletion data includes tokens in which the previous phoneme is a vowel. Many analyses of (t, d) deletion exclude this context. Here is how to remove these contexts from your data frame.</p>
-<div class="cell">
-<div class="sourceCode" id="cb82"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Before <span class="sc">!=</span> <span class="st">&quot;Vowel&quot;</span>, ]</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var           Stress         Category        Morph.Type 
- Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
- Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
-                                                  Semi-Weak:116  
-                                                                 
-                                                                 
-                                                                 
-                                                                 
-             Before          After        Speaker         YOB       Sex    
- Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
- Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
- Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
- S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
- Stop           :249                   DONF15 : 28   3rd Qu.:1991          
- Vowel          :  0                   GARF37 : 28   Max.   :1999          
-                                       (Other):939                         
-        Education        Job          Phoneme.Dep.Var
- Educated    :496   Blue   :130   t--T        :352   
- Not Educated:317   Service:468   t--Deletion :296   
- Student     :376   Student:376   t--Fricative:131   
-                    White  :215   d--Deletion : 90   
-                                  d--T        : 73   
-                                  d--D        : 46   
-                                  (Other)     :201   </code></pre>
-</div>
-</div>
-<p>The first line of code creates a new object called <code>td</code>. The <code>&lt;-</code> operator means you’re telling <em>R</em> that this new <code>td</code> is the same as the old <code>td</code>, but filtered according to some specific condition. You could also use the <code>&lt;-</code> operator to create a new <code>td</code> with a different name — e.g., <code>td.new &lt;- td[td\$Before != "Vowel",]}</code> — thus giving you two data frames (<code>td</code> and <code>td.new</code>) to work with.</p>
-<p>Throughout <em>R</em>, square brackets <code>[ ]</code> are used for specifying filtering conditions. The first line of code therefore says make new <code>td</code> the same as old <code>td</code>, but only where the value in the <code>Before</code> column of old <code>td</code> (indicated by <code>td$Before</code>) does not equal <code>"Vowel"</code>. <code>!=</code> is the standard operator meaning <em>does not equal</em>. The comma after <code>"Vowel"</code> is important. If you are filtering a data frame, as you are here, <em>R</em> needs to know where to look for the values you want to keep or throw out. It follows this format: <code>data frame[rows,columns]</code>. So the comma in the above function line indicates that the filtering condition relates to values found while searching row by row. It selects any row in which the value in the <code>Before</code> column does not equal <code>"Vowel"</code>. The quotation marks around <code>"Vowel"</code> are also important because the values in the <code>Before</code> column are all strings of characters, which (you’ll remember from above), are always enclosed in quotation marks.</p>
-<div class="cell">
-<div class="sourceCode" id="cb84"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span></code></pre></div>
-</div>
-<p>An additional line of code is needed for resetting the data structure. The new <code>td</code> inherits the data structure from the old <code>td</code>. This means <em>R</em> thinks the new <code>td</code> still has a level in the column <code>Before</code> called <code>"Vowel"</code> — even though there are zero tokens now in the column with this value. If you run <code>summary(td)</code> after the first code above you’ll see that <em>R</em> still lists <code>"Vowel"</code> as a possible level of <code>Before</code>, but with zero instances. The additional line of code tells <em>R</em> to make a new column <code>Before</code> in the data frame <code>td</code> (this will replace the old <code>Before</code> column) in which the possible factors (i.e., values) in that column are those that actually exist in the new <code>Before</code> column in <code>td</code>. Run <code>summary()</code> or <code>str()</code> now and you’ll see that the empty <code>"Vowel"</code> level is gone.</p>
-<div class="cell">
-<div class="sourceCode" id="cb85"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var           Stress         Category        Morph.Type 
- Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
- Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
-                                                  Semi-Weak:116  
-                                                                 
-                                                                 
-                                                                 
-                                                                 
-             Before          After        Speaker         YOB       Sex    
- Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
- Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
- Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
- S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
- Stop           :249                   DONF15 : 28   3rd Qu.:1991          
-                                       GARF37 : 28   Max.   :1999          
-                                       (Other):939                         
-        Education        Job          Phoneme.Dep.Var
- Educated    :496   Blue   :130   t--T        :352   
- Not Educated:317   Service:468   t--Deletion :296   
- Student     :376   Student:376   t--Fricative:131   
-                    White  :215   d--Deletion : 90   
-                                  d--T        : 73   
-                                  d--D        : 46   
-                                  (Other)     :201   </code></pre>
-</div>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&#39;data.frame&#39;:   1189 obs. of  12 variables:
- $ Dep.Var        : Factor w/ 2 levels &quot;Deletion&quot;,&quot;Realized&quot;: 2 1 1 1 2 1 1 1 1 1 ...
- $ Stress         : Factor w/ 2 levels &quot;Stressed&quot;,&quot;Unstressed&quot;: 1 1 1 1 1 1 1 1 1 1 ...
- $ Category       : Factor w/ 2 levels &quot;Function&quot;,&quot;Lexical&quot;: 2 2 2 2 2 2 2 2 2 2 ...
- $ Morph.Type     : Factor w/ 3 levels &quot;Mono&quot;,&quot;Past&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ Before         : Factor w/ 5 levels &quot;Liquid&quot;,&quot;Nasal&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
- $ After          : Factor w/ 4 levels &quot;Consonant&quot;,&quot;H&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ Speaker        : Factor w/ 66 levels &quot;ARSM91&quot;,&quot;BEAM91&quot;,..: 3 5 5 6 13 14 15 23 29 33 ...
- $ YOB            : int  1965 1955 1955 1952 1953 1958 1946 1942 1945 1949 ...
- $ Sex            : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 1 1 2 2 1 2 2 1 ...
- $ Education      : Factor w/ 3 levels &quot;Educated&quot;,&quot;Not Educated&quot;,..: 1 1 1 1 1 2 1 2 2 1 ...
- $ Job            : Factor w/ 4 levels &quot;Blue&quot;,&quot;Service&quot;,..: 4 4 4 2 2 2 2 1 1 2 ...
- $ Phoneme.Dep.Var: Factor w/ 18 levels &quot;d--Affricate&quot;,..: 18 12 12 12 18 12 12 12 12 12 ...</code></pre>
-</div>
-</div>
-<p>The following code does exactly the same thing as the previous code, but instead of filtering out <code>"Vowel"</code>, it specifies keeping all the other levels. Here <code>==</code> is the standard operator meaning <em>equals and only equals</em> and <code>|</code> (called <em>pipe</em>) is the operator meaning <em>or</em>. Again, note the very important comma following the last column condition.</p>
-<div class="cell">
-<div class="sourceCode" id="cb89"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Before <span class="sc">==</span> <span class="st">&quot;Liquid&quot;</span> <span class="sc">|</span> td<span class="sc">$</span>Before <span class="sc">==</span> <span class="st">&quot;Nasal&quot;</span> <span class="sc">|</span> td<span class="sc">$</span>Before <span class="sc">==</span> <span class="st">&quot;Other Fricative&quot;</span> <span class="sc">|</span></span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>    td<span class="sc">$</span>Before <span class="sc">==</span> <span class="st">&quot;S&quot;</span> <span class="sc">|</span> td<span class="sc">$</span>Before <span class="sc">==</span> <span class="st">&quot;Stop&quot;</span>, ]</span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span></code></pre></div>
-</div>
-<p>As you did previously, you must run the second line of code to get rid of the empty <code>"Vowel"</code> level.</p>
-</section>
-<section id="re-coding-variables" class="level2">
-<h2>Re-coding Variables</h2>
-<p>While it is possible to do <em>ad-hoc</em> re-codes in <em>R</em>, you must keep in mind that these re-codes will only exist in your <em>R</em> data frame, not in your saved tab-delimited-text file. Personally, I think it’s both easier and more useful to use Microsoft <em>Excel</em> to create new columns in your tab-delimited-text file for every re-code or configuration of factors in a factor group (i.e., levels in a column) that you might need. That being said, there are definitely situations where <em>ad-hoc</em> recodes may be preferable.</p>
-<p>If you want to change anything in your data frame you can generate an editable data frame in a popup window with the following function:</p>
-<div class="cell">
-<div class="sourceCode" id="cb90"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(td)</span></code></pre></div>
-</div>
-<p>I don’t recommend using this method. Like <code>file.choose()</code> and <code>choose.files()</code>, it introduces non-replicability because the changes you make using <code>fix()</code> are not recorded in your script file and therefore cannot be automatically replicated. A better practice for re-coding while maintaining replicability is to specify the cells in a column that include the specific values you want to change, and then to reassign a new value to those cells:</p>
-<div class="cell">
-<div class="sourceCode" id="cb91"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After[td<span class="sc">$</span>After <span class="sc">==</span> <span class="st">&quot;H&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Consonant&quot;</span></span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>After)</span></code></pre></div>
-</div>
-<p>The code above uses the <code>&lt;-</code> operator to say that any cells in the column <code>After</code> that contain the value <code>"H"</code> should be changed to <code>"Consonant"</code> — another value in the <code>After</code> column. Many studies of (t, d) deletion do not distinguish between pre-/h/ and other pre-consonantal contexts. The above re-code might be needed for comparing this (t, d) deletion data to other studies. Notice that there is no comma following <code>"H"</code> in the above code. This is because you are filtering a column; see how the filtering brackets <code>[ ]</code> come after the column specifier <code>$</code>. The comma is only used when filtering whole data frames because data frames can be filtered along two dimensions (e.g., rows and columns) and <em>R</em> needs to know which dimensions the filtering conditions apply to. When you filter just a column (or just a row), you don’t need the comma because the filtering only occurs along one dimension (in that column, or in that row only). You also need to run the second <code>factor()</code> function to get rid of the now empty <code>"H"</code> level.</p>
-<p>If you get an error message when trying to re-code using this method and your column contains words (rather than numbers) try first re-classifying (i.e., changing the type of) your original column to a <em>character</em> column: <code>td$After.New &lt;- as.character(td$After.New)</code>, then proceeding with the above method.</p>
-<p>The previous function sequence re-codes all <code>"H"</code> cells in the existing <code>After</code> column. If instead you wanted to create a new column with your re-code (so both possible coding options were available for later analyses), you could do so by creating a new column with the exact same values as <code>After</code> and then re-code that column. If you’ve been following along in <em>R</em>, your <code>After</code> column is already recoded. To go back to the original form of the data as it exists in the tab-delimited-text file, simply reload that text file and assign it to the object <code>td</code>. Of course, this resets the deletion of the tokens following a vowel, so you must do that again too. Luckily, you’ve written all of your functions in a script file (rather than directly into the console) so this is easy to do: just highlight the code and press the execution command.</p>
-<div class="cell">
-<div class="sourceCode" id="cb92"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with a fresh import of the (t, d) data into R</span></span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt&quot;</span>)</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert each character column into a factor</span></span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Dep.Var <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Dep.Var)</span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Stress <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Stress)</span>
-<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Category <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Category)</span>
-<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Morph.Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Morph.Type)</span>
-<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span>
-<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>After)</span>
-<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Speaker <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Speaker)</span>
-<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Sex)</span>
-<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Education <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Education)</span>
-<span id="cb92-13"><a href="#cb92-13" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Job <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Job)</span>
-<span id="cb92-14"><a href="#cb92-14" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Phoneme.Dep.Var <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Phoneme.Dep.Var)</span>
-<span id="cb92-15"><a href="#cb92-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data to remove previous &#39;Vowel&#39; contexts</span></span>
-<span id="cb92-16"><a href="#cb92-16" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Before <span class="sc">!=</span> <span class="st">&quot;Vowel&quot;</span>, ]</span>
-<span id="cb92-17"><a href="#cb92-17" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span>
-<span id="cb92-18"><a href="#cb92-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-code &#39;H&#39; to be &#39;Consonant&#39; in a new column</span></span>
-<span id="cb92-19"><a href="#cb92-19" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New <span class="ot">&lt;-</span> td<span class="sc">$</span>After</span>
-<span id="cb92-20"><a href="#cb92-20" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New[td<span class="sc">$</span>After.New <span class="sc">==</span> <span class="st">&quot;H&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Consonant&quot;</span></span>
-<span id="cb92-21"><a href="#cb92-21" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>After.New)</span></code></pre></div>
-</div>
-<p>The new column you create (<code>After.New</code>) is added at the end of the data frame. You can conceptualized this as the right edge of the data in an <code>Excel</code> spreadsheet. You can see this with the <code>summary()</code> or <code>str()</code> functions. The name of the new column you create doesn’t really matter, but it cannot include any spaces.</p>
-<div class="cell">
-<div class="sourceCode" id="cb93"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var           Stress         Category        Morph.Type 
- Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
- Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
-                                                  Semi-Weak:116  
-                                                                 
-                                                                 
-                                                                 
-                                                                 
-             Before          After        Speaker         YOB       Sex    
- Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
- Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
- Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
- S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
- Stop           :249                   DONF15 : 28   3rd Qu.:1991          
-                                       GARF37 : 28   Max.   :1999          
-                                       (Other):939                         
-        Education        Job          Phoneme.Dep.Var     After.New  
- Educated    :496   Blue   :130   t--T        :352    Consonant:372  
- Not Educated:317   Service:468   t--Deletion :296    Pause    :558  
- Student     :376   Student:376   t--Fricative:131    Vowel    :259  
-                    White  :215   d--Deletion : 90                   
-                                  d--T        : 73                   
-                                  d--D        : 46                   
-                                  (Other)     :201                   </code></pre>
-</div>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&#39;data.frame&#39;:   1189 obs. of  13 variables:
- $ Dep.Var        : Factor w/ 2 levels &quot;Deletion&quot;,&quot;Realized&quot;: 2 1 1 1 2 1 1 1 1 1 ...
- $ Stress         : Factor w/ 2 levels &quot;Stressed&quot;,&quot;Unstressed&quot;: 1 1 1 1 1 1 1 1 1 1 ...
- $ Category       : Factor w/ 2 levels &quot;Function&quot;,&quot;Lexical&quot;: 2 2 2 2 2 2 2 2 2 2 ...
- $ Morph.Type     : Factor w/ 3 levels &quot;Mono&quot;,&quot;Past&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ Before         : Factor w/ 5 levels &quot;Liquid&quot;,&quot;Nasal&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
- $ After          : Factor w/ 4 levels &quot;Consonant&quot;,&quot;H&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ Speaker        : Factor w/ 66 levels &quot;ARSM91&quot;,&quot;BEAM91&quot;,..: 3 5 5 6 13 14 15 23 29 33 ...
- $ YOB            : int  1965 1955 1955 1952 1953 1958 1946 1942 1945 1949 ...
- $ Sex            : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 1 1 2 2 1 2 2 1 ...
- $ Education      : Factor w/ 3 levels &quot;Educated&quot;,&quot;Not Educated&quot;,..: 1 1 1 1 1 2 1 2 2 1 ...
- $ Job            : Factor w/ 4 levels &quot;Blue&quot;,&quot;Service&quot;,..: 4 4 4 2 2 2 2 1 1 2 ...
- $ Phoneme.Dep.Var: Factor w/ 18 levels &quot;d--Affricate&quot;,..: 18 12 12 12 18 12 12 12 12 12 ...
- $ After.New      : Factor w/ 3 levels &quot;Consonant&quot;,&quot;Pause&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-</div>
-</div>
-</section>
-<section id="centering-continuous-variables" class="level2">
-<h2>Centering Continuous Variables</h2>
-<p>Some variables, like year of birth, are not discrete but are continuous. Some statisticians advocate centering continuous variables before including them in certain tests or models.In the Regression Analysis section you’ll learn when/if you need to center your variables.</p>
-<p><em>Centering</em> entails expressing each value of a continuous variable as that value’s difference from the mean of all values of the variable. For example, the <em>td</em> data frame has a column for speaker year of birth: <code>YOB</code>. The mean of all the years of birth (after the pre-vowel tokens are removed) is <code>1969</code>. Centering this variable simply means expressing years of birth like 1952 and 1989, as 17 (<span class="math inline">\(=1969-1952\)</span>) and -20 (<span class="math inline">\(=1969-1989\)</span>).</p>
-<div class="cell">
-<div class="sourceCode" id="cb97"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Center YOB</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(td<span class="sc">$</span>Center.Age)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb98"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(td<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
-</div>
-<p>The <code>scale()</code> function centers the values in the column <code>YOB</code> and assigns those Centerd values to a new column called <code>Center.Age</code>. The option <code>scale = FALSE</code> indicates that the centered values remain in the original units (in this case years). If you change this option to <code>scale = TRUE</code>, the values are first divided by the standard deviation before being subtracted from the mean. This is needed if you are including multiple continuous variables in a model that are expressed using different units and vary along differing scales.</p>
-<p>For example, imagine a study of variable word-initial voice onset time in which you want to look at the effect of following vowel backness and year of birth of the speaker. Each of these variables are continuous, but voice onset time is <span class="math inline">\(\pm20\)</span> ms around its mean, year of birth is <span class="math inline">\(\pm45\)</span> years around its mean, and F2 is <span class="math inline">\(\pm300\)</span> Hz around its mean. By first dividing each value of these three variables by the variable’s standard deviation, you can account for both the differing units and differing scales of each. Even if you have one variable, here just <code>YOB</code>, it is okay to scale the values, but do <em>NOT</em> do this here. Leave <code>YOB</code> in years. This will make the interpretation of later statistical estimates a little easier.</p>
-<p>After running your <code>scale()</code> function you must also run a function to tell <em>R</em> how to treat your new column <code>Center.Age.</code> <em>R</em> knows the column is filled with numbers, but <em>R</em> doesn’t know if those numbers are continuous, if they are ordered in a specific way, or if they are factors with names expressed as digits. You use the function <code>as.numeric()</code> to tell <em>R</em> that the values are continuous numbers. This is very similar to what you did above with the function <code>factor()</code>, which tells <em>R</em> to consider whatever is inside the function to be a factor. Also, with <code>After.New</code> above, where the data structure is inherited from <code>After</code>, you used <code>factor()</code> to remove the remaining <code>H</code> level name. You did this by telling <code>R</code> to consider whatever was inside the <code>factor()</code> function as a factor, and, as part of that, <code>R</code> reads all the levels inside that column and chooses them as the factors. Here you are doing the same thing. You’re telling <code>R</code> to look at the values inside <code>Center.Age</code> and consider them as being continuous numbers. You can do this as a secondary step after you create the column <code>Center.Age</code>, as shown in the first two rows. Or you can embed the <code>scale()</code> function inside the <code>as.numeric()</code> function, <code>as.numeric(scale())</code>, as shown in the last line.</p>
-</section>
-<section id="dividing-a-continuous-variable" class="level2">
-<h2>Dividing a Continuous Variable</h2>
-<p>There are other ways you can represent age. Instead of a continuous variable, you can categorize speakers as belonging to a “young”,“middle aged”, or “old” age group. You might also group speakers based on decade of birth or as being born before or after some event — whatever makes sense for your study or community.</p>
-<p>How to divide speakers by age is something that should be informed by sociolinguistic theory, demographics, and your own understanding of your data. The birth years 1980 and 1945, used here, represent generational divides in Cape Breton that can be independently justified (Gardner 2013). Grouping speakers like this is very common, and not particularly difficult to do in <em>R</em>.</p>
-<div class="cell">
-<div class="sourceCode" id="cb99"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 3-way Age Group</span></span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&gt;</span> <span class="dv">1979</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Young&quot;</span></span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&gt;</span> <span class="dv">1944</span> <span class="sc">&amp;</span> td<span class="sc">$</span>YOB <span class="sc">&lt;</span> <span class="dv">1980</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Middle&quot;</span></span>
-<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&lt;</span> <span class="dv">1945</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Old&quot;</span></span></code></pre></div>
-</div>
-<p>First you will need a new column for your age group variable. Here, call it <code>Age.Group</code>.You use the assignment operator <code>&lt;-</code> to fill all the cells in the new column <code>Age.Group</code> based on the values that are in the already existing <code>YOB</code> column. The first line says that for any rows in which <code>YOB</code> is greater than 1979, fill the empty cell in those same rows in the column <code>Age.Group</code> with the value <code>Young</code>. The second line does the same thing but includes two conditions: that <code>YOB</code> is greater than 1944 and that it is also less than 1980. For these rows, the value <code>Middle</code> is inserted in the <code>Age.Group</code> column. Even though the two conditions (<code>YOB &gt; 1944</code>, <code>YOB &lt; 1980</code>) refer to the same column, you need to fully specify each condition with both a column reference and a condition with an operator. So, for example, writing <code>td$Age.Group[td$YOB &gt;1944 &amp; &lt;1970]</code> will not work. The third line instructs <code>R</code> to put <code>Old</code> in the <code>Age.Group</code> column for any row where <code>YOB</code> is less than 1945. Because this new column includes words, <em>R</em> will automatically categorize the column as <code>character</code> data. To rectify this, see the next section.</p>
-<div class="cell">
-<div class="sourceCode" id="cb100"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(td<span class="sc">$</span>Age.Group)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;character&quot;</code></pre>
-</div>
-</div>
-</section>
-<section id="changing-the-order-of-levels" class="level2">
-<h2>Changing the Order of Levels</h2>
-<div class="cell">
-<div class="sourceCode" id="cb102"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Age.Group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Young&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;Old&quot;</span>))</span></code></pre></div>
-</div>
-<p>The code above does two things. First, it tells <code>R</code> that you want the new <code>Age.Group</code> column to be a column of factors, and second, it also tells <code>R</code> how you want those factors to be ordered. When <code>R</code> extracts the name of the factors of a column (based on the levels that are in that column) it orders the factors by name alphabetically. For example, the <code>Sex</code> column contains two levels: <code>M</code> and <code>F</code>. The first 500 tokens in your data frame might comes from males but <code>R</code> will still list the names of the factors in the column (which are based on those two levels) as <code>F</code> and then <code>M</code>, because <code>F</code> is closer to the start of the alphabet than <code>M</code>. If you run <code>summary(td)</code> you can see that the factor names listed in all of the factor columns are in alphabetical order. Sometimes this alphabetical ordering doesn’t matter. Other times it is makes a big difference.</p>
-<p>Any time factors are used in a statistical test or appear in a graph, the order of factor names is very important. For example, which factor is selected as the application value and which factor(s) are the non-application value(s) of a dependent variable is determined by factor name order. As for graphs, all kinds of layout parameters are set by the factor order of a variable. For example, if you left the <code>Age.Group</code> factor as it is, it would always list the <code>Age.Group</code> levels as <code>Middle</code>, <code>Old</code>, <code>Young</code>. On a graph like a bar graph it would arrange the bars for each age group alphabetically from left to right. This is not desirable. You will always want <code>Age.Group</code> ordered as either <code>Young</code>, <code>Middle</code>, <code>Old</code> or <code>Old</code>, <code>Middle</code>, <code>Young</code>. This is what the second part of the <code>factor()</code> command does. First it tells <code>R</code> to consider the values in the <code>Age.Group</code> to be factors, then it specifies that you want the factors (which get their names from the levels) to be ordered in certain way. You use <code>levels =</code> and the concatenating <code>c()</code> function to specify that you want the factors to get their names from the levels in the following order <code>"Young", "Middle", "Old"</code>, and thus also be ordered in that way.</p>
-<p>This might seem confusing. Think about coins. Imagine you have a bag of change. Each coin in that bag is like a token in your column in the data frame. The levels of the column are just the different kinds of coins there are. You can root around in the bag and figure out what coins are in it without having to put the coins in any particular order. This is the “levels” of the coins. If you ask <em>R</em> what coins are in your bag, it will tell you there are “dimes”, “nickels”, “pennies”, and “quarters”. These levels are in alphabetical order, but only for a lack of a better way to tell you them. Telling you the levels doesn’t imply any sort of ordering of the coins. Making the coin bag into a factor column is like putting the coins into a change tray, like the change trays in cash registers. Coins inside of a change tray go from being unstructured to being organized based on a structure. This makes them factors. In a cash tray each coin is grouped with other coins just like it. Each slot in the drawer also has a name. <em>R</em> just automatically gives the slots the same name as the coins (e.g. levels) that are in it. The order of the slots from right to left is also by default alphabetical based on the name of each slot. So, coin (= level), slot name (= factor name) and slot order (= factor order) are three independent parameters. The function <code>td$Age.Group &lt;-factor(td$Age.Group, levels = c("Young", "Middle", "Old"))</code> is basically saying take all the coins out of the cash drawer, then put them back in the drawer in in a specific order, with <code>Young</code> going in the first slot. The slots then take the names of the coins that go into them.</p>
-</section>
-<section id="reversing-the-order-of-levels" class="level2">
-<h2>Reversing the Order of Levels</h2>
-<p>To reverse the order of levels you can embed the <code>rev()</code> function inside your <code>factor()</code> function</p>
-<div class="cell">
-<div class="sourceCode" id="cb103"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Age.Group)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Young&quot;  &quot;Middle&quot; &quot;Old&quot;   </code></pre>
-</div>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Age.Group, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">levels</span>(td<span class="sc">$</span>Age.Group)))</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Age.Group)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Old&quot;    &quot;Middle&quot; &quot;Young&quot; </code></pre>
-</div>
-</div>
-</section>
-<section id="combining-columns" class="level2">
-<h2>Combining Columns</h2>
-<p>It is often useful to combine two columns, or factor groups, into one. For example, it might be useful to have a way of grouping tokens not by <code>Age.Group</code> or <code>Sex</code>, but instead by the combination of <code>Age.Group</code> and <code>Sex</code>. While it is not difficult to test the potential interaction of these two factor groups in statistical tests in <em>R</em>, for specifically generating summary statistics it is much easier to examine the combination of <code>Age.Group</code> and <code>Sex</code> (or any two columns) by first creating a new column combining them.</p>
-<p>Combining columns is done using the function <code>paste()</code>, which you embed inside of the <code>factor()</code> function so that the resulting column will be a column of factors. Inside <code>paste()</code> you list the two columns you want to combine (you could list more) and then tell <em>R</em> how to separate the values from each of the columns. Here the code tells <em>R</em> to put an underscore *_* between the values for <code>Age.Group</code> and <code>Sex</code>, resulting in new values like <code>Old_M</code> and <code>Middle_F</code>. The new column will be called <code>Age_Sex</code>. If we want to order these values in any particular way, we can do that with the <code>level=</code> option in <code>factor()</code></p>
-<div class="cell">
-<div class="sourceCode" id="cb107"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine Columns</span></span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age_Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(td<span class="sc">$</span>Age.Group, td<span class="sc">$</span>Sex, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Young_F&quot;</span>,</span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Middle_F&quot;</span>, <span class="st">&quot;Old_F&quot;</span>, <span class="st">&quot;Young_M&quot;</span>, <span class="st">&quot;Middle_M&quot;</span>, <span class="st">&quot;Old_M&quot;</span>))</span>
-<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Age_Sex)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Young_F&quot;  &quot;Middle_F&quot; &quot;Old_F&quot;    &quot;Young_M&quot;  &quot;Middle_M&quot; &quot;Old_M&quot;   </code></pre>
-</div>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder factor levels</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age_Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Age_Sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Young_F&quot;</span>, <span class="st">&quot;Young_M&quot;</span>, <span class="st">&quot;Middle_F&quot;</span>, <span class="st">&quot;Middle_M&quot;</span>,</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Old_F&quot;</span>, <span class="st">&quot;Old_M&quot;</span>))</span>
-<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Age_Sex)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;Young_F&quot;  &quot;Young_M&quot;  &quot;Middle_F&quot; &quot;Middle_M&quot; &quot;Old_F&quot;    &quot;Old_M&quot;   </code></pre>
-</div>
-</div>
-</section>
-<section id="splitting-columns" class="level2">
-<h2>Splitting Columns</h2>
-<p>You may have noticed that the data frame <code>td</code> has one column that is actually two variables. The column <code>Phoneme.Dep.Var</code> combines both the underlying phoneme of the token, either <code>t</code> (t) or <code>d</code> (d), with a more descriptive coding of the dependent variable. In the dialect where this data comes from (t) and (d) can be realized in up to nine different ways, only one of which is <code>Deletion</code>. In your analysis you might want to consider if deletion is more likely if the underlying phoneme is (t) or (d). In order to do this you must break <code>Phoneme</code> away from the more elaborate <code>Dep.Var</code> coding. To do this, you will use a function that is beyond <em>R</em>’s base functionality and part of the <code>dplyr</code> package. First you load the <code>dplyr</code> package from your library using <code>library()</code>, then you use the function <code>mutate()</code> to tell <em>R</em> how to break up the column. The <code>dplyr</code> package is very powerful. We will look at additional uses as this guide progresses.</p>
-<p>To be honest, splitting columns is an operation that is much simpler and usually faster to do using <em>Excel</em>, or another spreadsheet program. I never use <em>R</em> to split columns because, while the <code>mutate()</code> function itself is not tricky, figuring out the exact sequence of <code>regular expressions</code> I need to split my columns is challenging. If you absolutely must split columns in <em>R</em>, below are instructions. Keep in mind that this method will only work for columns with predictable structures, like <code>Phoneme.Dep.Var</code>.</p>
-<p>The values in the column <code>Phoneme.Dep.Var</code> are predictable, in other words, they all follow the same pattern. You can exploit this regularity to tell <em>R</em> exactly where to break the <code>Phoneme.Dep.Var</code> values into two. If you execute the command <code>levels(td$Phoneme.Dep.Var)</code> you can very easily see the pattern.</p>
-<div class="cell">
-<div class="sourceCode" id="cb111"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(td<span class="sc">$</span>Phoneme.Dep.Var)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;d--Affricate&quot;       &quot;d--D&quot;               &quot;d--Deletion&quot;       
- [4] &quot;d--Ejective&quot;        &quot;d--Flap&quot;            &quot;d--Fricative&quot;      
- [7] &quot;d--Glottal Stop&quot;    &quot;d--Other Weakening&quot; &quot;d--T&quot;              
-[10] &quot;t--Affricate&quot;       &quot;t--D&quot;               &quot;t--Deletion&quot;       
-[13] &quot;t--Ejective&quot;        &quot;t--Flap&quot;            &quot;t--Fricative&quot;      
-[16] &quot;t--Glottal Stop&quot;    &quot;t--Other Weakening&quot; &quot;t--T&quot;              </code></pre>
-</div>
-</div>
-<p>The first part of every value is either <code>t</code> or <code>d</code>, then there are two hyphens, then a word describing the realization of (t) or (d). If you split <code>Phoneme.Dep.Var</code> at the hyphens you’ll be left with two values: one that is either <code>t</code> or <code>d</code>, and another that describes the realization of (t) or (d). So, for the new <code>Phoneme</code> column you want the one character before the hyphens from <code>Phoneme.Dep.Var</code>, and for the new <code>Dep.Var.Full</code> column, you want all the characters — however many there are – that come after the two hyphens.</p>
-<div class="cell">
-<div class="sourceCode" id="cb113"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Break Phoneme.Dep.Var into two columns</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
+6 Realized Stressed Function       Mono  Vowel Pause  DONM41 1941   M Not Educated    Blue    t--Fricative
+```
 
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from &#39;package:base&#39;:
+``` r
+print(complex.list$d$Job)
+```
 
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">mutate</span>(td, <span class="at">Phoneme =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.)(--.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>, Phoneme.Dep.Var), <span class="at">Dep.Var.Full =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.--)(.*)$&quot;</span>,</span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">2&quot;</span>, Phoneme.Dep.Var), <span class="at">Phoneme.Dep.Var =</span> <span class="cn">NULL</span>)</span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Dep.Var.Full <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Dep.Var.Full)</span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Phoneme <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Phoneme)</span></code></pre></div>
-</div>
-<div style="color: #009fe3; background: #d8f0fa;">
-<p><strong> Note: </strong> The procedure here is somewhat complicated. I always have to double-check how these complicated procedures work. Either by looking up the functions or checking my old script files. You can look up how a function like <code>mutate()</code> works by placing a question mark before the function in the console window, e.g. .</p>
-</div>
-<p>Above, inside the <code>mutate()</code> function, first you specify the data frame object you want to mutate (here <code>td</code>), and then how to mutate it. The mutations include creating a new column called <code>Phoneme</code> and then telling <em>R</em> what do put in it, creating a new column called <code>Dep.Var.Full</code> and then telling <em>R</em> what to put in it, and then taking the <code>Phoneme.Dep.Var</code> column and making it equal <code>NULL</code> — in other words, deleting it. For the <code>Phoneme</code> and <code>Dep.Var.Full</code> columns you specify what values to insert in each cell using the <code>sub()</code> function, which returns a “sub” or divided section of a value within some cell. The <code>sub()</code> function’s first argument is a pattern of <em>regular expressions</em> to search for, the second is a character string to replace the pattern with, and the third is the column in which to search for the pattern.</p>
-<div style="color: #009fe3; background: #d8f0fa;">
-<p><strong> Note: </strong> I don’t have <em>R</em>’s regular expressions memorized; I always have to look them up <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">here</a></p>
-</div>
-<p>For the functions meant to create values for <code>Phoneme</code> and for <code>Dep.Var.Full</code> you tell <em>R</em> to search <code>Phoneme.Dep.Var</code> for the pattern <code>"^.--.*$"</code>. This series of regular expressions describes the following pattern: a text string beginning with one single character, followed by two hyphens, and then any number of characters. The quotation marks <code>" "</code> indicate a text string. The <code>^</code> and <code>$</code> indicate the beginning and end of a text string, respectively.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The period <code>.</code> indicates a single character and the asterisk<code>*</code> indicates zero or more of whatever comes before that asterisk. So <code>.*</code> means any one or more characters. The two hyphens <code>--</code> are just two hyphens. The parentheses in the regular expressions relate to the second substitution element. In the <code>sub()</code> function responsible for creating values for the new <code>Phoneme</code> column, you break the values that match the regular expression pattern into two parts: the one character before the two hyphens <code>(.)</code> and then everything after it <code>(--.*)</code>; then you tell <em>R</em> to substitute (or rather place) the first of those two elements <code>\\1</code> as text <code>" "</code> in the new column. In the <code>sub()</code> function responsible for creating the values for the new <code>Dep.Var.Full</code> column, you break the values that match the regular expression pattern into two parts: the two hyphens and the one character that comes before them <code>(.--)</code> and then the one or more characters that come after the hyphens <code>(.*)</code>; then tell <em>R</em> to to substitute (or rather place) the second of those elements <code>\\2</code> as text <code>" "</code> in the new column.</p>
-<p>The last two lines simply make these two new columns into factor columns.</p>
-</section>
-<section id="partitioning-data-frames" class="level2">
-<h2>Partitioning Data Frames</h2>
-<p>Many times in my own work I have only wanted to work in <em>R</em> with a subset of my full dataset. For example, I frequently want to run separate regression analyses on data from old speakers, middle age speakers, and young speakers. Other times I’ve had large datasets that combine multiple corpora and have wanted to run tests on data from just one corpus. Being able to partition (subset) my data frame has therefore been very useful.</p>
-<p>There are two main ways to partition your data. One method involves using the filtering functionality of <em>R</em> detailed above. For example, the first line code below represents the <code>td</code> data from <code>young</code> speakers only. The second line of codes assigns that subset of <code>td</code> to a completely new data frame.</p>
-<div class="cell">
-<div class="sourceCode" id="cb118"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset of td where Age.Group only equals Young</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>td[td<span class="sc">$</span>Age.Group <span class="sc">==</span> <span class="st">&quot;Young&quot;</span>, ]</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb119"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create td.young which equals subset of td where Age. Group only equals Young</span></span>
-<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>td.young <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Age.Group <span class="sc">==</span> <span class="st">&quot;Young&quot;</span>, ]</span></code></pre></div>
-</div>
-<p>In your tests you can use the filtered version of <code>td</code> or you can use the new data frame <code>td.young</code>. I recommend using the new data frame if you are using any centered continuous variables. This is because centered continuous variables are centered around the mean of the values in the column that is centered. If you partition the data, that mean will be different because the range of values within the the centered column are now different. So, if you partition your data, especially by age, you should re-center your continuous variables.</p>
-<p>The second way to partition your data is using the <code>subset()</code> function.</p>
-<div class="cell">
-<div class="sourceCode" id="cb120"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create three partitions based on Age.Group</span></span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>td.young <span class="ot">&lt;-</span> <span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Young&quot;</span>)</span>
-<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>td.middle <span class="ot">&lt;-</span> <span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Middle&quot;</span>)</span>
-<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>td.old <span class="ot">&lt;-</span> <span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Old&quot;</span>)</span>
-<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-Center Center.Age</span></span>
-<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a>td.young<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td.young<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>td.middle<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td.middle<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>td.old<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td.old<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-</div>
-<p>The usefulness of <code>subset()</code> is when you want to partition your data frame based on several factors. For example, compare the filtering versus <code>subset()</code> methods when partitioning <code>td</code> for just middle-age, blue-collar men. Using saves you from having to type <code>td$</code> multiple times, and you don’t need the final <code>,</code>.</p>
-<div class="cell">
-<div class="sourceCode" id="cb121"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset of td where Age.Group is Middle, Sex is M, and Job is Blue</span></span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>td.midmenblue <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Age.Group <span class="sc">==</span> <span class="st">&quot;Middle&quot;</span> <span class="sc">&amp;</span> td<span class="sc">$</span>Sex <span class="sc">==</span> <span class="st">&quot;M&quot;</span> <span class="sc">&amp;</span> td<span class="sc">$</span>Job <span class="sc">==</span> <span class="st">&quot;Blue&quot;</span>,</span>
-<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb121-4"><a href="#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset of td where Age.Group is Middle, Sex is M, and Job is Blue</span></span>
-<span id="cb121-5"><a href="#cb121-5" aria-hidden="true" tabindex="-1"></a>td.midmenblue <span class="ot">&lt;-</span> <span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Middle&quot;</span> <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">&quot;M&quot;</span> <span class="sc">&amp;</span> Job <span class="sc">==</span> <span class="st">&quot;Blue&quot;</span>)</span></code></pre></div>
-</div>
-<p>When you subset your data frame, using either method, and assign it to a new data frame, your new data frame inherits the structure of your old data frame. This means that there will be lots of columns that list empty levels. If you execute <code>summary(td.midmenblue)}</code> you’ll see see that <code>Job</code> still lists <code>Service</code>, <code>Student</code>, and <code>White</code> as factors with 0 tokens each. To remove these empty levels you could use the <code>factor()</code> function on each column with empty levels (as you did above), or you can use the function <code>droplevels()</code> to tell <em>R</em> to drop any empty levels from each column in the data frame. You need to make sure to also assign the dropped levels data frame to the original data frame, as shown below.</p>
-<div class="cell">
-<div class="sourceCode" id="cb122"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td.midmenblue)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var          Stress       Category      Morph.Type
- Deletion:30   Stressed  :49   Function: 3   Mono     :38  
- Realized:27   Unstressed: 8   Lexical :54   Past     :15  
-                                             Semi-Weak: 4  
-                                                           
-                                                           
-                                                           
-                                                           
-             Before         After       Speaker        YOB       Sex   
- Liquid         :13   Consonant:16   GREM45 :18   Min.   :1945   F: 0  
- Nasal          : 3   H        : 9   HOLM52 :16   1st Qu.:1945   M:57  
- Other Fricative: 6   Pause    :20   SMIM61 :16   Median :1952         
- S              :18   Vowel    :12   CLAM73 : 4   Mean   :1954         
- Stop           :17                  HANM57 : 3   3rd Qu.:1961         
-                                     ARSM91 : 0   Max.   :1973         
-                                     (Other): 0                        
-        Education       Job         After.New    Center.Age       Age.Group 
- Educated    : 0   Blue   :57   Consonant:25   Min.   :-24.447   Old   : 0  
- Not Educated:57   Service: 0   Pause    :20   1st Qu.:-24.447   Middle:57  
- Student     : 0   Student: 0   Vowel    :12   Median :-17.447   Young : 0  
-                   White  : 0                  Mean   :-15.394              
-                                               3rd Qu.: -8.447              
-                                               Max.   :  3.553              
-                                                                            
-     Age_Sex   Phoneme    Dep.Var.Full
- Young_F : 0   d:11    Deletion :30   
- Young_M : 0   t:46    T        :19   
- Middle_F: 0           Fricative: 6   
- Middle_M:57           D        : 1   
- Old_F   : 0           Flap     : 1   
- Old_M   : 0           Affricate: 0   
-                       (Other)  : 0   </code></pre>
-</div>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop empty levels across dataset</span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>td.midmenblue <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(td.midmenblue)</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(td.midmenblue)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Dep.Var          Stress       Category      Morph.Type
- Deletion:30   Stressed  :49   Function: 3   Mono     :38  
- Realized:27   Unstressed: 8   Lexical :54   Past     :15  
-                                             Semi-Weak: 4  
-                                                           
-                                                           
-                                                           
-             Before         After      Speaker        YOB       Sex   
- Liquid         :13   Consonant:16   CLAM73: 4   Min.   :1945   M:57  
- Nasal          : 3   H        : 9   GREM45:18   1st Qu.:1945         
- Other Fricative: 6   Pause    :20   HANM57: 3   Median :1952         
- S              :18   Vowel    :12   HOLM52:16   Mean   :1954         
- Stop           :17                  SMIM61:16   3rd Qu.:1961         
-                                                 Max.   :1973         
-        Education    Job         After.New    Center.Age       Age.Group 
- Not Educated:57   Blue:57   Consonant:25   Min.   :-24.447   Middle:57  
-                             Pause    :20   1st Qu.:-24.447              
-                             Vowel    :12   Median :-17.447              
-                                            Mean   :-15.394              
-                                            3rd Qu.: -8.447              
-                                            Max.   :  3.553              
-     Age_Sex   Phoneme    Dep.Var.Full
- Middle_M:57   d:11    D        : 1   
-               t:46    Deletion :30   
-                       Flap     : 1   
-                       Fricative: 6   
-                       T        :19   
-                                      </code></pre>
-</div>
-</div>
-</section>
-<section id="interim-summary" class="level2">
-<h2>Interim Summary</h2>
-<p>Below is the full code for loading the data file and then re-coding it. As you progress through the next sections, if for any reason you have a problem, it may be useful to recreate the <em>R</em> object <code>td</code> from scratch. Going forward in these instructions, the <code>td</code> object will be the object as it exists at the end of this code.</p>
-<div class="cell">
+```
+[1] "White"   "White"   "Service" "Blue"    "Service" "Blue"   
+```
 
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb126"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in token file</span></span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1&quot;</span>)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb127"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data to remove previous &#39;Vowel&#39; contexts</span></span>
-<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[td<span class="sc">$</span>Before <span class="sc">!=</span> <span class="st">&quot;Vowel&quot;</span>, ]</span>
-<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Before <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Before)</span>
-<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-code &#39;H&#39; to be &#39;Consonant&#39; in a new column</span></span>
-<span id="cb127-5"><a href="#cb127-5" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New <span class="ot">&lt;-</span> td<span class="sc">$</span>After</span>
-<span id="cb127-6"><a href="#cb127-6" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New[td<span class="sc">$</span>After.New <span class="sc">==</span> <span class="st">&quot;H&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Consonant&quot;</span></span>
-<span id="cb127-7"><a href="#cb127-7" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>After.New <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>After.New)</span>
-<span id="cb127-8"><a href="#cb127-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Center Year of Birth</span></span>
-<span id="cb127-9"><a href="#cb127-9" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(td<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb127-10"><a href="#cb127-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Age.Group</span></span>
-<span id="cb127-11"><a href="#cb127-11" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&gt;</span> <span class="dv">1979</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Young&quot;</span></span>
-<span id="cb127-12"><a href="#cb127-12" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&gt;</span> <span class="dv">1944</span> <span class="sc">&amp;</span> td<span class="sc">$</span>YOB <span class="sc">&lt;</span> <span class="dv">1980</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Middle&quot;</span></span>
-<span id="cb127-13"><a href="#cb127-13" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group[td<span class="sc">$</span>YOB <span class="sc">&lt;</span> <span class="dv">1945</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Old&quot;</span></span>
-<span id="cb127-14"><a href="#cb127-14" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Age.Group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Young&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;Old&quot;</span>))</span>
-<span id="cb127-15"><a href="#cb127-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine Age and Sex</span></span>
-<span id="cb127-16"><a href="#cb127-16" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Age_Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(td<span class="sc">$</span>Age.Group, td<span class="sc">$</span>Sex, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb127-17"><a href="#cb127-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Break Phoneme.Dep.Var into two columns</span></span>
-<span id="cb127-18"><a href="#cb127-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb127-19"><a href="#cb127-19" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">mutate</span>(td, <span class="at">Phoneme =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.)(--.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>, Phoneme.Dep.Var), <span class="at">Dep.Var.Full =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.--)(.*)$&quot;</span>,</span>
-<span id="cb127-20"><a href="#cb127-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">2&quot;</span>, Phoneme.Dep.Var), <span class="at">Phoneme.Dep.Var =</span> <span class="cn">NULL</span>)</span>
-<span id="cb127-21"><a href="#cb127-21" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Phoneme <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Phoneme)</span>
-<span id="cb127-22"><a href="#cb127-22" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>Dep.Var.Full <span class="ot">&lt;-</span> <span class="fu">factor</span>(td<span class="sc">$</span>Dep.Var.Full)</span>
-<span id="cb127-23"><a href="#cb127-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create three partitions based on Age.Group</span></span>
-<span id="cb127-24"><a href="#cb127-24" aria-hidden="true" tabindex="-1"></a>td.young <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Young&quot;</span>))</span>
-<span id="cb127-25"><a href="#cb127-25" aria-hidden="true" tabindex="-1"></a>td.middle <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Middle&quot;</span>))</span>
-<span id="cb127-26"><a href="#cb127-26" aria-hidden="true" tabindex="-1"></a>td.old <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(td, Age.Group <span class="sc">==</span> <span class="st">&quot;Old&quot;</span>))</span>
-<span id="cb127-27"><a href="#cb127-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-center Center.Age</span></span>
-<span id="cb127-28"><a href="#cb127-28" aria-hidden="true" tabindex="-1"></a>td.young<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td.young<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb127-29"><a href="#cb127-29" aria-hidden="true" tabindex="-1"></a>td.middle<span class="sc">$</span>Center.Age <span class="ot">&lt;-</span> <span class="fu">scale</span>(td.middle<span class="sc">$</span>YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-</div>
-</section>
-<section id="doing-it-all-again-but-tidy" class="level2">
-<h2>Doing It All Again, But <code>tidy</code></h2>
-<p>The package <code>dplyr</code> is part of a larger “universe” of <em>R</em> packages called <code>tidyverse</code>. This collection of packages is specifically focused on data science and offers some shortcuts that are useful to learn. The packages that make up the <code>tidyverse</code> are <code>dplyr</code>, <code>ggplot2</code>, <code>purr</code>, <code>tibble</code>, <code>tidyr</code>, <code>stingr</code>, <code>readr</code>, and <code>forcats</code>, among others. Throughout this guide I try to use the most basic <em>R</em> syntax for accomplishing a task. This way you learn how <em>R</em> works. I will also show how to complete the same task using packages from the <code>tidyverse</code>. Using the <code>tidyverse</code> methods is usually optional — though once you get the hang of it, you might always use the <code>tidyverse</code> methods.</p>
-<div class="cell">
-<div class="sourceCode" id="cb128"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the tidyverse package</span></span>
-<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb129"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tidyverse package</span></span>
-<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb130"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List the packages loaded by the tidyverse package</span></span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidyverse_packages</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;broom&quot;         &quot;cli&quot;           &quot;crayon&quot;        &quot;dbplyr&quot;       
- [5] &quot;dplyr&quot;         &quot;dtplyr&quot;        &quot;forcats&quot;       &quot;ggplot2&quot;      
- [9] &quot;googledrive&quot;   &quot;googlesheets4&quot; &quot;haven&quot;         &quot;hms&quot;          
-[13] &quot;httr&quot;          &quot;jsonlite&quot;      &quot;lubridate&quot;     &quot;magrittr&quot;     
-[17] &quot;modelr&quot;        &quot;pillar&quot;        &quot;purrr&quot;         &quot;readr&quot;        
-[21] &quot;readxl&quot;        &quot;reprex&quot;        &quot;rlang&quot;         &quot;rstudioapi&quot;   
-[25] &quot;rvest&quot;         &quot;stringr&quot;       &quot;tibble&quot;        &quot;tidyr&quot;        
-[29] &quot;xml2&quot;          &quot;tidyverse&quot;    </code></pre>
-</div>
-</div>
-<p>Before we get started with the <code>tidyverse</code>, there are two important new things to learn about. The first is the pipe operator <code>%&gt;%</code> and the second is the the alternative to a <em>data frame</em> called a <em>tibble</em>.</p>
-<section id="the-pipe" class="level3">
-<h3>The Pipe %&gt;%</h3>
-<p>The pipe operator <code>%&gt;%</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> is introduced by the <code>magrittr</code> package<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and it is extremely useful. The pipe operator passes the output of a function to the first argument of the next function, which mean you can chain several steps together.</p>
-<p>For example, lets find the mean year of birth in our data. We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.</p>
-<div class="cell">
-<div class="sourceCode" id="cb132"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find mean YOB using mean() function</span></span>
-<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(td<span class="sc">$</span>YOB)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1969.447</code></pre>
-</div>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the mean YOB by piping the td data to the mean() function</span></span>
-<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>td<span class="sc">$</span>YOB <span class="sc">%&gt;%</span></span>
-<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1969.447</code></pre>
-</div>
-</div>
-<p>The functionality of <code>%&gt;%</code> might seem trivial at this point; however, when you need to perform multiple tasks sequentially, it saves a lot of time and space when writing your code.</p>
-</section>
-<section id="tibbles" class="level3">
-<h3>Tibbles</h3>
-<p>A <em>tibble</em> is an updated version of a <em>data frame</em>. <em>Tibbles</em> keep the features that have stood the test of time, and drop the features that used to be convenient but are now frustrating (i.e. converting character vectors to factors). For our purposes, the difference between the two is negligible, but you should be aware that <em>tibbles</em> look a bit different from <em>data frames</em>.</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb136"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 500px;"><code>      Dep.Var     Stress Category Morph.Type          Before     After Speaker  YOB Sex    Education     Job After.New Center.Age Age.Group  Age_Sex Phoneme    Dep.Var.Full
+Generally, in LVC analysis we do not deal often with either simple vectors or lists; instead, most of our data is in a spreadsheet-like format, which in *R* is a **data frame**.
+
+**Data frames** are a special type of **list** in which every element in the **list** has the same length (unlike, for example, the `complex.list` above). **Data frames** can have additional annotations, like `rownames()`. Some statisticians use `rownames()` for things like `participantID`, `sampleID`, or some other unique identifier. Most of the time (and for our purposes), `rownames()` are not useful given that we have multiple rows from the same speaker/interview, etc.
+
+### Factors and Comments
+
+A *factor* in *R* is a special type of variable or data type that, in theory, has a limited number of values. Each value is called a *level*. Any **vector** or **data frame** column of `character` or `integer` values can be a **factor**. Most non-numerical data in LVC is generally thought of as a **factor** already, so knowing how to convert **vectors** or **data frame** columns to factors is important. For example, in the `td` data, the column `Stress` contains only two options: `Stressed` and `Unstressed`. Because this column contains letters, when we imported it into *R*, it was automatically categorized as `character` data. This is probably the best option for a column that, for example, contained the broader context of a token. For `Stressed`, however, it is better for our purposes for *R* to consider the column as containing a **factor** with two discrete levels. Below is the code to convert `Stress` into a **factor**.
+
+``` r
+# Determine the class of the column Stress in the date frame td
+class(td$Stress)
+```
+
+    [1] "character"
+
+``` r
+# Convert Stress to a column to a factor
+td$Stress <- factor(td$Stress)
+class(td$Stress)
+```
+
+    [1] "factor"
+
+Notice the **comments** in the code above. In *R* any line that begins with a `#` is not evaluated. This is called *commenting out* a line. We use `#` to include notes in our codes, or to keep code in our script file but have *R* ignore it. This can be useful in order to keep track of the steps you are taking in an analysis (see also [this tutorial](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections-in-the-RStudio-IDE) on organizing code using `#`)
+
+Columns within a data frame can be specified using the `$` operator So, above, we tell *R* to assign (using the assignment operator `<-`) the values of the original `td$Stress` column, converted into **factors**, back to the column `td$Stress`. In other words, we are replacing the original column `td$Stress` with a converted version of itself. Now, look how the output of the `summary()` function changes.
+
+``` r
+summary(td)
+```
+
+       Dep.Var                 Stress       Category          Morph.Type       
+     Length:6989        Stressed  :6555   Length:6989        Length:6989       
+     Class :character   Unstressed: 434   Class :character   Class :character  
+     Mode  :character                     Mode  :character   Mode  :character  
+                                                                               
+                                                                               
+                                                                               
+        Before             After             Speaker               YOB      
+     Length:6989        Length:6989        Length:6989        Min.   :1915  
+     Class :character   Class :character   Class :character   1st Qu.:1952  
+     Mode  :character   Mode  :character   Mode  :character   Median :1965  
+                                                              Mean   :1967  
+                                                              3rd Qu.:1991  
+                                                              Max.   :1999  
+         Sex             Education             Job            Phoneme.Dep.Var   
+     Length:6989        Length:6989        Length:6989        Length:6989       
+     Class :character   Class :character   Class :character   Class :character  
+     Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                                
+                                                                                
+                                                                                
+
+We get the number of observations of each level of `td$Stress` instead of just the number of rows (i.e. the `length` of the column).
+
+To get the levels of a **factor** we can use the function `levels()` and to get the number of levels, we can use the function `nlevels(`)\`
+
+``` r
+levels(td$Stress)
+```
+
+    [1] "Stressed"   "Unstressed"
+
+``` r
+nlevels(td$Stress)
+```
+
+    [1] 2
+
+## More Exploring
+
+If you only want information from a single column of the data frame, you can use the operator `$` to specify which column of `td` you want. Here the column \`Sex' is specified.
+
+``` r
+summary(td$Sex)
+```
+
+       Length     Class      Mode 
+         6989 character character 
+
+``` r
+levels(td$Sex)
+```
+
+    NULL
+
+The `Sex` column is still categorized as `character` data and so `summary()` only return the number of rows (`length`) of the column and there are no levels. To get the information we want about the `Sex` column (i.e., how many tokens are from male speakers and how many are from women speakers) we need to convert it to a factor first. We can either convert the the column to a factor column, or we can use the `as.factor()` function to have *R* treat is as a factor in just the following code.
+
+``` r
+summary(as.factor(td$Sex))
+```
+
+       F    M 
+    3776 3213 
+
+``` r
+levels(as.factor(td$Sex))
+```
+
+    [1] "F" "M"
+
+The following code changes all the character class columns to factors.
+
+``` r
+# We start with a fresh import of the (t, d) data into R
+td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+# Now we convert each character column into a factor
+td$Dep.Var <- factor(td$Dep.Var)
+td$Stress <- factor(td$Stress)
+td$Category <- factor(td$Category)
+td$Morph.Type <- factor(td$Morph.Type)
+td$Before <- factor(td$Before)
+td$After <- factor(td$After)
+td$Speaker <- factor(td$Speaker)
+td$Sex <- factor(td$Sex)
+td$Education <- factor(td$Education)
+td$Job <- factor(td$Job)
+td$Phoneme.Dep.Var <- factor(td$Phoneme.Dep.Var)
+```
+
+## The (t/d) Data
+
+Let's look at the data now that all the character columns are factors.
+
+``` r
+summary(td)
+```
+
+         Dep.Var            Stress         Category        Morph.Type  
+     Deletion:1747   Stressed  :6555   Function: 739   Mono     :5236  
+     Realized:5242   Unstressed: 434   Lexical :6250   Past     : 782  
+                                                       Semi-Weak: 971  
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+                 Before           After         Speaker          YOB       Sex     
+     Liquid         : 269   Consonant: 709   GARF87 : 224   Min.   :1915   F:3776  
+     Nasal          : 209   H        : 246   INGM84 : 212   1st Qu.:1952   M:3213  
+     Other Fricative: 130   Pause    :5248   MARM92 : 176   Median :1965           
+     S              : 332   Vowel    : 786   HANF83 : 139   Mean   :1967           
+     Stop           : 249                    CHIF55 : 135   3rd Qu.:1991           
+     Vowel          :5800                    GARF16 : 132   Max.   :1999           
+                                             (Other):5971                          
+            Education         Job           Phoneme.Dep.Var
+     Educated    :3006   Blue   :1068   t--Deletion : 981  
+     Not Educated:2184   Service:2895   t--Fricative: 973  
+     Student     :1799   Student:1799   t--T        : 830  
+                         White  :1227   d--Deletion : 766  
+                                        t--Affricate: 667  
+                                        d--T        : 583  
+                                        (Other)     :2189  
+
+As shown in the `summary(td)` results above, the first column in the (t, d) deletion data is called `Dep.Var` and it includes two levels: `Realized` and `Deletion`. These two levels represent the two options for each token of (t, d). The values after each level are how many rows are coded with that level. In other words, there are 1,747 rows (or tokens) of `Deletion` and there are 5,242 rows (or tokens) of `Realized`. Notice that the order of the factor levels is alphabetical. There is a column labelled `Stress` which indicates if the (t, d) token is in a stressed or unstressed syllable. The `Category` column indicates if the word in which the (t, d) token appears is a function or lexical word. `Morph.Type` indicates if the (t, d) occurs in a monomorpheme (like *fist*), a semi-weak simple past-tense verb (like *dealt* ) in which there is a vowel change and a (t,d) sound is added, or a weak simple past-tense verb (like *walked*) in which just /*-ed*/ is added. `Before` indicates the type of sound preceding the (t, d) and `After` indicates the sound following the (t, d). `Speaker` is a unique identifier for each participant in the data (only the first six are displayed, though); `YOB` indicates the speaker's year of birth, `Sex` his or her sex[^1], `Education` his or her education level, and `Job` his or her job type. Finally, `Phoneme.Dep.Var` indicates the canonical underlying phoneme of the (t, d) token and a more detailed coding of the dependent variable.
+
+# Modifying Data
+
+Deleting tokens, recoding tokens, combining factor groups, etc. is, in my opinion, easier to do in *Excel*. But, if you want to do this in *R*, or you only want to perform the modification for a specific analysis or graph, you may find the following functions useful.
+
+## Removing Rows
+
+This (t, d) deletion data includes tokens in which the previous phoneme is a vowel. Many analyses of (t, d) deletion exclude this context. Here is how to remove these contexts from your data frame.
+
+``` r
+td <- td[td$Before != "Vowel", ]
+summary(td)
+```
+
+         Dep.Var           Stress         Category        Morph.Type 
+     Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
+     Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
+                                                      Semi-Weak:116  
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                 Before          After        Speaker         YOB       Sex    
+     Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
+     Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
+     Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
+     S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
+     Stop           :249                   DONF15 : 28   3rd Qu.:1991          
+     Vowel          :  0                   GARF37 : 28   Max.   :1999          
+                                           (Other):939                         
+            Education        Job          Phoneme.Dep.Var
+     Educated    :496   Blue   :130   t--T        :352   
+     Not Educated:317   Service:468   t--Deletion :296   
+     Student     :376   Student:376   t--Fricative:131   
+                        White  :215   d--Deletion : 90   
+                                      d--T        : 73   
+                                      d--D        : 46   
+                                      (Other)     :201   
+
+The first line of code creates a new object called `td`. The `<-` operator means you're telling *R* that this new `td` is the same as the old `td`, but filtered according to some specific condition. You could also use the `<-` operator to create a new `td` with a different name --- e.g., `td.new <- td[td\$Before != "Vowel",]}` --- thus giving you two data frames (`td` and `td.new`) to work with.
+
+Throughout *R*, square brackets `[ ]` are used for specifying filtering conditions. The first line of code therefore says make new `td` the same as old `td`, but only where the value in the `Before` column of old `td` (indicated by `td$Before`) does not equal `"Vowel"`. `!=` is the standard operator meaning *does not equal*. The comma after `"Vowel"` is important. If you are filtering a data frame, as you are here, *R* needs to know where to look for the values you want to keep or throw out. It follows this format: `data frame[rows,columns]`. So the comma in the above function line indicates that the filtering condition relates to values found while searching row by row. It selects any row in which the value in the `Before` column does not equal `"Vowel"`. The quotation marks around `"Vowel"` are also important because the values in the `Before` column are all strings of characters, which (you'll remember from above), are always enclosed in quotation marks.
+
+``` r
+td$Before <- factor(td$Before)
+```
+
+An additional line of code is needed for resetting the data structure. The new `td` inherits the data structure from the old `td`. This means *R* thinks the new `td` still has a level in the column `Before` called `"Vowel"` --- even though there are zero tokens now in the column with this value. If you run `summary(td)` after the first code above you'll see that *R* still lists `"Vowel"` as a possible level of `Before`, but with zero instances. The additional line of code tells *R* to make a new column `Before` in the data frame `td` (this will replace the old `Before` column) in which the possible factors (i.e., values) in that column are those that actually exist in the new `Before` column in `td`. Run `summary()` or `str()` now and you'll see that the empty `"Vowel"` level is gone.
+
+``` r
+summary(td)
+```
+
+         Dep.Var           Stress         Category        Morph.Type 
+     Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
+     Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
+                                                      Semi-Weak:116  
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                 Before          After        Speaker         YOB       Sex    
+     Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
+     Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
+     Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
+     S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
+     Stop           :249                   DONF15 : 28   3rd Qu.:1991          
+                                           GARF37 : 28   Max.   :1999          
+                                           (Other):939                         
+            Education        Job          Phoneme.Dep.Var
+     Educated    :496   Blue   :130   t--T        :352   
+     Not Educated:317   Service:468   t--Deletion :296   
+     Student     :376   Student:376   t--Fricative:131   
+                        White  :215   d--Deletion : 90   
+                                      d--T        : 73   
+                                      d--D        : 46   
+                                      (Other)     :201   
+
+``` r
+str(td)
+```
+
+    'data.frame':   1189 obs. of  12 variables:
+     $ Dep.Var        : Factor w/ 2 levels "Deletion","Realized": 2 1 1 1 2 1 1 1 1 1 ...
+     $ Stress         : Factor w/ 2 levels "Stressed","Unstressed": 1 1 1 1 1 1 1 1 1 1 ...
+     $ Category       : Factor w/ 2 levels "Function","Lexical": 2 2 2 2 2 2 2 2 2 2 ...
+     $ Morph.Type     : Factor w/ 3 levels "Mono","Past",..: 1 1 1 1 1 1 1 1 1 1 ...
+     $ Before         : Factor w/ 5 levels "Liquid","Nasal",..: 5 5 5 5 5 5 5 5 5 5 ...
+     $ After          : Factor w/ 4 levels "Consonant","H",..: 1 1 1 1 1 1 1 1 1 1 ...
+     $ Speaker        : Factor w/ 66 levels "ARSM91","BEAM91",..: 3 5 5 6 13 14 15 23 29 33 ...
+     $ YOB            : int  1965 1955 1955 1952 1953 1958 1946 1942 1945 1949 ...
+     $ Sex            : Factor w/ 2 levels "F","M": 1 1 1 1 2 2 1 2 2 1 ...
+     $ Education      : Factor w/ 3 levels "Educated","Not Educated",..: 1 1 1 1 1 2 1 2 2 1 ...
+     $ Job            : Factor w/ 4 levels "Blue","Service",..: 4 4 4 2 2 2 2 1 1 2 ...
+     $ Phoneme.Dep.Var: Factor w/ 18 levels "d--Affricate",..: 18 12 12 12 18 12 12 12 12 12 ...
+
+The following code does exactly the same thing as the previous code, but instead of filtering out `"Vowel"`, it specifies keeping all the other levels. Here `==` is the standard operator meaning *equals and only equals* and `|` (called *pipe*) is the operator meaning *or*. Again, note the very important comma following the last column condition.
+
+``` r
+td <- td[td$Before == "Liquid" | td$Before == "Nasal" | td$Before == "Other Fricative" |
+    td$Before == "S" | td$Before == "Stop", ]
+td$Before <- factor(td$Before)
+```
+
+As you did previously, you must run the second line of code to get rid of the empty `"Vowel"` level.
+
+## Re-coding Variables
+
+While it is possible to do *ad-hoc* re-codes in *R*, you must keep in mind that these re-codes will only exist in your *R* data frame, not in your saved tab-delimited-text file. Personally, I think it's both easier and more useful to use Microsoft *Excel* to create new columns in your tab-delimited-text file for every re-code or configuration of factors in a factor group (i.e., levels in a column) that you might need. That being said, there are definitely situations where *ad-hoc* recodes may be preferable.
+
+If you want to change anything in your data frame you can generate an editable data frame in a popup window with the following function:
+
+``` r
+fix(td)
+```
+
+I don't recommend using this method. Like `file.choose()` and `choose.files()`, it introduces non-replicability because the changes you make using `fix()` are not recorded in your script file and therefore cannot be automatically replicated. A better practice for re-coding while maintaining replicability is to specify the cells in a column that include the specific values you want to change, and then to reassign a new value to those cells:
+
+``` r
+td$After[td$After == "H"] <- "Consonant"
+td$After <- factor(td$After)
+```
+
+The code above uses the `<-` operator to say that any cells in the column `After` that contain the value `"H"` should be changed to `"Consonant"` --- another value in the `After` column. Many studies of (t, d) deletion do not distinguish between pre-/h/ and other pre-consonantal contexts. The above re-code might be needed for comparing this (t, d) deletion data to other studies. Notice that there is no comma following `"H"` in the above code. This is because you are filtering a column; see how the filtering brackets `[ ]` come after the column specifier `$`. The comma is only used when filtering whole data frames because data frames can be filtered along two dimensions (e.g., rows and columns) and *R* needs to know which dimensions the filtering conditions apply to. When you filter just a column (or just a row), you don't need the comma because the filtering only occurs along one dimension (in that column, or in that row only). You also need to run the second `factor()` function to get rid of the now empty `"H"` level.
+
+If you get an error message when trying to re-code using this method and your column contains words (rather than numbers) try first re-classifying (i.e., changing the type of) your original column to a *character* column: `td$After.New <- as.character(td$After.New)`, then proceeding with the above method.
+
+The previous function sequence re-codes all `"H"` cells in the existing `After` column. If instead you wanted to create a new column with your re-code (so both possible coding options were available for later analyses), you could do so by creating a new column with the exact same values as `After` and then re-code that column. If you've been following along in *R*, your `After` column is already recoded. To go back to the original form of the data as it exists in the tab-delimited-text file, simply reload that text file and assign it to the object `td`. Of course, this resets the deletion of the tokens following a vowel, so you must do that again too. Luckily, you've written all of your functions in a script file (rather than directly into the console) so this is easy to do: just highlight the code and press the execution command.
+
+``` r
+# Start with a fresh import of the (t, d) data into R
+td <- read.delim("~/Dropbox/R/Doing_LVC_with_R/deletiondata.txt")
+# Convert each character column into a factor
+td$Dep.Var <- factor(td$Dep.Var)
+td$Stress <- factor(td$Stress)
+td$Category <- factor(td$Category)
+td$Morph.Type <- factor(td$Morph.Type)
+td$Before <- factor(td$Before)
+td$After <- factor(td$After)
+td$Speaker <- factor(td$Speaker)
+td$Sex <- factor(td$Sex)
+td$Education <- factor(td$Education)
+td$Job <- factor(td$Job)
+td$Phoneme.Dep.Var <- factor(td$Phoneme.Dep.Var)
+# Subset data to remove previous 'Vowel' contexts
+td <- td[td$Before != "Vowel", ]
+td$Before <- factor(td$Before)
+# Re-code 'H' to be 'Consonant' in a new column
+td$After.New <- td$After
+td$After.New[td$After.New == "H"] <- "Consonant"
+td$After.New <- factor(td$After.New)
+```
+
+The new column you create (`After.New`) is added at the end of the data frame. You can conceptualized this as the right edge of the data in an `Excel` spreadsheet. You can see this with the `summary()` or `str()` functions. The name of the new column you create doesn't really matter, but it cannot include any spaces.
+
+``` r
+summary(td)
+```
+
+         Dep.Var           Stress         Category        Morph.Type 
+     Deletion:386   Stressed  :1047   Function:  57   Mono     :762  
+     Realized:803   Unstressed: 142   Lexical :1132   Past     :311  
+                                                      Semi-Weak:116  
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                 Before          After        Speaker         YOB       Sex    
+     Liquid         :269   Consonant:215   INGM84 : 57   Min.   :1915   F:659  
+     Nasal          :209   H        :157   MARM92 : 53   1st Qu.:1952   M:530  
+     Other Fricative:130   Pause    :558   GARF87 : 52   Median :1984          
+     S              :332   Vowel    :259   HUNF22 : 32   Mean   :1969          
+     Stop           :249                   DONF15 : 28   3rd Qu.:1991          
+                                           GARF37 : 28   Max.   :1999          
+                                           (Other):939                         
+            Education        Job          Phoneme.Dep.Var     After.New  
+     Educated    :496   Blue   :130   t--T        :352    Consonant:372  
+     Not Educated:317   Service:468   t--Deletion :296    Pause    :558  
+     Student     :376   Student:376   t--Fricative:131    Vowel    :259  
+                        White  :215   d--Deletion : 90                   
+                                      d--T        : 73                   
+                                      d--D        : 46                   
+                                      (Other)     :201                   
+
+``` r
+str(td)
+```
+
+    'data.frame':   1189 obs. of  13 variables:
+     $ Dep.Var        : Factor w/ 2 levels "Deletion","Realized": 2 1 1 1 2 1 1 1 1 1 ...
+     $ Stress         : Factor w/ 2 levels "Stressed","Unstressed": 1 1 1 1 1 1 1 1 1 1 ...
+     $ Category       : Factor w/ 2 levels "Function","Lexical": 2 2 2 2 2 2 2 2 2 2 ...
+     $ Morph.Type     : Factor w/ 3 levels "Mono","Past",..: 1 1 1 1 1 1 1 1 1 1 ...
+     $ Before         : Factor w/ 5 levels "Liquid","Nasal",..: 5 5 5 5 5 5 5 5 5 5 ...
+     $ After          : Factor w/ 4 levels "Consonant","H",..: 1 1 1 1 1 1 1 1 1 1 ...
+     $ Speaker        : Factor w/ 66 levels "ARSM91","BEAM91",..: 3 5 5 6 13 14 15 23 29 33 ...
+     $ YOB            : int  1965 1955 1955 1952 1953 1958 1946 1942 1945 1949 ...
+     $ Sex            : Factor w/ 2 levels "F","M": 1 1 1 1 2 2 1 2 2 1 ...
+     $ Education      : Factor w/ 3 levels "Educated","Not Educated",..: 1 1 1 1 1 2 1 2 2 1 ...
+     $ Job            : Factor w/ 4 levels "Blue","Service",..: 4 4 4 2 2 2 2 1 1 2 ...
+     $ Phoneme.Dep.Var: Factor w/ 18 levels "d--Affricate",..: 18 12 12 12 18 12 12 12 12 12 ...
+     $ After.New      : Factor w/ 3 levels "Consonant","Pause",..: 1 1 1 1 1 1 1 1 1 1 ...
+
+## Centering Continuous Variables
+
+Some variables, like year of birth, are not discrete but are continuous. Some statisticians advocate centering continuous variables before including them in certain tests or models.In the Regression Analysis section you'll learn when/if you need to center your variables.
+
+*Centering* entails expressing each value of a continuous variable as that value's difference from the mean of all values of the variable. For example, the *td* data frame has a column for speaker year of birth: `YOB`. The mean of all the years of birth (after the pre-vowel tokens are removed) is `1969`. Centering this variable simply means expressing years of birth like 1952 and 1989, as 17 ($=1969-1952$) and -20 ($=1969-1989$).
+
+``` r
+# Center YOB
+td$Center.Age <- scale(td$YOB, scale = FALSE)
+td$Center.Age <- as.numeric(td$Center.Age)
+```
+
+``` r
+td$Center.Age <- as.numeric(scale(td$YOB, scale = FALSE))
+```
+
+The `scale()` function centers the values in the column `YOB` and assigns those Centerd values to a new column called `Center.Age`. The option `scale = FALSE` indicates that the centered values remain in the original units (in this case years). If you change this option to `scale = TRUE`, the values are first divided by the standard deviation before being subtracted from the mean. This is needed if you are including multiple continuous variables in a model that are expressed using different units and vary along differing scales.
+
+For example, imagine a study of variable word-initial voice onset time in which you want to look at the effect of following vowel backness and year of birth of the speaker. Each of these variables are continuous, but voice onset time is $\pm20$ ms around its mean, year of birth is $\pm45$ years around its mean, and F2 is $\pm300$ Hz around its mean. By first dividing each value of these three variables by the variable's standard deviation, you can account for both the differing units and differing scales of each. Even if you have one variable, here just `YOB`, it is okay to scale the values, but do *NOT* do this here. Leave `YOB` in years. This will make the interpretation of later statistical estimates a little easier.
+
+After running your `scale()` function you must also run a function to tell *R* how to treat your new column `Center.Age.` *R* knows the column is filled with numbers, but *R* doesn't know if those numbers are continuous, if they are ordered in a specific way, or if they are factors with names expressed as digits. You use the function `as.numeric()` to tell *R* that the values are continuous numbers. This is very similar to what you did above with the function `factor()`, which tells *R* to consider whatever is inside the function to be a factor. Also, with `After.New` above, where the data structure is inherited from `After`, you used `factor()` to remove the remaining `H` level name. You did this by telling `R` to consider whatever was inside the `factor()` function as a factor, and, as part of that, `R` reads all the levels inside that column and chooses them as the factors. Here you are doing the same thing. You're telling `R` to look at the values inside `Center.Age` and consider them as being continuous numbers. You can do this as a secondary step after you create the column `Center.Age`, as shown in the first two rows. Or you can embed the `scale()` function inside the `as.numeric()` function, `as.numeric(scale())`, as shown in the last line.
+
+## Dividing a Continuous Variable
+
+There are other ways you can represent age. Instead of a continuous variable, you can categorize speakers as belonging to a "young","middle aged", or "old" age group. You might also group speakers based on decade of birth or as being born before or after some event --- whatever makes sense for your study or community.
+
+How to divide speakers by age is something that should be informed by sociolinguistic theory, demographics, and your own understanding of your data. The birth years 1980 and 1945, used here, represent generational divides in Cape Breton that can be independently justified (Gardner 2013). Grouping speakers like this is very common, and not particularly difficult to do in *R*.
+
+``` r
+# Create a 3-way Age Group
+td$Age.Group[td$YOB > 1979] <- "Young"
+td$Age.Group[td$YOB > 1944 & td$YOB < 1980] <- "Middle"
+td$Age.Group[td$YOB < 1945] <- "Old"
+```
+
+First you will need a new column for your age group variable. Here, call it `Age.Group`.You use the assignment operator `<-` to fill all the cells in the new column `Age.Group` based on the values that are in the already existing `YOB` column. The first line says that for any rows in which `YOB` is greater than 1979, fill the empty cell in those same rows in the column `Age.Group` with the value `Young`. The second line does the same thing but includes two conditions: that `YOB` is greater than 1944 and that it is also less than 1980. For these rows, the value `Middle` is inserted in the `Age.Group` column. Even though the two conditions (`YOB > 1944`, `YOB < 1980`) refer to the same column, you need to fully specify each condition with both a column reference and a condition with an operator. So, for example, writing `td$Age.Group[td$YOB >1944 & <1970]` will not work. The third line instructs `R` to put `Old` in the `Age.Group` column for any row where `YOB` is less than 1945. Because this new column includes words, *R* will automatically categorize the column as `character` data. To rectify this, see the next section.
+
+``` r
+class(td$Age.Group)
+```
+
+    [1] "character"
+
+## Changing the Order of Levels
+
+``` r
+td$Age.Group <- factor(td$Age.Group, levels = c("Young", "Middle", "Old"))
+```
+
+The code above does two things. First, it tells `R` that you want the new `Age.Group` column to be a column of factors, and second, it also tells `R` how you want those factors to be ordered. When `R` extracts the name of the factors of a column (based on the levels that are in that column) it orders the factors by name alphabetically. For example, the `Sex` column contains two levels: `M` and `F`. The first 500 tokens in your data frame might comes from males but `R` will still list the names of the factors in the column (which are based on those two levels) as `F` and then `M`, because `F` is closer to the start of the alphabet than `M`. If you run `summary(td)` you can see that the factor names listed in all of the factor columns are in alphabetical order. Sometimes this alphabetical ordering doesn't matter. Other times it is makes a big difference.
+
+Any time factors are used in a statistical test or appear in a graph, the order of factor names is very important. For example, which factor is selected as the application value and which factor(s) are the non-application value(s) of a dependent variable is determined by factor name order. As for graphs, all kinds of layout parameters are set by the factor order of a variable. For example, if you left the `Age.Group` factor as it is, it would always list the `Age.Group` levels as `Middle`, `Old`, `Young`. On a graph like a bar graph it would arrange the bars for each age group alphabetically from left to right. This is not desirable. You will always want `Age.Group` ordered as either `Young`, `Middle`, `Old` or `Old`, `Middle`, `Young`. This is what the second part of the `factor()` command does. First it tells `R` to consider the values in the `Age.Group` to be factors, then it specifies that you want the factors (which get their names from the levels) to be ordered in certain way. You use `levels =` and the concatenating `c()` function to specify that you want the factors to get their names from the levels in the following order `"Young", "Middle", "Old"`, and thus also be ordered in that way.
+
+This might seem confusing. Think about coins. Imagine you have a bag of change. Each coin in that bag is like a token in your column in the data frame. The levels of the column are just the different kinds of coins there are. You can root around in the bag and figure out what coins are in it without having to put the coins in any particular order. This is the "levels" of the coins. If you ask *R* what coins are in your bag, it will tell you there are "dimes", "nickels", "pennies", and "quarters". These levels are in alphabetical order, but only for a lack of a better way to tell you them. Telling you the levels doesn't imply any sort of ordering of the coins. Making the coin bag into a factor column is like putting the coins into a change tray, like the change trays in cash registers. Coins inside of a change tray go from being unstructured to being organized based on a structure. This makes them factors. In a cash tray each coin is grouped with other coins just like it. Each slot in the drawer also has a name. *R* just automatically gives the slots the same name as the coins (e.g. levels) that are in it. The order of the slots from right to left is also by default alphabetical based on the name of each slot. So, coin (= level), slot name (= factor name) and slot order (= factor order) are three independent parameters. The function `td$Age.Group <-factor(td$Age.Group, levels = c("Young", "Middle", "Old"))` is basically saying take all the coins out of the cash drawer, then put them back in the drawer in in a specific order, with `Young` going in the first slot. The slots then take the names of the coins that go into them.
+
+## Reversing the Order of Levels
+
+To reverse the order of levels you can embed the `rev()` function inside your `factor()` function
+
+``` r
+levels(td$Age.Group)
+```
+
+    [1] "Young"  "Middle" "Old"   
+
+``` r
+td$Age.Group <- factor(td$Age.Group, levels = rev(levels(td$Age.Group)))
+levels(td$Age.Group)
+```
+
+    [1] "Old"    "Middle" "Young" 
+
+## Combining Columns
+
+It is often useful to combine two columns, or factor groups, into one. For example, it might be useful to have a way of grouping tokens not by `Age.Group` or `Sex`, but instead by the combination of `Age.Group` and `Sex`. While it is not difficult to test the potential interaction of these two factor groups in statistical tests in *R*, for specifically generating summary statistics it is much easier to examine the combination of `Age.Group` and `Sex` (or any two columns) by first creating a new column combining them.
+
+Combining columns is done using the function `paste()`, which you embed inside of the `factor()` function so that the resulting column will be a column of factors. Inside `paste()` you list the two columns you want to combine (you could list more) and then tell *R* how to separate the values from each of the columns. Here the code tells *R* to put an underscore \*\_\* between the values for `Age.Group` and `Sex`, resulting in new values like `Old_M` and `Middle_F`. The new column will be called `Age_Sex`. If we want to order these values in any particular way, we can do that with the `level=` option in `factor()`
+
+``` r
+# Combine Columns
+td$Age_Sex <- factor(paste(td$Age.Group, td$Sex, sep = "_"), levels = c("Young_F",
+    "Middle_F", "Old_F", "Young_M", "Middle_M", "Old_M"))
+levels(td$Age_Sex)
+```
+
+    [1] "Young_F"  "Middle_F" "Old_F"    "Young_M"  "Middle_M" "Old_M"   
+
+``` r
+# Reorder factor levels
+td$Age_Sex <- factor(td$Age_Sex, levels = c("Young_F", "Young_M", "Middle_F", "Middle_M",
+    "Old_F", "Old_M"))
+levels(td$Age_Sex)
+```
+
+    [1] "Young_F"  "Young_M"  "Middle_F" "Middle_M" "Old_F"    "Old_M"   
+
+## Splitting Columns
+
+You may have noticed that the data frame `td` has one column that is actually two variables. The column `Phoneme.Dep.Var` combines both the underlying phoneme of the token, either `t` (t) or `d` (d), with a more descriptive coding of the dependent variable. In the dialect where this data comes from (t) and (d) can be realized in up to nine different ways, only one of which is `Deletion`. In your analysis you might want to consider if deletion is more likely if the underlying phoneme is (t) or (d). In order to do this you must break `Phoneme` away from the more elaborate `Dep.Var` coding. To do this, you will use a function that is beyond *R*'s base functionality and part of the `dplyr` package. First you load the `dplyr` package from your library using `library()`, then you use the function `mutate()` to tell *R* how to break up the column. The `dplyr` package is very powerful. We will look at additional uses as this guide progresses.
+
+To be honest, splitting columns is an operation that is much simpler and usually faster to do using *Excel*, or another spreadsheet program. I never use *R* to split columns because, while the `mutate()` function itself is not tricky, figuring out the exact sequence of `regular expressions` I need to split my columns is challenging. If you absolutely must split columns in *R*, below are instructions. Keep in mind that this method will only work for columns with predictable structures, like `Phoneme.Dep.Var`.
+
+The values in the column `Phoneme.Dep.Var` are predictable, in other words, they all follow the same pattern. You can exploit this regularity to tell *R* exactly where to break the `Phoneme.Dep.Var` values into two. If you execute the command `levels(td$Phoneme.Dep.Var)` you can very easily see the pattern.
+
+``` r
+levels(td$Phoneme.Dep.Var)
+```
+
+     [1] "d--Affricate"       "d--D"               "d--Deletion"       
+     [4] "d--Ejective"        "d--Flap"            "d--Fricative"      
+     [7] "d--Glottal Stop"    "d--Other Weakening" "d--T"              
+    [10] "t--Affricate"       "t--D"               "t--Deletion"       
+    [13] "t--Ejective"        "t--Flap"            "t--Fricative"      
+    [16] "t--Glottal Stop"    "t--Other Weakening" "t--T"              
+
+The first part of every value is either `t` or `d`, then there are two hyphens, then a word describing the realization of (t) or (d). If you split `Phoneme.Dep.Var` at the hyphens you'll be left with two values: one that is either `t` or `d`, and another that describes the realization of (t) or (d). So, for the new `Phoneme` column you want the one character before the hyphens from `Phoneme.Dep.Var`, and for the new `Dep.Var.Full` column, you want all the characters --- however many there are -- that come after the two hyphens.
+
+``` r
+# Break Phoneme.Dep.Var into two columns
+library(dplyr)
+```
+
+
+    Attaching package: 'dplyr'
+
+    The following objects are masked from 'package:stats':
+
+        filter, lag
+
+    The following objects are masked from 'package:base':
+
+        intersect, setdiff, setequal, union
+
+``` r
+td <- mutate(td, Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var), Dep.Var.Full = sub("^(.--)(.*)$",
+    "\\2", Phoneme.Dep.Var), Phoneme.Dep.Var = NULL)
+td$Dep.Var.Full <- factor(td$Dep.Var.Full)
+td$Phoneme <- factor(td$Phoneme)
+```
+
+::: {style="color: \#009fe3; background: \#d8f0fa;"} <strong> Note: </strong> The procedure here is somewhat complicated. I always have to double-check how these complicated procedures work. Either by looking up the functions or checking my old script files. You can look up how a function like `mutate()` works by placing a question mark before the function in the console window, e.g. . :::
+
+Above, inside the `mutate()` function, first you specify the data frame object you want to mutate (here `td`), and then how to mutate it. The mutations include creating a new column called `Phoneme` and then telling *R* what do put in it, creating a new column called `Dep.Var.Full` and then telling *R* what to put in it, and then taking the `Phoneme.Dep.Var` column and making it equal `NULL` --- in other words, deleting it. For the `Phoneme` and `Dep.Var.Full` columns you specify what values to insert in each cell using the `sub()` function, which returns a "sub" or divided section of a value within some cell. The `sub()` function's first argument is a pattern of *regular expressions* to search for, the second is a character string to replace the pattern with, and the third is the column in which to search for the pattern.
+
+::: {style="color: \#009fe3; background: \#d8f0fa;"} <strong> Note: </strong> I don't have *R*'s regular expressions memorized; I always have to look them up [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html) :::
+
+For the functions meant to create values for `Phoneme` and for `Dep.Var.Full` you tell *R* to search `Phoneme.Dep.Var` for the pattern `"^.--.*$"`. This series of regular expressions describes the following pattern: a text string beginning with one single character, followed by two hyphens, and then any number of characters. The quotation marks `" "` indicate a text string. The `^` and `$` indicate the beginning and end of a text string, respectively.[^2] The period `.` indicates a single character and the asterisk`*` indicates zero or more of whatever comes before that asterisk. So `.*` means any one or more characters. The two hyphens `--` are just two hyphens. The parentheses in the regular expressions relate to the second substitution element. In the `sub()` function responsible for creating values for the new `Phoneme` column, you break the values that match the regular expression pattern into two parts: the one character before the two hyphens `(.)` and then everything after it `(--.*)`; then you tell *R* to substitute (or rather place) the first of those two elements `\\1` as text `" "` in the new column. In the `sub()` function responsible for creating the values for the new `Dep.Var.Full` column, you break the values that match the regular expression pattern into two parts: the two hyphens and the one character that comes before them `(.--)` and then the one or more characters that come after the hyphens `(.*)`; then tell *R* to to substitute (or rather place) the second of those elements `\\2` as text `" "` in the new column.
+
+The last two lines simply make these two new columns into factor columns.
+
+## Partitioning Data Frames
+
+Many times in my own work I have only wanted to work in *R* with a subset of my full dataset. For example, I frequently want to run separate regression analyses on data from old speakers, middle age speakers, and young speakers. Other times I've had large datasets that combine multiple corpora and have wanted to run tests on data from just one corpus. Being able to partition (subset) my data frame has therefore been very useful.
+
+There are two main ways to partition your data. One method involves using the filtering functionality of *R* detailed above. For example, the first line code below represents the `td` data from `young` speakers only. The second line of codes assigns that subset of `td` to a completely new data frame.
+
+``` r
+# Subset of td where Age.Group only equals Young
+td[td$Age.Group == "Young", ]
+```
+
+``` r
+# Create td.young which equals subset of td where Age. Group only equals Young
+td.young <- td[td$Age.Group == "Young", ]
+```
+
+In your tests you can use the filtered version of `td` or you can use the new data frame `td.young`. I recommend using the new data frame if you are using any centered continuous variables. This is because centered continuous variables are centered around the mean of the values in the column that is centered. If you partition the data, that mean will be different because the range of values within the the centered column are now different. So, if you partition your data, especially by age, you should re-center your continuous variables.
+
+The second way to partition your data is using the `subset()` function.
+
+``` r
+# Create three partitions based on Age.Group
+td.young <- subset(td, Age.Group == "Young")
+td.middle <- subset(td, Age.Group == "Middle")
+td.old <- subset(td, Age.Group == "Old")
+# Re-Center Center.Age
+td.young$Center.Age <- scale(td.young$YOB, scale = FALSE)
+td.middle$Center.Age <- scale(td.middle$YOB, scale = FALSE)
+td.old$Center.Age <- scale(td.old$YOB, scale = FALSE)
+```
+
+The usefulness of `subset()` is when you want to partition your data frame based on several factors. For example, compare the filtering versus `subset()` methods when partitioning `td` for just middle-age, blue-collar men. Using saves you from having to type `td$` multiple times, and you don't need the final `,`.
+
+``` r
+# Subset of td where Age.Group is Middle, Sex is M, and Job is Blue
+td.midmenblue <- td[td$Age.Group == "Middle" & td$Sex == "M" & td$Job == "Blue",
+    ]
+# Subset of td where Age.Group is Middle, Sex is M, and Job is Blue
+td.midmenblue <- subset(td, Age.Group == "Middle" & Sex == "M" & Job == "Blue")
+```
+
+When you subset your data frame, using either method, and assign it to a new data frame, your new data frame inherits the structure of your old data frame. This means that there will be lots of columns that list empty levels. If you execute `summary(td.midmenblue)}` you'll see see that `Job` still lists `Service`, `Student`, and `White` as factors with 0 tokens each. To remove these empty levels you could use the `factor()` function on each column with empty levels (as you did above), or you can use the function `droplevels()` to tell *R* to drop any empty levels from each column in the data frame. You need to make sure to also assign the dropped levels data frame to the original data frame, as shown below.
+
+``` r
+summary(td.midmenblue)
+```
+
+         Dep.Var          Stress       Category      Morph.Type
+     Deletion:30   Stressed  :49   Function: 3   Mono     :38  
+     Realized:27   Unstressed: 8   Lexical :54   Past     :15  
+                                                 Semi-Weak: 4  
+                                                               
+                                                               
+                                                               
+                                                               
+                 Before         After       Speaker        YOB       Sex   
+     Liquid         :13   Consonant:16   GREM45 :18   Min.   :1945   F: 0  
+     Nasal          : 3   H        : 9   HOLM52 :16   1st Qu.:1945   M:57  
+     Other Fricative: 6   Pause    :20   SMIM61 :16   Median :1952         
+     S              :18   Vowel    :12   CLAM73 : 4   Mean   :1954         
+     Stop           :17                  HANM57 : 3   3rd Qu.:1961         
+                                         ARSM91 : 0   Max.   :1973         
+                                         (Other): 0                        
+            Education       Job         After.New    Center.Age       Age.Group 
+     Educated    : 0   Blue   :57   Consonant:25   Min.   :-24.447   Old   : 0  
+     Not Educated:57   Service: 0   Pause    :20   1st Qu.:-24.447   Middle:57  
+     Student     : 0   Student: 0   Vowel    :12   Median :-17.447   Young : 0  
+                       White  : 0                  Mean   :-15.394              
+                                                   3rd Qu.: -8.447              
+                                                   Max.   :  3.553              
+                                                                                
+         Age_Sex   Phoneme    Dep.Var.Full
+     Young_F : 0   d:11    Deletion :30   
+     Young_M : 0   t:46    T        :19   
+     Middle_F: 0           Fricative: 6   
+     Middle_M:57           D        : 1   
+     Old_F   : 0           Flap     : 1   
+     Old_M   : 0           Affricate: 0   
+                           (Other)  : 0   
+
+``` r
+# Drop empty levels across dataset
+td.midmenblue <- droplevels(td.midmenblue)
+summary(td.midmenblue)
+```
+
+         Dep.Var          Stress       Category      Morph.Type
+     Deletion:30   Stressed  :49   Function: 3   Mono     :38  
+     Realized:27   Unstressed: 8   Lexical :54   Past     :15  
+                                                 Semi-Weak: 4  
+                                                               
+                                                               
+                                                               
+                 Before         After      Speaker        YOB       Sex   
+     Liquid         :13   Consonant:16   CLAM73: 4   Min.   :1945   M:57  
+     Nasal          : 3   H        : 9   GREM45:18   1st Qu.:1945         
+     Other Fricative: 6   Pause    :20   HANM57: 3   Median :1952         
+     S              :18   Vowel    :12   HOLM52:16   Mean   :1954         
+     Stop           :17                  SMIM61:16   3rd Qu.:1961         
+                                                     Max.   :1973         
+            Education    Job         After.New    Center.Age       Age.Group 
+     Not Educated:57   Blue:57   Consonant:25   Min.   :-24.447   Middle:57  
+                                 Pause    :20   1st Qu.:-24.447              
+                                 Vowel    :12   Median :-17.447              
+                                                Mean   :-15.394              
+                                                3rd Qu.: -8.447              
+                                                Max.   :  3.553              
+         Age_Sex   Phoneme    Dep.Var.Full
+     Middle_M:57   d:11    D        : 1   
+                   t:46    Deletion :30   
+                           Flap     : 1   
+                           Fricative: 6   
+                           T        :19   
+                                          
+
+## Interim Summary
+
+Below is the full code for loading the data file and then re-coding it. As you progress through the next sections, if for any reason you have a problem, it may be useful to recreate the *R* object `td` from scratch. Going forward in these instructions, the `td` object will be the object as it exists at the end of this code.
+
+``` r
+# Read in token file
+td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+```
+
+``` r
+# Subset data to remove previous 'Vowel' contexts
+td <- td[td$Before != "Vowel", ]
+td$Before <- factor(td$Before)
+# Re-code 'H' to be 'Consonant' in a new column
+td$After.New <- td$After
+td$After.New[td$After.New == "H"] <- "Consonant"
+td$After.New <- factor(td$After.New)
+# Center Year of Birth
+td$Center.Age <- as.numeric(scale(td$YOB, scale = FALSE))
+# Create Age.Group
+td$Age.Group[td$YOB > 1979] <- "Young"
+td$Age.Group[td$YOB > 1944 & td$YOB < 1980] <- "Middle"
+td$Age.Group[td$YOB < 1945] <- "Old"
+td$Age.Group <- factor(td$Age.Group, levels = c("Young", "Middle", "Old"))
+# Combine Age and Sex
+td$Age_Sex <- factor(paste(td$Age.Group, td$Sex, sep = "_"))
+# Break Phoneme.Dep.Var into two columns
+library(dplyr)
+td <- mutate(td, Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var), Dep.Var.Full = sub("^(.--)(.*)$",
+    "\\2", Phoneme.Dep.Var), Phoneme.Dep.Var = NULL)
+td$Phoneme <- factor(td$Phoneme)
+td$Dep.Var.Full <- factor(td$Dep.Var.Full)
+# Create three partitions based on Age.Group
+td.young <- droplevels(subset(td, Age.Group == "Young"))
+td.middle <- droplevels(subset(td, Age.Group == "Middle"))
+td.old <- droplevels(subset(td, Age.Group == "Old"))
+# Re-center Center.Age
+td.young$Center.Age <- scale(td.young$YOB, scale = FALSE)
+td.middle$Center.Age <- scale(td.middle$YOB, scale = FALSE)
+```
+
+## Doing It All Again, But `tidy`
+
+The package `dplyr` is part of a larger "universe" of *R* packages called `tidyverse`. This collection of packages is specifically focused on data science and offers some shortcuts that are useful to learn. The packages that make up the `tidyverse` are `dplyr`, `ggplot2`, `purr`, `tibble`, `tidyr`, `stingr`, `readr`, and `forcats`, among others. Throughout this guide I try to use the most basic *R* syntax for accomplishing a task. This way you learn how *R* works. I will also show how to complete the same task using packages from the `tidyverse`. Using the `tidyverse` methods is usually optional --- though once you get the hang of it, you might always use the `tidyverse` methods.
+
+``` r
+# Install the tidyverse package
+install.packages("tidyverse")
+```
+
+``` r
+# Load the tidyverse package
+library(tidyverse)
+```
+
+``` r
+# List the packages loaded by the tidyverse package
+tidyverse_packages()
+```
+
+     [1] "broom"         "cli"           "crayon"        "dbplyr"       
+     [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
+     [9] "googledrive"   "googlesheets4" "haven"         "hms"          
+    [13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
+    [17] "modelr"        "pillar"        "purrr"         "readr"        
+    [21] "readxl"        "reprex"        "rlang"         "rstudioapi"   
+    [25] "rvest"         "stringr"       "tibble"        "tidyr"        
+    [29] "xml2"          "tidyverse"    
+
+Before we get started with the `tidyverse`, there are two important new things to learn about. The first is the pipe operator `%>%` and the second is the the alternative to a *data frame* called a *tibble*.
+
+### The Pipe %\>%
+
+The pipe operator `%>%`[^3] is introduced by the `magrittr` package[^4] and it is extremely useful. The pipe operator passes the output of a function to the first argument of the next function, which mean you can chain several steps together.
+
+For example, lets find the mean year of birth in our data. We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.
+
+``` r
+# Find mean YOB using mean() function
+mean(td$YOB)
+```
+
+    [1] 1969.447
+
+``` r
+# Find the mean YOB by piping the td data to the mean() function
+td$YOB %>%
+    mean()
+```
+
+    [1] 1969.447
+
+The functionality of `%>%` might seem trivial at this point; however, when you need to perform multiple tasks sequentially, it saves a lot of time and space when writing your code.
+
+### Tibbles
+
+A *tibble* is an updated version of a *data frame*. *Tibbles* keep the features that have stood the test of time, and drop the features that used to be convenient but are now frustrating (i.e. converting character vectors to factors). For our purposes, the difference between the two is negligible, but you should be aware that *tibbles* look a bit different from *data frames*.
+
+``` r
+as.data.frame(td)
+```
+
+```
+      Dep.Var     Stress Category Morph.Type          Before     After Speaker  YOB Sex    Education     Job After.New Center.Age Age.Group  Age_Sex Phoneme    Dep.Var.Full
 51   Realized   Stressed  Lexical       Mono            Stop Consonant  BOUF65 1965   F     Educated   White Consonant  -4.446594    Middle Middle_F       t               T
 52   Deletion   Stressed  Lexical       Mono            Stop Consonant  CHIF55 1955   F     Educated   White Consonant -14.446594    Middle Middle_F       t        Deletion
 53   Deletion   Stressed  Lexical       Mono            Stop Consonant  CHIF55 1955   F     Educated   White Consonant -14.446594    Middle Middle_F       t        Deletion
@@ -9467,15 +9457,17 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 6921 Realized   Stressed  Lexical       Past            Stop     Vowel  DONF15 1915   F Not Educated Service     Vowel -54.446594       Old    Old_F       t               T
 6983 Realized   Stressed  Lexical       Mono           Nasal     Pause  PACM94 1994   M      Student Student     Pause  24.553406     Young  Young_M       d               T
 6984 Deletion   Stressed  Lexical       Mono               S     Pause  INGM84 1984   M     Educated Service     Pause  14.553406     Young  Young_M       t        Deletion
-6985 Realized   Stressed  Lexical       Mono               S     Vowel  INGM84 1984   M     Educated Service     Vowel  14.553406     Young  Young_M       t    Glottal Stop</code></pre>
-</div>
-</div>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb138"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 500px;"><code># A tibble: 1,189 × 17
+6985 Realized   Stressed  Lexical       Mono               S     Vowel  INGM84 1984   M     Educated Service     Vowel  14.553406     Young  Young_M       t    Glottal Stop
+```
+
+``` r
+as_tibble(td)
+```
+
+```
+# A tibble: 1,189 × 17
    Dep.Var  Stress   Category Morph.Type Before After     Speaker   YOB Sex   Education    Job     After.New Center.Age Age.Group Age_Sex  Phoneme Dep.Var.Full
-   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;fct&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;fct&gt;          &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;    &lt;fct&gt;   &lt;fct&gt;       
+   <chr>    <chr>    <chr>    <chr>      <fct>  <chr>     <chr>   <int> <chr> <chr>        <chr>   <fct>          <dbl> <fct>     <fct>    <fct>   <fct>       
  1 Realized Stressed Lexical  Mono       Stop   Consonant BOUF65   1965 F     Educated     White   Consonant      -4.45 Middle    Middle_F t       T           
  2 Deletion Stressed Lexical  Mono       Stop   Consonant CHIF55   1955 F     Educated     White   Consonant     -14.4  Middle    Middle_F t       Deletion    
  3 Deletion Stressed Lexical  Mono       Stop   Consonant CHIF55   1955 F     Educated     White   Consonant     -14.4  Middle    Middle_F t       Deletion    
@@ -9486,23 +9478,28 @@ Attaching package: &#39;dplyr&#39;</code></pre>
  8 Deletion Stressed Lexical  Mono       Stop   Consonant GARM42   1942 M     Not Educated Blue    Consonant     -27.4  Old       Old_M    t       Deletion    
  9 Deletion Stressed Lexical  Mono       Stop   Consonant GREM45   1945 M     Not Educated Blue    Consonant     -24.4  Middle    Middle_M t       Deletion    
 10 Deletion Stressed Lexical  Mono       Stop   Consonant HOLF49   1949 F     Educated     Service Consonant     -20.4  Middle    Middle_F t       Deletion    
-# … with 1,179 more rows</code></pre>
-</div>
-</div>
-<p>Notice that the <em>tibble</em> lists the dimensions of the tibble at the top, as well as the class of each of the columns. It also only displays the first 10 rows. You’ll also notice that the row numbers have reset when we converted <code>td</code> to a <em>tibble</em>. If we want to view the entire tibble, we can use the <code>print()</code> function and specify the <code>n=</code> plus the number of rows we want to see, including all rows (<code>n=Inf</code>). You can see below how the pipe operator makes doing this pretty easy.</p>
-<div class="cell">
-<div class="sourceCode" id="cb140"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Embedding functions</span></span>
-<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">as_tibble</span>(td), <span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
-</div>
-<p>The above produces the same as the following:</p>
-<div class="cell" data-R.options="{&quot;width&quot;:1000}">
-<div class="sourceCode" id="cb141"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using %&gt;% to pass the results from the first function to the second function</span></span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(td) <span class="sc">%&gt;%</span></span>
-<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre style="max-height: 500px;"><code># A tibble: 1,189 × 17
+# … with 1,179 more rows
+```
+
+Notice that the *tibble* lists the dimensions of the tibble at the top, as well as the class of each of the columns. It also only displays the first 10 rows. You'll also notice that the row numbers have reset when we converted `td` to a *tibble*. If we want to view the entire tibble, we can use the `print()` function and specify the `n=` plus the number of rows we want to see, including all rows (`n=Inf`). You can see below how the pipe operator makes doing this pretty easy.
+
+``` r
+# Embedding functions
+print(as_tibble(td), n = 20)
+```
+
+The above produces the same as the following:
+
+``` r
+# Using %>% to pass the results from the first function to the second function
+as_tibble(td) %>%
+    print(n = 20)
+```
+
+```
+# A tibble: 1,189 × 17
    Dep.Var  Stress   Category Morph.Type Before After     Speaker   YOB Sex   Education    Job     After.New Center.Age Age.Group Age_Sex  Phoneme Dep.Var.Full
-   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;fct&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;fct&gt;          &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;    &lt;fct&gt;   &lt;fct&gt;       
+   <chr>    <chr>    <chr>    <chr>      <fct>  <chr>     <chr>   <int> <chr> <chr>        <chr>   <fct>          <dbl> <fct>     <fct>    <fct>   <fct>       
  1 Realized Stressed Lexical  Mono       Stop   Consonant BOUF65   1965 F     Educated     White   Consonant      -4.45 Middle    Middle_F t       T           
  2 Deletion Stressed Lexical  Mono       Stop   Consonant CHIF55   1955 F     Educated     White   Consonant     -14.4  Middle    Middle_F t       Deletion    
  3 Deletion Stressed Lexical  Mono       Stop   Consonant CHIF55   1955 F     Educated     White   Consonant     -14.4  Middle    Middle_F t       Deletion    
@@ -9523,251 +9520,138 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 18 Deletion Stressed Lexical  Mono       Stop   Consonant MOFM55   1955 M     Educated     White   Consonant     -14.4  Middle    Middle_M t       Deletion    
 19 Deletion Stressed Lexical  Mono       Stop   Consonant NATF84   1984 F     Educated     Service Consonant      14.6  Young     Young_F  t       Deletion    
 20 Deletion Stressed Lexical  Mono       Stop   Consonant NEIF49   1949 F     Educated     Service Consonant     -20.4  Middle    Middle_F t       Deletion    
-# … with 1,169 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="getting-a-glimpse" class="level3">
-<h3>Getting a <code>glimpse()</code></h3>
-<p>Another useful addition to data exploration is the <code>glimpse()</code> function from the <code>pilllar</code> package and re-exported by <code>dplyr</code>. The <code>glipmpse()</code> function is like a cross between <code>print()</code> (which shows the data) and <code>str()</code> (which shows the structure of the data). I use <code>glimpse()</code> almost as frequently as I use <code>summary()</code>. In fact, if you have very wide data, i.e., with lots of columns, <code>glimpse()</code> may prove more useful than <code>summary()</code> for getting a quick snapshot of your data. <code>glimpse()</code> shows the number of rows, the number of columns, the name of each column, its class, and however many values in each column as will fit horizontally in the console.</p>
-<div class="cell">
-<div class="sourceCode" id="cb143"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(td)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,189
-Columns: 17
-$ Dep.Var      &lt;chr&gt; &quot;Realized&quot;, &quot;Deletion&quot;, &quot;Deletion&quot;, &quot;Deletion&quot;, &quot;Realized…
-$ Stress       &lt;chr&gt; &quot;Stressed&quot;, &quot;Stressed&quot;, &quot;Stressed&quot;, &quot;Stressed&quot;, &quot;Stressed…
-$ Category     &lt;chr&gt; &quot;Lexical&quot;, &quot;Lexical&quot;, &quot;Lexical&quot;, &quot;Lexical&quot;, &quot;Lexical&quot;, &quot;L…
-$ Morph.Type   &lt;chr&gt; &quot;Mono&quot;, &quot;Mono&quot;, &quot;Mono&quot;, &quot;Mono&quot;, &quot;Mono&quot;, &quot;Mono&quot;, &quot;Mono&quot;, &quot;…
-$ Before       &lt;fct&gt; Stop, Stop, Stop, Stop, Stop, Stop, Stop, Stop, Stop, Sto…
-$ After        &lt;chr&gt; &quot;Consonant&quot;, &quot;Consonant&quot;, &quot;Consonant&quot;, &quot;Consonant&quot;, &quot;Cons…
-$ Speaker      &lt;chr&gt; &quot;BOUF65&quot;, &quot;CHIF55&quot;, &quot;CHIF55&quot;, &quot;CLAF52&quot;, &quot;DONM53&quot;, &quot;DONM58…
-$ YOB          &lt;int&gt; 1965, 1955, 1955, 1952, 1953, 1958, 1946, 1942, 1945, 194…
-$ Sex          &lt;chr&gt; &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M…
-$ Education    &lt;chr&gt; &quot;Educated&quot;, &quot;Educated&quot;, &quot;Educated&quot;, &quot;Educated&quot;, &quot;Educated…
-$ Job          &lt;chr&gt; &quot;White&quot;, &quot;White&quot;, &quot;White&quot;, &quot;Service&quot;, &quot;Service&quot;, &quot;Service…
-$ After.New    &lt;fct&gt; Consonant, Consonant, Consonant, Consonant, Consonant, Co…
-$ Center.Age   &lt;dbl&gt; -4.446594, -14.446594, -14.446594, -17.446594, -16.446594…
-$ Age.Group    &lt;fct&gt; Middle, Middle, Middle, Middle, Middle, Middle, Middle, O…
-$ Age_Sex      &lt;fct&gt; Middle_F, Middle_F, Middle_F, Middle_F, Middle_M, Middle_…
-$ Phoneme      &lt;fct&gt; t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, …
-$ Dep.Var.Full &lt;fct&gt; T, Deletion, Deletion, Deletion, T, Deletion, Deletion, D…</code></pre>
-</div>
-</div>
-</section>
-<section id="manipulating-data-with-dplyr" class="level3">
-<h3>Manipulating data with <code>dplyr</code></h3>
-<p>The <code>dplyr</code> package is great for manipulating data in a data frame/tibble. Some common things that <code>diplyr</code> can do include:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>mutate()</code></td>
-<td>add new variables or modify existing ones</td>
-</tr>
-<tr class="even">
-<td><code>select()</code></td>
-<td>select variables</td>
-</tr>
-<tr class="odd">
-<td><code>filter()</code></td>
-<td>filter</td>
-</tr>
-<tr class="even">
-<td><code>summarize()</code></td>
-<td>summarize/reduce</td>
-</tr>
-<tr class="odd">
-<td><code>arrange()</code></td>
-<td>sort</td>
-</tr>
-<tr class="even">
-<td><code>group_by()</code></td>
-<td>group</td>
-</tr>
-<tr class="odd">
-<td><code>rename()</code></td>
-<td>rename columns</td>
-</tr>
-</tbody>
-</table>
-<p>Lets redo all our data manipulation of <code>td</code> but with <code>dplyr</code> and its pipe <code>%&gt;%</code> operator</p>
-<div class="cell">
+# … with 1,169 more rows
+```
 
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb145"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in token file</span></span>
-<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1&quot;</span>)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb146"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data to remove previous &#39;Vowel&#39; contexts</span></span>
-<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Before <span class="sc">!=</span> <span class="st">&quot;Vowel&quot;</span>) <span class="co"># filter td to include everything that is not &quot;Vowel&quot; in the column Before</span></span>
-<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-code &#39;H&#39; to be &#39;Consonant&#39; in a new column</span></span>
-<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">After.New =</span> <span class="fu">recode</span>(After, <span class="st">&quot;H&quot;</span> <span class="ot">=</span> <span class="st">&quot;Consonant&quot;</span>)) <span class="co"># create a new column called After.New that equals a re-code of After in which H is re-coded as Consonant</span></span>
-<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Center Year of Birth</span></span>
-<span id="cb146-8"><a href="#cb146-8" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb146-9"><a href="#cb146-9" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">Center.Age =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>))) <span class="co"># create a new column called Center.Age equal to the YOB column but scaled</span></span>
-<span id="cb146-10"><a href="#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Age.Group</span></span>
-<span id="cb146-11"><a href="#cb146-11" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb146-12"><a href="#cb146-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Age.Group =</span> <span class="fu">cut</span>(YOB, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1944</span>, <span class="dv">1979</span>, <span class="cn">Inf</span>), </span>
-<span id="cb146-13"><a href="#cb146-13" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Old&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;Young&quot;</span>))) <span class="co"># cut the YOB into discrete categories. </span></span></code></pre></div>
-</div>
-<p>Before we continue, a note about the <code>cut()</code> function. The <code>breaks=</code> option is a concatenated list of boundaries. It should start and end with <code>-Inf</code> and <code>Inf</code> (negative and positive infinity) as these will be the lower and upper bounds. The other values are the boundaries or cut-off points. By default <code>cut()</code> has the setting <code>right=TRUE</code>, which means the boundary values will be are considered the last value in a group (e.g., rightmost value). Above, this means <code>1944</code> will be the highest value in the <code>Old</code> category and <code>1979</code> will the the highest value in the <code>Middle</code> category. To reverse this you can add the option <code>right=FALSE</code> in which case 1944 would be the lowest value in the <code>Middle</code> category (e.g. leftmost value) and 1979 would be the lowest value in the <code>Young</code> category.</p>
-<p>Let’s continue.</p>
-<div class="cell">
-<div class="sourceCode" id="cb147"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine Age and Sex</span></span>
-<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span>td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unite</span>(<span class="st">&quot;Age_Sex&quot;</span>, Age.Group<span class="sc">:</span>Sex, <span class="at">sep=</span> <span class="st">&quot;_&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="co"># using the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted</span></span>
-<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Break Phoneme.Dep.Var into two columns</span></span>
-<span id="cb147-7"><a href="#cb147-7" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span>td <span class="sc">%&gt;%</span> <span class="co"># pass td to next function</span></span>
-<span id="cb147-8"><a href="#cb147-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Phoneme =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.)(--.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>, </span>
-<span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a>        Phoneme.Dep.Var), </span>
-<span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">Dep.Var.Full =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.--)(.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">2&quot;</span>, </span>
-<span id="cb147-11"><a href="#cb147-11" aria-hidden="true" tabindex="-1"></a>        Phoneme.Dep.Var), </span>
-<span id="cb147-12"><a href="#cb147-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">Phoneme.Dep.Var =</span> <span class="cn">NULL</span>) <span class="co"># Same as before, but with td passed to mutate() by the %&gt;% operator</span></span></code></pre></div>
-</div>
-<p>At this point we have done everything except partition the data and re-center YOB in the partitioned data frames. You may ask, “How is this better?”. Well, the answer is that because all these modifications feed into one another, we can actually include them all together in one serialized operation. Behold!</p>
-<p>All of the above code can be simplified as follows:</p>
-<div class="cell">
+### Getting a `glimpse()`
 
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb148"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in token file</span></span>
-<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1&quot;</span>)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb149"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data to remove previous &#39;Vowel&#39; contexts, then modify several columns</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span></span>
-<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Before <span class="sc">!=</span> <span class="st">&quot;Vowel&quot;</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">After.New =</span> <span class="fu">recode</span>(After, <span class="st">&quot;H&quot;</span> <span class="ot">=</span> <span class="st">&quot;Consonant&quot;</span>),  </span>
-<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">Center.Age =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)),</span>
-<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">Age.Group =</span> <span class="fu">cut</span>(YOB, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1944</span>, <span class="dv">1979</span>, <span class="cn">Inf</span>), </span>
-<span id="cb149-7"><a href="#cb149-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Old&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;Young&quot;</span>)),</span>
-<span id="cb149-8"><a href="#cb149-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">Phoneme =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.)(--.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>, Phoneme.Dep.Var),</span>
-<span id="cb149-9"><a href="#cb149-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">Dep.Var.Full =</span> <span class="fu">sub</span>(<span class="st">&quot;^(.--)(.*)$&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">2&quot;</span>, Phoneme.Dep.Var),</span>
-<span id="cb149-10"><a href="#cb149-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">Phoneme.Dep.Var =</span> <span class="cn">NULL</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb149-11"><a href="#cb149-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate_if</span>(is.character, as.factor)</span></code></pre></div>
-</div>
-<p>Now, doesn’t the above look so much cleaner and easier to follow?</p>
-<p>To partition the data we still need separate functions.</p>
-<div class="cell">
-<div class="sourceCode" id="cb150"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>td.young <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span></span>
-<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age.Group <span class="sc">==</span> <span class="st">&quot;Young&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Center.Age =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>td.middle <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span></span>
-<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age.Group <span class="sc">==</span> <span class="st">&quot;Middle&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Center.Age =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb150-8"><a href="#cb150-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-9"><a href="#cb150-9" aria-hidden="true" tabindex="-1"></a>td.old <span class="ot">&lt;-</span> td <span class="sc">%&gt;%</span></span>
-<span id="cb150-10"><a href="#cb150-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age.Group <span class="sc">==</span> <span class="st">&quot;Old&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb150-11"><a href="#cb150-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Center.Age =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(YOB, <span class="at">scale =</span> <span class="cn">FALSE</span>)))</span></code></pre></div>
-</div>
-</section>
-</section>
-</section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>These were the only two sex/gender identities reported by speakers in this data.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>You use <code>$</code> in other places for specifying columns within data frames, but here it’s inside quotation marks and serving a different function.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Not to be confused with the operator <code>|</code>, which means “or” and whose symbol is also called pipe<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Loading <code>dplyr</code> will also let you use it<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+Another useful addition to data exploration is the `glimpse()` function from the `pilllar` package and re-exported by `dplyr`. The `glipmpse()` function is like a cross between `print()` (which shows the data) and `str()` (which shows the structure of the data). I use `glimpse()` almost as frequently as I use `summary()`. In fact, if you have very wide data, i.e., with lots of columns, `glimpse()` may prove more useful than `summary()` for getting a quick snapshot of your data. `glimpse()` shows the number of rows, the number of columns, the name of each column, its class, and however many values in each column as will fit horizontally in the console.
 
-</main>
-<!-- /main column -->
-<script id = "quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
-    }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    setTimeout(function() {
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
-    });
-  }
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
-      });
-      return popup.innerHTML;
-    });
-  }
-});
-</script>
-</div> <!-- /content -->
+``` r
+glimpse(td)
+```
 
-</body>
+    Rows: 1,189
+    Columns: 17
+    $ Dep.Var      <chr> "Realized", "Deletion", "Deletion", "Deletion", "Realized…
+    $ Stress       <chr> "Stressed", "Stressed", "Stressed", "Stressed", "Stressed…
+    $ Category     <chr> "Lexical", "Lexical", "Lexical", "Lexical", "Lexical", "L…
+    $ Morph.Type   <chr> "Mono", "Mono", "Mono", "Mono", "Mono", "Mono", "Mono", "…
+    $ Before       <fct> Stop, Stop, Stop, Stop, Stop, Stop, Stop, Stop, Stop, Sto…
+    $ After        <chr> "Consonant", "Consonant", "Consonant", "Consonant", "Cons…
+    $ Speaker      <chr> "BOUF65", "CHIF55", "CHIF55", "CLAF52", "DONM53", "DONM58…
+    $ YOB          <int> 1965, 1955, 1955, 1952, 1953, 1958, 1946, 1942, 1945, 194…
+    $ Sex          <chr> "F", "F", "F", "F", "M", "M", "F", "M", "M", "F", "M", "M…
+    $ Education    <chr> "Educated", "Educated", "Educated", "Educated", "Educated…
+    $ Job          <chr> "White", "White", "White", "Service", "Service", "Service…
+    $ After.New    <fct> Consonant, Consonant, Consonant, Consonant, Consonant, Co…
+    $ Center.Age   <dbl> -4.446594, -14.446594, -14.446594, -17.446594, -16.446594…
+    $ Age.Group    <fct> Middle, Middle, Middle, Middle, Middle, Middle, Middle, O…
+    $ Age_Sex      <fct> Middle_F, Middle_F, Middle_F, Middle_F, Middle_M, Middle_…
+    $ Phoneme      <fct> t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t, …
+    $ Dep.Var.Full <fct> T, Deletion, Deletion, Deletion, T, Deletion, Deletion, D…
 
-</html>
+### Manipulating data with `dplyr`
+
+The `dplyr` package is great for manipulating data in a data frame/tibble. Some common things that `diplyr` can do include:
+
+| Function      | Description                               |
+|---------------|-------------------------------------------|
+| `mutate()`    | add new variables or modify existing ones |
+| `select()`    | select variables                          |
+| `filter()`    | filter                                    |
+| `summarize()` | summarize/reduce                          |
+| `arrange()`   | sort                                      |
+| `group_by()`  | group                                     |
+| `rename()`    | rename columns                            |
+
+Lets redo all our data manipulation of `td` but with `dplyr` and its pipe `%>%` operator
+
+``` r
+# Read in token file
+td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+```
+
+``` r
+# Subset data to remove previous 'Vowel' contexts
+td <- td %>% # pass td to next function
+      filter(Before != "Vowel") # filter td to include everything that is not "Vowel" in the column Before
+# Re-code 'H' to be 'Consonant' in a new column
+td <- td %>% # pass td to next function
+      mutate(After.New = recode(After, "H" = "Consonant")) # create a new column called After.New that equals a re-code of After in which H is re-coded as Consonant
+# Center Year of Birth
+td <- td %>% # pass td to next function
+     mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE))) # create a new column called Center.Age equal to the YOB column but scaled
+# Create Age.Group
+td <- td %>% # pass td to next function
+      mutate(Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                                  labels = c("Old", "Middle", "Young"))) # cut the YOB into discrete categories. 
+```
+
+Before we continue, a note about the `cut()` function. The `breaks=` option is a concatenated list of boundaries. It should start and end with `-Inf` and `Inf` (negative and positive infinity) as these will be the lower and upper bounds. The other values are the boundaries or cut-off points. By default `cut()` has the setting `right=TRUE`, which means the boundary values will be are considered the last value in a group (e.g., rightmost value). Above, this means `1944` will be the highest value in the `Old` category and `1979` will the the highest value in the `Middle` category. To reverse this you can add the option `right=FALSE` in which case 1944 would be the lowest value in the `Middle` category (e.g. leftmost value) and 1979 would be the lowest value in the `Young` category.
+
+Let's continue.
+
+``` r
+# Combine Age and Sex
+
+td <-td %>% # pass td to next function
+     unite("Age_Sex", Age.Group:Sex, sep= "_", remove = FALSE) # using the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted
+    
+# Break Phoneme.Dep.Var into two columns
+td <-td %>% # pass td to next function
+ mutate(Phoneme = sub("^(.)(--.*)$", "\\1", 
+        Phoneme.Dep.Var), 
+        Dep.Var.Full = sub("^(.--)(.*)$", "\\2", 
+        Phoneme.Dep.Var), 
+        Phoneme.Dep.Var = NULL) # Same as before, but with td passed to mutate() by the %>% operator
+```
+
+At this point we have done everything except partition the data and re-center YOB in the partitioned data frames. You may ask, "How is this better?". Well, the answer is that because all these modifications feed into one another, we can actually include them all together in one serialized operation. Behold!
+
+All of the above code can be simplified as follows:
+
+``` r
+# Read in token file
+td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+```
+
+``` r
+# Subset data to remove previous 'Vowel' contexts, then modify several columns
+td <- td %>%
+      filter(Before != "Vowel")%>%
+      mutate(After.New = recode(After, "H" = "Consonant"),  
+             Center.Age = as.numeric(scale(YOB, scale = FALSE)),
+             Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                                  labels = c("Old", "Middle", "Young")),
+             Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
+             Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
+             Phoneme.Dep.Var = NULL)%>%
+            mutate_if(is.character, as.factor)
+```
+
+Now, doesn't the above look so much cleaner and easier to follow?
+
+To partition the data we still need separate functions.
+
+``` r
+td.young <- td %>%
+    filter(Age.Group == "Young") %>%
+    mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.middle <- td %>%
+    filter(Age.Group == "Middle") %>%
+    mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.old <- td %>%
+    filter(Age.Group == "Old") %>%
+    mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+```
+
+[^1]: These were the only two sex/gender identities reported by speakers in this data.
+
+[^2]: You use `$` in other places for specifying columns within data frames, but here it's inside quotation marks and serving a different function.
+
+[^3]: Not to be confused with the operator `|`, which means "or" and whose symbol is also called pipe
+
+[^4]: Loading `dplyr` will also let you use it
