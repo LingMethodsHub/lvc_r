@@ -4,7 +4,6 @@ author: "Matt Hunt Gardner, PhD "
 date: "`r Sys.Date()`"
 licence: "CC-BY 4.0"
 format: hugo
-output-file: "_index.md"
 draft: false
 weight: 50
 ---
@@ -198,7 +197,7 @@ tail(td, n=10)
 There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
 
 | Data Type   | Description                                                           | Example                                                                               |
-|-----------------|-------------------------|------------------------------|
+|------------------|-------------------------|-----------------------------|
 | `logical`   | either `TRUE` or `FALSE`                                              | The answer to a question like "is `x` a number?", etc.                                |
 | `numeric`   | any real number, positive or negative, with or without decimal values | Vowel formant measurements, position in an audio file, household income, etc.         |
 | `integer`   | whole numbers and their negative counterparts                         | year of birth, year of data collection, number of occurrences of something, etc.      |

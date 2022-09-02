@@ -7,6 +7,3 @@ format: hugo
 draft: false
 weight: 50
 ---
-
-
-
