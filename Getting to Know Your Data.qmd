@@ -1,0 +1,280 @@
+---
+title: "Getting to Know Your Data"
+date: "`r Sys.Date()`"
+license: "CC-BY-SA 4.0"
+format: 
+  html: default
+  pdf: default
+author:
+  - name:
+      given: Matt Hunt
+      family: Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+```
+
+## Getting to know the (t, d) deletion data
+
+If you followed the previous section you now have an object in *R* called `td`. If not, you can load it now with either of the following codes.
+
+```{r eval=TRUE}
+td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+```
+
+```{r eval=TRUE}
+td <- read.delim("Data/deletiondata.txt")
+```
+
+### Getting a Snapshot of the Data
+
+Now that you have some data loaded into *R* you can start exploring it. At any time you can type `td` into the console window to see what that object actually represents. Try it.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+td
+```
+
+To find out how many columns there are in your data frame (this is what *R* calls spreadsheets), use the function `nrow()`. Similarly, to find out how many columns are in the data frame, use the function `ncol()`. The function `dim()` gives both.
+
+```{r}
+nrow(td)
+ncol(td)
+dim(td)
+```
+
+There are 6,989 rows and 12 columns in this data frame.
+
+The `summary()` function is one of the most useful functions you'll use in *R*. It gives you a quick snapshot of a data frame.
+
+```{r}
+summary(td)
+```
+
+The `summary()` function shows you the name of all the columns in the data frame and what each column contains.
+
+When you import a data frame into *R*, *R* automatically decides what type of data each column contains. Any data frame columns where all cells contain only numbers are assumed to `numeric` or `integer` data (depending on if there are decimal values). Any columns that include letters will be assumed to be `character` data.
+
+For `numeric` or `integer` data (like `YOB`, or year of birth of the speakers in the `td` data), the `summary()` function will tell you the mean, the median, the minimum value, the maximum value, and the values of the first and third quartiles. The mean is the arithmetic mean, which is the sum of all the values in a column divided by the number of values in a column. Fifty percent of the values in the column are equal to or less than the mean and 50% of the values in the column are greater than or less than the mean. The mean can also be thought of as the 2nd quartile. The median is exact middle point of the values in the column ordered from smallest to largest. For *normally distributed* data, the mean and the median should be close to the same value. Not all data, however, is normally distributed, which is sometimes a problem, and sometimes not a problem. If a certain test expects numerical data to be normally distributed these instructions will explain what to do, but for now, it's just good to know what mean and median indicate. Twenty-five percent of the values in the column are equal to or less than the 1st quartile and 75% of the values in the column are equal to or less than the 3rd quartile. The minimum value is the lowest value in a column; the maximum value is the highest number in a column. These values can be used to construct a **box and whisker** plot:
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.cap="Box and whisker plot of `YOB` (Year of Birth) in the `td` data frame"}
+library(ggpubr)
+library(ggplot2)
+library(plotly)
+p<-ggplot(td, aes(y=YOB))+
+  geom_boxplot(fill="lightblue1", color="dodgerblue")+
+   theme_pubclean()+
+  theme(axis.ticks.x=element_blank(),  axis.text.x=element_blank())
+ggplotly(p)
+```
+
+The bottom **whisker** displays the minimum value of 1910. The bottom line of the **box** displays the first quartile value of 1952. The black bar in the middle of the **box** displays the second quartile value/mean of 1965. The top line of the *box* displays the third quartile value of 1991. The range from the first quartile to the third quartile is called the **interquartile range**. The top **whisker** displays the maximum value of 1999.
+
+The function `names()` returns a vector (a series of items in a line, separated by commas) of the column names. This function can be useful as a quick way to get the names of each column. You will need to use these names quite often when writing other commands. `colnames()` returns the same information; `ls()` returns the same information, but ordered alphabetically.
+
+```{r}
+names(td)
+```
+
+```{r}
+colnames(td)
+```
+
+```{r}
+ls(td)
+```
+
+The function `str()` describes the structure of a data frame. It reports similar information as `summary()` but does not include descriptions of each column; however, the layout of the information is sometimes a little easier to read, especially if your data frame has many columns. Here we can see that `YOB` is categorized as `int` (integer) data and all the other columns are `chr` (character) data.
+
+```{r}
+str(td)
+```
+
+`head()` will return the first six lines of the data frame. `tail()` provides the last six. For either you can change the number of lines reported using the option `n=`.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+head(td)
+```
+
+The numbers on the left side of the output are the row number in the data frame.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+tail(td, n=10)
+```
+
+### Types of Data
+
+There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
+
+| Data Type   | Description                                                                                    | Example                                                                               |
+|------------------|-------------------------|-----------------------------|
+| `logical`   | either `TRUE` or `FALSE`                                                                       | The answer to a question like "is `x` a number?", etc.                                |
+| `numeric`   | any real number, positive or negative, with or without decimal values                          | Vowel formant measurements, position in an audio file, household income, etc.         |
+| `double`    | any real number, positive or negative, with or without decimal values (identical to `numeric`) | Vowel formant measurements, position in an audio file, household income, etc.         |
+| `integer`   | whole numbers and their negative counterparts                                                  | year of birth, year of data collection, number of occurrences of something, etc.      |
+| `complex`   | data that includes imaginary or unknown elements                                               | the pythagorian theroem, i.e., `a^2 + b^2 = c^2`, where `a`, `b`, and `c` are unknown |
+| `character` | single characters (like `'F'`) or **strings** (like `"female"`)                                | gender, speaker name, etc.                                                            |
+| `raw`       | raw bytes                                                                                      | Anything expressed in bytes                                                           |
+
+::: callout-noted
+Character data is always enclosed in either single quotes `' '` or double quotes `" "`. It is common practice to use single quotes for single characters and double quotes for strings, though either type of quotation marks will work with either data type.
+
+`double` is short for "double precision floating point numbers". Don't worry about the difference between `numeric` and `double`, because it doesn't really matter.
+:::
+
+It is uncommon to use `raw` data in sociolinguistics. Anything can be expressed in bytes. There are two functions to convert from characters to bytes, and bytes to characters. To go from characters to bytes:
+
+```{r, echo = T}
+raw_variable <- charToRaw("Sociolinguistics is fun")
+print(raw_variable)
+print(class(raw_variable))
+```
+
+Above the function `charToRaw()` converts the string `"Sociolinguistics is fun"` to bytes and assigns that raw data to the object `raw_variable`. Next the `print()` function displays in *R* the contents of the variable `raw_variable`. The `class()` function returns the type of data contained within a variable. To convert back to characters:
+
+```{r, echo = T}
+ char_variable <- rawToChar(raw_variable)
+print(char_variable)
+print(class(char_variable))
+```
+
+### Types of Data Structures
+
+A **vector** and **list** are the most basic types of data structures. A **vector** is a collection of elements, most commonly a collection of `character`, `logical`, `integer`, or `numeric` values. Values can be combined into a vector using the concatenating function `c()`
+
+```{r}
+simple.vector <- c("Labov", "Fishman")
+print(simple.vector)
+```
+
+We can explore the vector using some of the same functions we've already seen.
+
+```{r}
+length(simple.vector)
+class(simple.vector)
+str(simple.vector)
+```
+
+**Lists** are like **vectors** but can contain a mixture of different data types. Characters must be in quotation marks. Numbers in quotation marks will be categorized as characters. Numeric data is numbers without quotation marks. Integers are specificed by adding `L` after the number. Logical values are either `TRUE` or `FALSE` in all capital letters.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+simple.list<-list("Labov", "Fishman","2001", 1963, 1.5, 1974L, TRUE)
+print(simple.list)
+length(simple.list)
+class(simple.list)
+str(simple.list)
+```
+
+You will notice that the results of the `str()` function show that `Labov`, `Fishman` and `2001` are all categorized as `chr` (character); `1963` and `1.5` are categorized as `num` (numeric); `1974` is categorized as `int` (integer); and `TRUE` is categorized as `logi` (logical).
+
+Lists can be bigger than just one group of data. Items in a list can also be more complex than a single value.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+complex.list <- list(a = "John Baugh", b = simple.vector, c=simple.list, d=head(td))
+print(complex.list)
+str(complex.list)
+```
+
+In the list `complex.list` column `a` contains only one value: `John Baugh`. Column `b` contains our `simple.vector`, column `c` contains our `simple.list`, and column `d` includes the first six rows of the `td` data (which itself has columns). To access the values from columns within columns you can use multiple `$` operators.
+
+```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+print(complex.list$a)
+print(complex.list$d)
+print(complex.list$d$Job)
+```
+
+Generally, in LVC analysis we do not deal often with either simple vectors or lists; instead, most of our data is in a spreadsheet-like format, which in *R* is a **data frame**.
+
+**Data frames** are a special type of **list** in which every element in the **list** has the same length (unlike, for example, the `complex.list` above). **Data frames** can have additional annotations, like `rownames()`. Some statisticians use `rownames()` for things like `participantID`, `sampleID`, or some other unique identifier. Most of the time (and for our purposes), `rownames()` are not useful given that we have multiple rows from the same speaker/interview, etc.
+
+### Factors and Comments
+
+A *factor* in *R* is a special type of variable or data type that, in theory, has a limited number of values. Each value is called a *level*. Any **vector** or **data frame** column of `character` or `integer` values can be a **factor**. Most non-numerical data in LVC is generally thought of as a **factor** already, so knowing how to convert **vectors** or **data frame** columns to factors is important. For example, in the `td` data, the column `Stress` contains only two options: `Stressed` and `Unstressed`. Because this column contains letters, when we imported it into *R*, it was automatically categorized as `character` data. This is probably the best option for a column that, for example, contained the broader context of a token. For `Stress`, however, it is better for our purposes for *R* to consider the column as containing a **factor** with two discrete levels. Below is the code to convert `Stress` into a **factor**.
+
+```{r}
+# Determine the class of the column Stress in the date frame td
+class(td$Stress)
+```
+
+```{r}
+# Convert Stress to a column to a factor
+td$Stress <-factor(td$Stress)
+# Verify class of Stress column
+class(td$Stress)
+```
+
+Notice the **comments** in the code above. In *R* any line that begins with a `#` is not evaluated. This is called *commenting out* a line. We use `#` to include notes in our codes, or to keep code in our script file but have *R* ignore it. This can be useful in order to keep track of the steps you are taking in an analysis (see also [this tutorial](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections-in-the-RStudio-IDE) on organizing code using `#`)
+
+Columns within a data frame can be specified using the `$` operator So, above, we tell *R* to assign (using the assignment operator `<-`) the values of the original `td$Stress` column, converted into **factors**, back to the column `td$Stress`. In other words, we are replacing the original column `td$Stress` with a converted version of itself. Now, look how the output of the `summary()` function changes.
+
+```{r}
+summary(td)
+```
+
+We get the number of observations of each level of `td$Stress` instead of just the number of rows (i.e. the `length` of the column).
+
+To get the levels of a **factor** we can use the function `levels()` and to get the number of levels, we can use the function `nlevels()`
+
+```{r}
+levels(td$Stress)
+nlevels(td$Stress)
+```
+## More Exploring
+
+If you only want information from a single column of the data frame, you can use the operator `$` to specify which column of `td` you want. Here the column `Sex' is specified.
+
+```{r}
+summary(td$Sex)
+levels(td$Sex)
+```
+
+The `Sex` column is still categorized as `character` data and so `summary()` only return the number of rows (`length`) of the column and there are no levels. To get the information we want about the `Sex` column (i.e., how many tokens are from male speakers and how many are from women speakers) we need to convert it to a factor first. We can either convert the the column to a factor column, or we can use the `as.factor()` function to have *R* treat is as a factor in just the following code.
+
+```{r}
+summary(as.factor(td$Sex))
+levels (as.factor(td$Sex))
+```
+
+The following code changes all the character class columns to factors.
+
+```{r}
+# Start with a fresh import of the (t, d) data into R, downloading it directly
+td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
+
+# or using the version saved locally in a folder Data in the same location as your script file
+td <- read.delim("Data/deletiondata.txt")
+
+# Now convert each character column into a factor
+td$Dep.Var <- factor(td$Dep.Var)
+td$Stress <- factor(td$Stress)
+td$Category <- factor(td$Category)
+td$Morph.Type<- factor(td$Morph.Type)
+td$Before <- factor(td$Before)
+td$After <- factor(td$After)
+td$Speaker <- factor(td$Speaker)
+td$Sex <- factor(td$Sex)
+td$Education <- factor(td$Education)
+td$Job <- factor(td$Job)
+td$Phoneme.Dep.Var <- factor(td$Phoneme.Dep.Var)
+```
+
+## The (t/d) Data
+
+Let's look at the data now that all the character columns are factors.
+
+```{r}
+summary(td)
+```
+
+As shown by the `summary(td)` results above, the first column in the (t, d) deletion data is called `Dep.Var` and it includes two levels: `Realized` and `Deletion`. These two levels represent the two options for each token of (t, d). The values after each level are how many rows are coded with that level. In other words, there are 1,747 rows (or tokens) of `Deletion` and there are 5,242 rows (or tokens) of `Realized`. Notice that the order of the factor levels is alphabetical. There is a column labelled `Stress` which indicates if the (t, d) token is in a stressed or unstressed syllable. The `Category` column indicates if the word in which the (t, d) token appears is a function or lexical word. `Morph.Type` indicates if the (t, d) occurs in a monomorpheme (like *fist*), a semi-weak simple past-tense verb (like *dealt* ) in which there is a vowel change and a (t,d) sound is added, or a weak simple past-tense verb (like *walked*) in which just /*-ed*/ is added. `Before` indicates the type of sound preceding the (t, d) and `After` indicates the sound following the (t, d). `Speaker` is a unique identifier for each participant in the data (only the first six are displayed, though); `YOB` indicates the speaker's year of birth, `Sex` his or her sex[^1], `Education` his or her education level, and `Job` his or her job type. Finally, `Phoneme.Dep.Var` indicates the canonical underlying phoneme of the (t, d) token and a more detailed coding of the dependent variable.
+
+[^1]: These were the only two sex/gender identities reported by speakers in this data.
