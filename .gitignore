@@ -4,3 +4,6 @@
 .Ruserdata
 
 /.quarto/
+*.html
+*_files
+*pdf
