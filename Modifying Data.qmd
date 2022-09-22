@@ -23,6 +23,7 @@ author:
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
 ```
+
 # Modifying Data
 
 If you followed the previous section you now have an object in *R* called `td` in which all character columns are converted to factors. If not, you can load it now with either of the following codes.
@@ -35,7 +36,7 @@ td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1
 td <- read.delim("Data/deletiondata.txt")
 ```
 
-Re-class character columns as factors. 
+Re-class character columns as factors.
 
 ```{r}
 td$Dep.Var <- factor(td$Dep.Var)
@@ -64,7 +65,7 @@ summary(td)
 
 The first line of code creates a new object called `td`. The `<-` operator means you're telling *R* that this new `td` is the same as the old `td`, but filtered according to some specific condition. You could also use the `<-` operator to create a new `td` with a different name --- e.g., `td.new <- td[td\$Before != "Vowel",]}` --- thus giving you two data frames (`td` and `td.new`) to work with.
 
-Throughout *R*, square brackets `[ ]` are used for specifying filtering conditions. The first line of code therefore says make new `td` the same as old `td`, but only where the value in the `Before` column of old `td` (indicated by `td$Before`) does not equal `"Vowel"`. `!=` is the standard operator meaning *does not equal*. The comma after `"Vowel"` is important. If you are filtering a data frame, as you are here, *R* needs to know where to look for the values you want to keep or throw out. It follows this format: `data frame[rows,columns]`. So the comma in the above  indicates that the filtering condition relates to values found while searching row by row. It selects any row in which the value in the `Before` column does not equal `"Vowel"`. The quotation marks around `"Vowel"` are also important because the values in the `Before` column are all strings of characters, which (you'll remember from above), are always enclosed in quotation marks.
+Throughout *R*, square brackets `[ ]` are used for specifying filtering conditions. The first line of code therefore says make new `td` the same as old `td`, but only where the value in the `Before` column of old `td` (indicated by `td$Before`) does not equal `"Vowel"`. `!=` is the standard operator meaning *does not equal*. The comma after `"Vowel"` is important. If you are filtering a data frame, as you are here, *R* needs to know where to look for the values you want to keep or throw out. It follows this format: `data frame[rows,columns]`. So the comma in the above indicates that the filtering condition relates to values found while searching row by row. It selects any row in which the value in the `Before` column does not equal `"Vowel"`. The quotation marks around `"Vowel"` are also important because the values in the `Before` column are all strings of characters, which (you'll remember from above), are always enclosed in quotation marks.
 
 ```{r}
 td$Before <-factor(td$Before)
@@ -156,7 +157,7 @@ td$Center.Age <- as.numeric(td$Center.Age)
 td$Center.Age <-as.numeric(scale(td$YOB, scale = FALSE))
 ```
 
-The `scale()` function centers the values in the column `YOB` and assigns those Centered values to a new column called `Center.Age`. The option `scale = FALSE` indicates that the centered values remain in the original units (in this case years). If you change this option to `scale = TRUE`, the overall mean is subtracted from each value and then each values is divided by the overall standard deviation. This is needed if you are including multiple continuous variables in a model that are expressed using different units and vary along differing scales. When the data is centred and scalled the new values are called **z-scores** or **standardized scores** and you can think of each value as describing the raw value in terms of its distance from the mean when measured in standard deviation units. 
+The `scale()` function centers the values in the column `YOB` and assigns those Centered values to a new column called `Center.Age`. The option `scale = FALSE` indicates that the centered values remain in the original units (in this case years). If you change this option to `scale = TRUE`, the overall mean is subtracted from each value and then each values is divided by the overall standard deviation. This is needed if you are including multiple continuous variables in a model that are expressed using different units and vary along differing scales. When the data is centred and scalled the new values are called **z-scores** or **standardized scores** and you can think of each value as describing the raw value in terms of its distance from the mean when measured in standard deviation units.
 
 For example, imagine a study of variable word-initial voice onset time in which you want to look at the effect of following vowel backness and year of birth of the speaker. Each of these variables are continuous, but voice onset time is $\pm20$ ms around its mean, year of birth is $\pm45$ years around its mean, and F2 is $\pm300$ Hz around its mean. By expressing these values as **z-scores**, you can account for both the differing units and differing scales of each. Even if you have one variable, here just `YOB`, it is okay to scale the values, but do *NOT* do this here. Leave `YOB` in years. This will make the interpretation of later statistical estimates a little easier.
 
@@ -207,7 +208,7 @@ levels(td$Age.Group)
 
 It is often useful to combine two columns, or factor groups, into one. For example, it might be useful to have a way of grouping tokens not by `Age.Group` or `Sex`, but instead by the combination of `Age.Group` and `Sex`. While it is not difficult to test the potential interaction of these two factor groups in statistical tests in *R*, for specifically generating summary statistics it is much easier to examine the combination of `Age.Group` and `Sex` (or any two columns) by first creating a new column combining them.
 
-Combining columns is done using the function `paste()`, which you embed inside of the `factor()` function so that the resulting column will be a column of factors. Inside `paste()` you list the two columns you want to combine (you could list more) and then tell *R* how to separate the values from each of the columns. Here the code tells *R* to put an underscore *_* between the values for `Age.Group` and `Sex`, resulting in new values like `Old_M` and `Middle_F`. The new column will be called `Age_Sex`. If we want to order these values in any particular way, we can do that with the `level=` option in `factor()`
+Combining columns is done using the function `paste()`, which you embed inside of the `factor()` function so that the resulting column will be a column of factors. Inside `paste()` you list the two columns you want to combine (you could list more) and then tell *R* how to separate the values from each of the columns. Here the code tells *R* to put an underscore \*\_\* between the values for `Age.Group` and `Sex`, resulting in new values like `Old_M` and `Middle_F`. The new column will be called `Age_Sex`. If we want to order these values in any particular way, we can do that with the `level=` option in `factor()`
 
 ```{r}
 # Combine Columns 
@@ -240,19 +241,19 @@ td$Dep.Var.Full <-factor(td$Dep.Var.Full)
 td$Phoneme <-factor(td$Phoneme)
 ```
 
-::: callout-note 
-The procedure here is somewhat complicated. I always have to double-check how these complicated procedures work. Either by looking up the functions or checking my old script files. You can look up how a function like `mutate()` works by placing a question mark before the function in the console window, e.g. \texttt{?mutate()}. 
+::: callout-note
+The procedure here is somewhat complicated. I always have to double-check how these complicated procedures work. Either by looking up the functions or checking my old script files. You can look up how a function like `mutate()` works by placing a question mark before the function in the console window, e.g. \texttt{?mutate()}.
 :::
 
 Above, inside the `mutate()` function, first you specify the data frame object you want to mutate (here `td`), and then how to mutate it. The mutations include creating a new column called `Phoneme` and then telling *R* what do put in it, creating a new column called `Dep.Var.Full` and then telling *R* what to put in it, and then taking the `Phoneme.Dep.Var` column and making it equal `NULL` --- in other words, deleting it. For the `Phoneme` and `Dep.Var.Full` columns you specify what values to insert in each cell using the `sub()` function, which returns a "sub" or divided section of a value within some cell. The `sub()` function's first argument is a pattern of *regular expressions* to search for, the second is a character string to replace the pattern with, and the third is the column in which to search for the pattern.
 
-::: callout-note 
-I don't have *R*'s regular expressions memorized; I always have to look them up [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html) 
+::: callout-note
+I don't have *R*'s regular expressions memorized; I always have to look them up [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)
 :::
 
-For the \texttt{sub()} functions meant to create values for `Phoneme` and for `Dep.Var.Full` you tell *R* to search `Phoneme.Dep.Var` for the pattern `"^.--.*$"`. This series of regular expressions describes the following pattern: a text string beginning with one single character, followed by two hyphens, and then any number of characters. The quotation marks `" "` indicate a text string. The `^` and `$` indicate the beginning and end of a text string, respectively.[^2] The period `.` indicates a single character and the asterisk`*` indicates zero or more of whatever comes before that asterisk. So `.*` means any one or more characters. The two hyphens `--` are just two hyphens. The parentheses in the regular expressions relate to the second substitution element. In the `sub()` function responsible for creating values for the new `Phoneme` column, you break the values that match the regular expression pattern into two parts: the one character before the two hyphens `(.)` and then everything after it `(--.*)`; then you tell *R* to substitute (or rather place) the first of those two elements `\\1` as text `" "` in the new column. In the `sub()` function responsible for creating the values for the new `Dep.Var.Full` column, you break the values that match the regular expression pattern into two parts: the two hyphens and the one character that comes before them `(.--)` and then the one or more characters that come after the hyphens `(.*)`; then tell *R* to to substitute (or rather place) the second of those elements `\\2` as text `" "` in the new column.
+For the \texttt{sub()} functions meant to create values for `Phoneme` and for `Dep.Var.Full` you tell *R* to search `Phoneme.Dep.Var` for the pattern `"^.--.*$"`. This series of regular expressions describes the following pattern: a text string beginning with one single character, followed by two hyphens, and then any number of characters. The quotation marks `" "` indicate a text string. The `^` and `$` indicate the beginning and end of a text string, respectively.[^1] The period `.` indicates a single character and the asterisk`*` indicates zero or more of whatever comes before that asterisk. So `.*` means any one or more characters. The two hyphens `--` are just two hyphens. The parentheses in the regular expressions relate to the second substitution element. In the `sub()` function responsible for creating values for the new `Phoneme` column, you break the values that match the regular expression pattern into two parts: the one character before the two hyphens `(.)` and then everything after it `(--.*)`; then you tell *R* to substitute (or rather place) the first of those two elements `\\1` as text `" "` in the new column. In the `sub()` function responsible for creating the values for the new `Dep.Var.Full` column, you break the values that match the regular expression pattern into two parts: the two hyphens and the one character that comes before them `(.--)` and then the one or more characters that come after the hyphens `(.*)`; then tell *R* to to substitute (or rather place) the second of those elements `\\2` as text `" "` in the new column.
 
-[^2]: You use `$` in other places for specifying columns within data frames, but here it's inside quotation marks and serving a different function.
+[^1]: You use `$` in other places for specifying columns within data frames, but here it's inside quotation marks and serving a different function.
 
 The last two lines simply make these two new columns into factor columns.
 
@@ -287,7 +288,7 @@ td.middle$Center.Age <- scale(td.middle$YOB, scale = FALSE)
 td.old$Center.Age <- scale(td.old$YOB, scale = FALSE)
 ```
 
-The usefulness of `subset()` is when you want to partition your data frame based on several factors. For example, compare the filtering versus `subset()` methods when partitioning `td` for just middle-age, blue-collar men. Using \texttt{subset()} saves you from having to type `td$` multiple times, and you don't need the final `,`. Below  `&` is the standard operator meaning "and". 
+The usefulness of `subset()` is when you want to partition your data frame based on several factors. For example, compare the filtering versus `subset()` methods when partitioning `td` for just middle-age, blue-collar men. Using \texttt{subset()} saves you from having to type `td$` multiple times, and you don't need the final `,`. Below `&` is the standard operator meaning "and".
 
 ```{r}
 # Subset of td where Age.Group is Middle, Sex is M, and Job is Blue
@@ -312,11 +313,15 @@ Below is the full code for loading the data file and then re-coding it. As you p
 ```{r eval=TRUE}
 td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
 ```
+
 Or...
+
 ```{r eval=TRUE}
 td <- read.delim("Data/deletiondata.txt")
 ```
+
 Then...
+
 ```{r}
 # Subset data to remove previous "Vowel" contexts
 td <- td[td$Before != "Vowel",]
@@ -346,4 +351,5 @@ td.old <- droplevels(subset(td, Age.Group == "Old"))
 # Re-center Center.Age
 td.young$Center.Age <- scale(td.young$YOB, scale = FALSE)
 td.middle$Center.Age <- scale(td.middle$YOB, scale = FALSE)
+td.old$Center.Age <- scale(td.old$YOB, scale = FALSE)
 ```
