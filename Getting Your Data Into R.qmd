@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
   html: default
-  pdf: default
+#  pdf: default
 author:
   - name:
       given: Matt Hunt
@@ -23,8 +23,8 @@ author:
 
 The best way to organize your tokens is in a spreadsheet in Microsoft *Excel*. There are a lot of useful tools in Microsoft *Excel* for automatically coding and re-coding your data. Some of those tools overlap with what I present here for *R*. If you want to explore *Excel*'s functionality, I recommend this website as a springboard: <https://support.office.com/en-us/article/Excel-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb>. There are other programs for spreadsheet management: *Numbers* in OSX, or Google's *Sheets*, for example. They generally function similarly to *Excel*. *R* does not easily read *Excel*'s default file type (**.xls** or **.xlsx**, [though it can be done](https://cran.r-project.org/web/packages/xlsx/xlsx.pdf)) therefore, you must save your token file as a tab-delimited-text file (**.txt**) or a comma-separated-values (**.csv**) file.
 
-:::{.callout-warning}
-I recommend NOT saving your token files as a .**csv file**. Often your token files will include a column of cells containing the broader context the token was extracted from. For example, the sentence in which it appears in a transcript. This broader context usually includes commas. If this is the case, when you save your file as a **.csv file**, it will appear as if there are column breaks in the middle of your broader context because commas are used as the column delimiter. 
+::: callout-warning
+I recommend NOT saving your token files as a .**csv file**. Often your token files will include a column of cells containing the broader context the token was extracted from. For example, the sentence in which it appears in a transcript. This broader context usually includes commas. If this is the case, when you save your file as a **.csv file**, it will appear as if there are column breaks in the middle of your broader context because commas are used as the column delimiter.
 :::
 
 There are four or five ways to read data into *R*. Which method you choose is really up to you, but because I'm advocating the use of *R* script files and maximum replicability, I suggest using the following function at the top of your script file:
@@ -33,7 +33,7 @@ There are four or five ways to read data into *R*. Which method you choose is re
 td <- read.delim("Data/deletiondata.txt")
 ```
 
-The function creates an *R* "object" called `td` and then uses the assignment operator `<-` to specify what that object is. In this case `td` is the contents of the tab-delimited text file called `deletiondata.txt` that is located in a folder called `Data`, in the same directory as my script file. If your data is saved somewhere else on your computer, replace `'Data/deletiondata.txt"` with the full path of your data file.  The `deletiondata.txt` is a tab-delimited text file and is the data file I will use to teach you about *R*. You can download this same file [here](https://www.dropbox.com/s/pi8xz1kuo6cz60l/deletiondata.txt?dl=1). Wherever you save this file, write that file path in quotation marks inside the `read.delim()` function. On a PC this file path will likely begin `"C:/..."`. You can actually just read the file directly into *R* from the web link using the following function:
+The function creates an *R* "object" called `td` and then uses the assignment operator `<-` to specify what that object is. In this case `td` is the contents of the tab-delimited text file called `deletiondata.txt` that is located in a folder called `Data`, in the same directory as my script file. If your data is saved somewhere else on your computer, replace `'Data/deletiondata.txt"` with the full path of your data file. The `deletiondata.txt` is a tab-delimited text file and is the data file I will use to teach you about *R*. You can download this same file [here](https://www.dropbox.com/s/pi8xz1kuo6cz60l/deletiondata.txt?dl=1). Wherever you save this file, write that file path in quotation marks inside the `read.delim()` function. On a PC this file path will likely begin `"C:/..."`. You can actually just read the file directly into *R* from the web link using the following function:
 
 ```{r eval=FALSE}
 td <-read.delim("https://www.dropbox.com/s/pi8xz1kuo6cz60l/deletiondata.txt?dl=1")

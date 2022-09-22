@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
   html: default
-  pdf: default
+#  pdf: default
 author:
   - name:
       given: Matt Hunt
@@ -28,14 +28,13 @@ knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens")
 
 If you have not installed *R* or have never used *R* before, please check out *Swirl* <https://swirlstats.com/>, which will guide you through installing and learning the basic functionality of *R*. *Swirl* is a collection of interactive courses. Its *R Programming* beginner course will introduce you to *R* and several concepts discussed in this guide. Even if you have used *R* before, you should still go through the basic *R Programming* tutorial --- even I learned something new when testing it before recommending it here.
 
-The first two chapters of Bodo Winter's [*Statistics or Lingustics: An Introduction Using R*](https://www.routledge.com/Statistics-for-Linguists-An-Introduction-Using-R/Winter/p/book/9781138056091) will also help you learn the same fundamental *R* skills. 
-
+The first two chapters of Bodo Winter's [*Statistics or Lingustics: An Introduction Using R*](https://www.routledge.com/Statistics-for-Linguists-An-Introduction-Using-R/Winter/p/book/9781138056091) will also help you learn the same fundamental *R* skills.
 
 ## Introduction
 
 These instructions are not intended to be a comprehensive overview of *R*'s functionality, which is myriad. Instead it is a set of very specific instructions for doing the kinds of things in *R* that variationist sociolinguists familiar with *Goldvarb* often want to do. This includes extracting summary statistics from a standard token spreadsheet and formatting those statistics in such a way that they can be graphed using the package `ggplot2`, as well as testing the trends in those summary statistics using mixed-effects logistic regression analysis. These instructions assume you have installed the latest version of *R* (4.1.3 or later ). Even though this guide does not show everything that *R* can do, after reading and working your way through this guide, you should be familiar enough with how *R* generally works to figure out how do something not covered.
 
-:::{.callout-note}
+::: callout-note
 The best way to learn how to use *R* is to play with it. Learn by doing. You can't break *R*. It doesn't bite. Even though *R* is a cutting edge statistical tool, I compare the experience working with it to fixing an old car. Sometimes you just need to keep tinkering until the engine starts and runs smoothly. Other times you just need to kick it.
 :::
 
@@ -53,8 +52,8 @@ You should have one master Microsoft *Excel* spreadsheet for your data. From thi
 
 ![Example token file `deletiondata.txt`](images/tokenfile.png){#fig-excel}
 
-:::{.callout-warning} 
-Do not include anything in your token file that isn't a token. Do not create sum columns. Do not add random notes to the right or the top of the data. *R* will try to interpret all of this as data. 
+::: callout-warning
+Do not include anything in your token file that isn't a token. Do not create sum columns. Do not add random notes to the right or the top of the data. *R* will try to interpret all of this as data.
 :::
 
 ### *R* Script Files
@@ -73,7 +72,7 @@ If you download this file and open it, *R* will automatically open for you. If y
 
 ### *R* and *R Studio*
 
-The following instructions assume you are using the core *R* program, not *R Studio*. There is no real difference between these programs (at least in how *R* operates). *R Studio* is just an alternative user interface. Some of the external commands (e.g. creating a new *R* script file, etc.) may be different, but the actual *R* functions listed in this document will be the same. There is no advantage to using the *R* core program or *R Studio*. The choice is simply personal preference. I prefer the core *R* program because I like to be able to see multiple script files at the same time. *R Studio* organizes script files in tabs. You may prefer *R Studio* because it can also author other types of documents. 
+The following instructions assume you are using the core *R* program, not *R Studio*. There is no real difference between these programs (at least in how *R* operates). *R Studio* is just an alternative user interface. Some of the external commands (e.g. creating a new *R* script file, etc.) may be different, but the actual *R* functions listed in this document will be the same. There is no advantage to using the *R* core program or *R Studio*. The choice is simply personal preference. I prefer the core *R* program because I like to be able to see multiple script files at the same time. *R Studio* organizes script files in tabs. You may prefer *R Studio* because it can also author other types of documents.
 
 To execute a command function that is in a script file simply put your cursor on the same line as that command and press the execution or **Run** command depending on your operating system and editor. In @fig-scriptfile the cursor is placed in the middle of line 2; pressing `Control+Return` on my Mac executes the command function highlighted in grey. You can also highlight a large portion, or even all of your script file, and press the execution command to execute multiple commands at once. There is also an execute all or **Source** command that will execute the entire script file.
 
@@ -91,7 +90,7 @@ To execute a command function that is in a script file simply put your cursor on
 
 ### Installing Packages
 
-Before you begin doing any kind of analysis in *R*, you'll first need several `packages.' Packages are simply additional sets of instructions that can do things above and beyond *R*'s core functionality. Packages are created by academics and are made available to everyone. *R* doesn't automatically download every package, so if you want to use a specific package, you must download it. You only need to do this one time. You also need to be connected to the internet to do it. Type the following function into *R*'s console window and press **Enter/Return** or type it into a script file and press **CTRL+Enter/Command+Return**:
+Before you begin doing any kind of analysis in *R*, you'll first need several \`packages.' Packages are simply additional sets of instructions that can do things above and beyond *R*'s core functionality. Packages are created by academics and are made available to everyone. *R* doesn't automatically download every package, so if you want to use a specific package, you must download it. You only need to do this one time. You also need to be connected to the internet to do it. Type the following function into *R*'s console window and press **Enter/Return** or type it into a script file and press **CTRL+Enter/Command+Return**:
 
 ```{r eval=FALSE}
 install.packages(c("dplyr","vcd","reshape2","ggplot2","partykit","lme4","car","multcomp", "MuMIn"), dependencies = TRUE)
@@ -101,7 +100,7 @@ Above `install.packages()` is a function for installing packages. Inside the par
 
 When you execute this function, *R* might ask you to pick a **CRAN Mirror**. This is just *R* asking you from where you want to download the packages. *CRAN* is the *Comprehensive R Archive Network* and mirrors are simply different institutions that offer identical copies of *R* files for downloading. Usually I just pick the option closest to me, which is the University of Toronto in Canada. If you've downloaded packages in the past you've likely already set your **CRAN Mirror**, and won't be prompted to do it again.
 
-Once you've selected your **CRAN Mirror**, if necessary, and executed the `install.packages()` function, you may see a bunch of text scroll across your *R* console window. This is just *R* telling you that it is downloading and installing these packages. You can also install packages by selecting **Packages & Data > Package Installer**. In this window click **Get List**, then search/browse for the required packages one by one. When you find a package, highlight it and click **Install Selected**. Make sure the **Install Dependencies** option is checked.
+Once you've selected your **CRAN Mirror**, if necessary, and executed the `install.packages()` function, you may see a bunch of text scroll across your *R* console window. This is just *R* telling you that it is downloading and installing these packages. You can also install packages by selecting **Packages & Data \> Package Installer**. In this window click **Get List**, then search/browse for the required packages one by one. When you find a package, highlight it and click **Install Selected**. Make sure the **Install Dependencies** option is checked.
 
 As *R* updates over time, so too must these packages. But packages don't update automatically. Therefore it's a good idea to periodically execute the function below. Do this now. These instructions assume that you have the most up to date version of *R* and its packages. The `ask=FALSE` option for the `update.packages()` function just means that *R* will run the update 'silently", or rather, it won't ask you whether or not you want to update each individual package you've installed.
 
