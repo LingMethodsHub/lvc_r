@@ -1,10 +1,10 @@
----
+ ---
 title: "Getting to Know Your Data"
 date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
   html: default
-  pdf: default
+#  pdf: default
 author:
   - name:
       given: Matt Hunt
@@ -228,9 +228,10 @@ To get the levels of a **factor** we can use the function `levels()` and to get 
 levels(td$Stress)
 nlevels(td$Stress)
 ```
+
 ## More Exploring
 
-If you only want information from a single column of the data frame, you can use the operator `$` to specify which column of `td` you want. Here the column `Sex' is specified.
+If you only want information from a single column of the data frame, you can use the operator `$` to specify which column of `td` you want. Here the column \`Sex' is specified.
 
 ```{r}
 summary(td$Sex)
