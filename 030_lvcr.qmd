@@ -1,4 +1,4 @@
- ---
+---
 title: "Getting to Know Your Data"
 date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
@@ -17,6 +17,7 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
+description: "Getting a snapshot of your data. Types of data and data structures. Getting the dimensions of your data. Introducting the (t/d) dataset. "
 ---
 
 ```{r setup, include=FALSE}
@@ -116,7 +117,7 @@ tail(td, n=10)
 There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
 
 | Data Type   | Description                                                                                    | Example                                                                               |
-|------------------|-------------------------|-----------------------------|
+|-------------|------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `logical`   | either `TRUE` or `FALSE`                                                                       | The answer to a question like "is `x` a number?", etc.                                |
 | `numeric`   | any real number, positive or negative, with or without decimal values                          | Vowel formant measurements, position in an audio file, household income, etc.         |
 | `double`    | any real number, positive or negative, with or without decimal values (identical to `numeric`) | Vowel formant measurements, position in an audio file, household income, etc.         |

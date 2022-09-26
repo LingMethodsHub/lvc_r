@@ -17,14 +17,13 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
+description: "An introduction to using this tutorial. The relationship between *R* and *Goldvarb*. Token and script files. *R* vs. *R Studio*. How to install packages."
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
 ```
-
-# Getting Started
 
 If you have not installed *R* or have never used *R* before, please check out *Swirl* <https://swirlstats.com/>, which will guide you through installing and learning the basic functionality of *R*. *Swirl* is a collection of interactive courses. Its *R Programming* beginner course will introduce you to *R* and several concepts discussed in this guide. Even if you have used *R* before, you should still go through the basic *R Programming* tutorial --- even I learned something new when testing it before recommending it here.
 
@@ -93,7 +92,7 @@ To execute a command function that is in a script file simply put your cursor on
 Before you begin doing any kind of analysis in *R*, you'll first need several \`packages.' Packages are simply additional sets of instructions that can do things above and beyond *R*'s core functionality. Packages are created by academics and are made available to everyone. *R* doesn't automatically download every package, so if you want to use a specific package, you must download it. You only need to do this one time. You also need to be connected to the internet to do it. Type the following function into *R*'s console window and press **Enter/Return** or type it into a script file and press **CTRL+Enter/Command+Return**:
 
 ```{r eval=FALSE}
-install.packages(c("dplyr","vcd","reshape2","ggplot2","partykit","lme4","car","multcomp", "MuMIn"), dependencies = TRUE)
+install.packages(c("dplyr","vcd","reshape2","ggplot2","partykit","lme4","car","multcomp", "MuMIn", "gmodels"), dependencies = TRUE)
 ```
 
 Above `install.packages()` is a function for installing packages. Inside the parentheses you tell *R* which packages to install. In this case you want to install multiple packages. Any time you need to combine multiple things in *R* you use the concatenating function `c()`. So the above function says combine the package names `dplyr`,`vcd`, `reshape2`, `ggplot2`, `partykit`, `lme4`, `car`, `multcomp`, and`MuNIn` and then install the packages with those names. The `dependencies = TRUE` specification tells *R* to install any additional packages that these packages depend on to function.

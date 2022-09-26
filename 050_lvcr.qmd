@@ -17,12 +17,15 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
+description: "Modifying data, but using the `tidyverse`"
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
 ```
-``` {r include=FALSE}
+
+```{r include=FALSE}
 td <- read.delim("Data/deletiondata.txt")
 
 # Subset data to remove previous "Vowel" contexts
@@ -55,6 +58,7 @@ td.young$Center.Age <- scale(td.young$YOB, scale = FALSE)
 td.middle$Center.Age <- scale(td.middle$YOB, scale = FALSE)
 td.old$Center.Age <- scale(td.old$YOB, scale = FALSE)
 ```
+
 ## Doing It All Again, But `tidy`
 
 The package `dplyr` is part of a larger "universe" of *R* packages called `tidyverse`. This collection of packages is specifically focused on data science and offers some shortcuts that are useful to learn. The packages that make up the `tidyverse` are `dplyr`, `ggplot2`, `purr`, `tibble`, `tidyr`, `stingr`, `readr`, and `forcats`, among others. Throughout this guide I try to use the most basic *R* syntax for accomplishing a task. This way you learn how *R* works. I will also show how to complete the same task using packages from the `tidyverse`. Using the `tidyverse` methods is usually optional --- though once you get the hang of it, you might always use the `tidyverse` methods.
@@ -78,15 +82,15 @@ Before we get started with the `tidyverse`, there are two important new things t
 
 ### The Pipe %\>%
 
-The pipe operator `%>%`[^3] is introduced by the `magrittr` package[^4] and it is extremely useful. The pipe operator passes the output of a function to the first argument of the next function, which mean you can chain several steps together.
+The pipe operator `%>%`[^1] is introduced by the `magrittr` package[^2] and it is extremely useful. The pipe operator passes the output of a function to the first argument of the next function, which mean you can chain several steps together.
 
-[^3]: Not to be confused with the operator `|`, which means "or" and whose symbol is also called "pipe".
+[^1]: Not to be confused with the operator `|`, which means "or" and whose symbol is also called "pipe".
 
-[^4]: Loading `dplyr` will also let you use it.
+[^2]: Loading `dplyr` will also let you use it.
 
-For example, lets find the mean year of birth in our data.[^5]  We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.
+For example, lets find the mean year of birth in our data.[^3] We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.
 
-[^5]: If you don't have the `td` dataset loaded in *R*, go back to the Interim Summary and run the code.
+[^3]: If you don't have the `td` dataset loaded in *R*, go back to the [Interim Summary](%22050_lvcr.qmd%22) and run the code.
 
 ```{r}
 # Find mean YOB using mean() function
@@ -149,13 +153,18 @@ The `dplyr` package is great for manipulating data in a data frame/tibble. Some 
 Lets redo all our data manipulation of `td` but with `dplyr` and its pipe `%>%` operator
 
 ```{r eval=TRUE}
+# Read in token file
 td <- read.delim("Data/deletiondata.txt")
 ```
+
+or...
 
 ```{r eval=FALSE}
 # Read in token file
 td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
 ```
+
+then...
 
 ```{r}
 # Subset data to remove previous 'Vowel' contexts
@@ -173,7 +182,7 @@ td <- td %>% # pass td to next function
                                   labels = c("Old", "Middle", "Young"))) # cut the YOB into discrete categories. 
 ```
 
-Before we continue, a note about the `cut()` function. The `breaks=` option is a concatenated list of boundaries. It should start and end with `-Inf` and `Inf` (negative and positive infinity) as these will be the lower and upper bounds. The other values are the boundaries or cut-off points. By default `cut()` has the setting `right=TRUE`, which means the boundary values will be are considered the last value in a group (e.g., rightmost value). Above, this means `1944` will be the highest value in the `Old` category and `1979` will the the highest value in the `Middle` category. To reverse this you can add the option `right=FALSE` in which case 1944 would be the lowest value in the `Middle` category (e.g. leftmost value) and 1979 would be the lowest value in the `Young` category.
+Before we continue, a note about the `cut()` function. The `breaks=` option is a concatenated list of boundaries. It should start and end with `-Inf` and `Inf` (negative and positive infinity) as these will be the lower and upper bounds. The other values are the boundaries or cut-off points. By default `cut()` has the setting `right=TRUE`, which means the boundary values are considered the last value in a group (e.g., rightmost value). Above, this means `1944` will be the highest value in the `Old` category and `1979` will the the highest value in the `Middle` category. To reverse this you can add the option `right=FALSE` in which case 1944 would be the lowest value in the `Middle` category (e.g. leftmost value) and 1979 would be the lowest value in the `Young` category.
 
 Let's continue.
 
@@ -201,13 +210,17 @@ All of the above code can be simplified as follows:
 td <- read.delim("Data/deletiondata.txt")
 ```
 
+or...
+
 ```{r eval=FALSE}
 # Read in token file
 td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
 ```
 
-```{r, tidy=FALSE}
-# Subset data to remove previous 'Vowel' contexts, then modify several columns
+then...
+
+```{r, tidy=TRUE}
+# Subset data to remove previous 'Vowel' contexts, then modify several columns with mutate, then convert any character column to a factor column
 td <- td %>%
       filter(Before != "Vowel")%>%
       mutate(After.New = recode(After, "H" = "Consonant"),  
@@ -217,13 +230,13 @@ td <- td %>%
              Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
              Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
              Phoneme.Dep.Var = NULL)%>%
-            mutate_if(is.character, as.factor)
+      mutate_if(is.character, as.factor)
   
 ```
 
 Now, doesn't the above look so much cleaner and easier to follow?
 
-To partition the data we still need separate functions.
+To partition the data we still need separate functions. Also, remember to re-centre any continuous variables after partioning.
 
 ```{r}
 td.young <- td %>% 
@@ -238,4 +251,3 @@ td.old <- td %>%
           filter(Age.Group == "Old")%>%
           mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
 ```
-

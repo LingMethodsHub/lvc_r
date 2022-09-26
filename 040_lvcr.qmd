@@ -17,14 +17,13 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
+description: "Modifying data, including removing rows, re-coding variables, centering continuous variables, dividing continuous variables, changing the order of variables, reversing the order of variables, combining columns, splitting columns, and partitioning data sets."
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
 ```
-
-# Modifying Data
 
 If you followed the previous section you now have an object in *R* called `td` in which all character columns are converted to factors. If not, you can load it now with either of the following codes.
 
