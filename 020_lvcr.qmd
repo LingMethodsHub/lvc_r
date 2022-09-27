@@ -19,6 +19,10 @@ author:
         country: UK
 description: "How to import your data into *R*."
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
 
 
 The best way to organize your tokens is in a spreadsheet in Microsoft *Excel*. There are a lot of useful tools in Microsoft *Excel* for automatically coding and re-coding your data. Some of those tools overlap with what I present here for *R*. If you want to explore *Excel*'s functionality, I recommend this website as a springboard: <https://support.office.com/en-us/article/Excel-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb>. There are other programs for spreadsheet management: *Numbers* in OSX, or Google's *Sheets*, for example. They generally function similarly to *Excel*. *R* does not easily read *Excel*'s default file type (**.xls** or **.xlsx**, [though it can be done](https://cran.r-project.org/web/packages/xlsx/xlsx.pdf)) therefore, you must save your token file as a tab-delimited-text file (**.txt**) or a comma-separated-values (**.csv**) file.

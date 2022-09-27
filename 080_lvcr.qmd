@@ -19,6 +19,10 @@ author:
         country: UK
 description: "Doing an analysis using conditional inference trees. "
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

@@ -19,6 +19,11 @@ author:
         country: UK
 description: "Modifying data, including removing rows, re-coding variables, centering continuous variables, dividing continuous variables, changing the order of variables, reversing the order of variables, combining columns, splitting columns, and partitioning data sets."
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

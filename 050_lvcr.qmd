@@ -19,6 +19,10 @@ author:
         country: UK
 description: "Modifying data, but using the `tidyverse`"
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

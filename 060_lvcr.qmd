@@ -19,6 +19,10 @@ author:
         country: UK
 description: "Getting token counts and proportions. Getting mean, median, standard deviation, and quartiles. Dealing with decimals and exponential notation. "
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
