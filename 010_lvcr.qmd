@@ -21,6 +21,12 @@ author:
 description: "An introduction to using this tutorial. The relationship between *R* and *Goldvarb*. Token and script files. *R* vs. *R Studio*. How to install packages."
 ---
 
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)

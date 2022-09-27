@@ -20,6 +20,10 @@ author:
         country: UK
 description: "Generating proportions that you can plot using `ggplot2`. "
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
