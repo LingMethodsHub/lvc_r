@@ -8,3 +8,5 @@
 *.html
 *_files
 *.pdf
+*.Rproj
+*.DS_Store
