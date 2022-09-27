@@ -1,6 +1,6 @@
 ---
 title: "Crosstabs: Counts, Proportions, and More"
-date: "`r Sys.Date()`"
+date: "2022-9-27"
 license: "CC-BY-SA 4.0"
 format: 
   html: default
