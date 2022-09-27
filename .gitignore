@@ -2,10 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rproj
+.DS_Store
 
 /.quarto/
 *.html
 *_files
 *.pdf
-*.Rproj
-*.DS_Store
