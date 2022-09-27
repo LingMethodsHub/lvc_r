@@ -7,17 +7,18 @@ format:
     code-overflow: scroll
 # pdf: default
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
-    orcid: 0000-0002-1878-4232
-    email: matt.gardner@ling-phil.ox.ac.uk
-    corresponding: true
-    affiliations:
-      - name: University of Oxford 
-        department: Linguistics, Philology, & Phonetics
-        city: Oxford
-        country: UK
+  # - name:
+  #     given: Matt Hunt
+  #     family: Gardner
+  name: "Matt Hunt Gardner"
+  orcid: 0000-0002-1878-4232
+  email: matt.gardner@ling-phil.ox.ac.uk
+  corresponding: true
+  affiliations:
+    - name: University of Oxford 
+      department: Linguistics, Philology, & Phonetics
+      city: Oxford
+      country: UK
 description: "Modifying data, including removing rows, re-coding variables, centering continuous variables, dividing continuous variables, changing the order of variables, reversing the order of variables, combining columns, splitting columns, and partitioning data sets."
 ---
 ```{r}
