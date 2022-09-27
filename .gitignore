@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
-
+/renv/
 /.quarto/
 *.html
 *_files
