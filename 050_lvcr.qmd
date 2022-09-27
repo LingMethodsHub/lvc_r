@@ -6,17 +6,18 @@ format:
   html: default
   pdf: default
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
-    orcid: 0000-0002-1878-4232
-    email: matt.gardner@ling-phil.ox.ac.uk
-    corresponding: true
-    affiliations:
-      - name: University of Oxford 
-        department: Linguistics, Philology, & Phonetics
-        city: Oxford
-        country: UK
+  # - name:
+  #     given: Matt Hunt
+  #     family: Gardner
+  name: "Matt Hunt Gardner"
+  orcid: 0000-0002-1878-4232
+  email: matt.gardner@ling-phil.ox.ac.uk
+  corresponding: true
+  affiliations:
+    - name: University of Oxford 
+      department: Linguistics, Philology, & Phonetics
+      city: Oxford
+      country: UK
 description: "Modifying data, but using the `tidyverse`"
 ---
 ```{r}
