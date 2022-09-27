@@ -315,7 +315,8 @@ summary(td.midmenblue)
 
 Below is the full code for loading the data file and then re-coding it. As you progress through the next sections, if for any reason you have a problem, it may be useful to recreate the *R* object `td` from scratch. Going forward in these instructions, the `td` object will be the object as it exists at the end of this code.
 
-```{r eval=TRUE}
+```{r}
+#| eval: false
 td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
 ```
 
