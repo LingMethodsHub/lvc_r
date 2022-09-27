@@ -1,0 +1,6 @@
+project:
+  render:
+    - "!renv/"
+
+citation: 
+  author: "Matt Hunt Gardner"
