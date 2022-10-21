@@ -19,6 +19,11 @@ author:
       city: Oxford
       country: UK
 description: "Doing an analysis using conditional inference trees. "
+image: "080_lvcr_files/figure-html/unnamed-chunk-6-1.png"
+twitter-card:
+  image: "080_lvcr_files/figure-html/unnamed-chunk-6-1.png"
+open-graph:
+  image: "080_lvcr_files/figure-html/unnamed-chunk-6-1.png"
 ---
 ```{r}
 #| echo: false

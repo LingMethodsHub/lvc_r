@@ -19,6 +19,11 @@ author:
       city: Oxford
       country: UK
 description: "Generating proportions that you can plot using `ggplot2`. "
+image: "070_lvcr_files/figure-html/unnamed-chunk-8-1.png"
+twitter-card:
+  image: "070_lvcr_files/figure-html/unnamed-chunk-8-1.png"
+open-graph:
+  image: "070_lvcr_files/figure-html/unnamed-chunk-8-1.png"
 ---
 ```{r}
 #| echo: false
