@@ -19,6 +19,11 @@ author:
       city: Oxford
       country: UK
 description: "An introduction to using this tutorial. The relationship between *R* and *Goldvarb*. Token and script files. *R* vs. *R Studio*. How to install packages."
+image: "images/tweet.png"
+twitter-card:
+  image: "images/tweet.png"
+open-graph:
+  image: "images/tweet.png"
 ---
 
 ```{r}
