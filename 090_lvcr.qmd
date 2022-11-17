@@ -17,7 +17,7 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
-description: "Doing an analysis using conditional inference trees. "
+description: "Doing a basic random forest analysis. "
 ---
 
 ```{r setup, include=FALSE}
@@ -51,7 +51,7 @@ td.old <- td %>%
           mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
 ```
 
-Another useful type of analysis available as part of the `partykit` package is a random forest analysis. This algorithm determines the most common classification tree (like the one above) among a large collection of trees built on random subsets of a dataset. Random forests are useful because they can rank the relative importance of independent variables with respect to a dependent variable. They can also simultaneously test variables that are (multi)collinear. Logistic regression (discussed in the [next section](100_lvcr.qmd)) assumes little or no collinearity among independent predictor variables. Variables like lexical status (`Category`) and morphological type (`Morph.Type`) are highly correlated (i.e., semi-weak and past-tense verbs are all lexical), thus should not be included as predictors in the same logistic regression model.[^1]
+Another useful type of analysis available as part of the `partykit` package is a random forest analysis. This algorithm determines the most common classification tree (like the one above) among a large collection of trees built on random subsets of a dataset. Random forests are useful because they can rank the relative importance of independent variables with respect to a dependent variable. They can also simultaneously test variables that are (multi)collinear. Logistic regression (discussed in [Mixed-Efects Logistic Regression Analysis](110_lvcr.qmd)) assumes little or no collinearity among independent predictor variables. Variables like lexical status (`Category`) and morphological type (`Morph.Type`) are highly correlated (i.e., semi-weak and past-tense verbs are all lexical), thus should not be included as predictors in the same logistic regression model.[^1]
 
 [^1]: See [Tagliamonte 2012](https://www.wiley.com/en-gb/Variationist+Sociolinguistics:+Change,+Observation,+Interpretation-p-9781405135900) and [Tagliamonte & Baayen (2012)](https://doi.org/10.1017/S0954394512000129)  for a variationist-focused explanation of random forest analysis and its relationship to other analyses.
 
@@ -172,7 +172,7 @@ To save the graph use the function `ggsave()`. The first argument is the save de
 
 In the dotplot above, the descriptor variables are ordered top to bottom from most important to least important. Variables can be considered informative if their variable importance is above the absolute value of the lowest negative-scoring variable. The rationale for this rule of thumb, according to [Strobl *et al.* (2009: 342)](https://doi.org/10.1037%2Fa0016973), is that importance of irrelevant variables varies randomly around zero. In other words, everything to the right of the dashed line is a useful in describing `Deletion` in the data. The further to the right of the dashed line, the more useful. 
 
-The variables with the highest variable importance are `Before` and `Moreph.Type`, followed by `Center.Age`, `After`, `Job`, `Education`, `After.New` and `Stress`. The variables `Category`, `Age.Group`, `Sex`, and `Phoneme` are all to the left of the dashed line, so you can consider them as not useful in describing the variation. 
+The variables with the highest variable importance are `Before` and `Morph.Type`, followed by `Center.Age`, `After`, `Job`, `Education`, `After.New` and `Stress`. The variables `Category`, `Age.Group`, `Sex`, and `Phoneme` are all to the left of the dashed line, so you can consider them as not useful in describing the variation. 
 
 You'll notice that many of the independent variables included are collinear --- in other words, the value of one can predict (all or some of) the values of the other. As I noted above, `Category` and `Morph.Type` are collinear because all `Semi-Weak` and `Past` tokens are also `Lexical`. Likewise `Age.Group` and `Center.Age` are completely collinear; the value of `Center.Age` can exactly predict the value of `Age.Group`. Values for both age measures can also do a good job of predicting both `Education` and `Job` in the Cape Breton data. Younger speakers are generally `Educated` and have `White` (collar) or `Service` jobs. All `Students` in the variable `Education` are also `Students` for the variable `Job`, and all are also `Young`. It would violate the assumptions of the model to include all these predictors at the same time in the same regression (see [next chapter](100_lvcr.qmd)); however, these collinear variables can be included in a random forest. One of the greatest uses of a random forest analysis is when you have multiple ways of categorizing the same phenomenon (like social class, which can be operationalized by either `Job` or `Education`, or age which can be operationalized as a continuous variable like `Center.Age`, or a discrete variable like `Age.Group`) and you want to decide which categorization to use.
 
