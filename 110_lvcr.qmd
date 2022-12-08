@@ -1,0 +1,100 @@
+---
+title: "Mixed-Efects Logistic Regression Analysis: Part 1"
+date: "`r Sys.Date()`"
+license: "CC-BY-SA 4.0"
+format: 
+  html: default
+  pdf: default
+author:
+  - name:
+      given: Matt Hunt
+      family: Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
+description: "Doing a mixed-effects logistic regression analysis suitable for comparing to a *Goldvarb* analysis. Part 1: The Setup"
+crossref:
+  fig-title: Table  
+  fig-prefix: Table
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+td <- read.delim("Data/deletiondata.txt") %>%
+      filter(Before != "Vowel") %>%
+      mutate(After.New = recode(After, "H" = "Consonant"),  
+             Center.Age = as.numeric(scale(YOB, scale = FALSE)),
+             Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                                  labels = c("Old", "Middle", "Young")),
+             Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
+             Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
+             Phoneme.Dep.Var = NULL) %>%
+      mutate_if(is.character, as.factor)
+
+td.young <- td %>% 
+            filter(Age.Group == "Young") %>%
+            mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.middle <- td %>% 
+             filter(Age.Group == "Middle") %>%
+             mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.old <- td %>% 
+          filter(Age.Group == "Old") %>%
+          mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+```
+
+# Introduction
+
+One of the best way to test multiple potential predictors of a variable phenomenon is with multivariate statistical modelling. Increasingly in variationist sociolinguistics, we are also taking into account potential random effects, like speaker, in our models. In *R*, a good way to perform multivariate statistical modelling that takes random effects into account is to create mixed-effects logistic regression model. This is the kind of modelling used by *Rbrul* [(Johnson 2009)](https://doi.org/10.1111/j.1749-818X.2008.00108.x),[^1] with which you may already be familiar. Logistic regression examines the relationship of a binary (or dichotomous) outcome (e.g., alive/dead, success/failure, yes/no, `Deletion`/`Realized`) with one or more predictors that may be either categorical or continuous. Calling a regression analysis "mixed-effects" simply means that it will consider some fixed effects (i.e., independent predictor variables) and at least one random effect (explained below).
+
+[^1]: *Rbrul* is a very useful variable rule analysis script that runs in *R*. Often *Rbrul* acts as a bridge for variationists familiar with *Goldvarb* who want to try running analyses in *R*. You can use *Rbrul*, or you can just use the same functions that *Rbrul* uses. The advantage of **not** using *Rbrul* is that you can preserve the steps you took to create the model in a script file --- insuring easy replicability. For more information about *Rbrul* see <http://www.danielezrajohnson.com/rbrul.html>.
+
+::: {.callout-tip collapse="false"}
+## What is a random effect?
+
+Good question!
+
+The in a regression analysis, the first step is to calculate the baseline odds/likelihood of having one outcome (i.e., the \*application value\*\*, `Deletion`) versus not having the outcome without considering any predictor variables. This gives us the constant (also known as the intercept or grand mean). The next step in a regression analysis is to consider the independent predictor variables and how including them in the model changes the odds/likelihood of having one outcome versus not having that outcome. These independent predictor variables are collectively called the fixed effects in the model.
+
+Random effects, however, are variables we include in the model for which each level is understood to potentially have differing baseline odds/likelihoods . In other words, a mixed effects model assumes fixed effect independent variables are correlated to changes in odds/liklihood of the application value in the data (and determines whether those changes are significantly different from zero), while any variability across levels of the random effects variable is uncorrelated with the independent variables.
+
+Given that sociolinguistic data usually includes an inconsistent number of tokens per speaker, it is a good idea to include speaker as a random effect when modelling variation. By doing so you can allow the model to consider each speaker to have a different baseline odds/likelihood (intercept) that is unrelated to other predictors in the model like `Sex` or `Age.Group` in the (t, d) data set. If fixed effects like `Sex` and `Age.Group` are returned as significant predictors of the variation, and `Speaker` was included as a random effect, we can say that the effect of `Sex` or `Age.Group` is significant over and above the potential random effect of individual `Speaker`. Including speaker as a random effect also overcomes the non-indendence introduced by having multiple observations from the same individual.
+:::
+
+Before you continue, it's worth pointing out that as variationist sociolinguists, we use regression analyses to provide statistical validation for the acceptance or rejection of hypotheses and/or to confirm trends observed in summary statistics. The key facts that you use to do this are generally referred to as the "three lines of evidence" and are found in the results of *Goldvarb*'s step-up/step-down method of variable rule analysis (or in *Rbrul*'s mixed-effects logistic regression analysis, which mimics *Goldvarb*'s output).
+
+::: {.callout-tip collapse="false"}
+## What are the Three Lines of Evidence?
+
+1.  **statistical significance** --- what independent variables, e.g., factor groups, are significant predictors of the variation and which are not.
+2.  **magnitude of effect** --- the relative ordering of predictors, e.g., significant factor groups, based on their magnitude of effect on the variation.
+3.  **constraint hierarchy/direction of effect** --- the relative ordering of levels of a predictor, e.g., factors within a factor group, from the level with the greatest positive effect to the level with the greatest negative effect on the overall probability.
+
+Based on [Poplack & Tagliamonte 2001: 92](https://www.wiley.com/en-us/African+American+English+in+the+Diaspora-p-9780631212669); [Tagliamonte 2002: 731](https://doi.org/10.1002/9781118335598.ch6); [Tagliamonte 2006: 235](https://doi.org/10.1017/CBO9780511801624), etc.
+:::
+
+In a standard *Goldvarb*/*Rbrul* analysis, the first line of evidence is determined by what factor groups (predictors) are selected in the best step-up/step-down run, the second line of evidence is determined by the range of the factor weights in each of the significant factor groups (predictor), and the third is determined by the ordering of factors (levels) within each factor group (predictor) based on each factor's (level's) factor weight. Mixed-effects logistic regression modelling in *R* does not provide the exact same step-up/step-down analysis with factor weights that *Goldvarb*/*Rbrul* provides; however, it **does** provide facts that are analogous to to the three lines of evidence.
+
+::: {.callout-caution collapse="false"}
+## Factors, Factor Groups, Predictors, Levels --- What's the difference?
+
+In *Goldvarb* parlance, independent variables in an analysis --- like `Phoneme` and `Sex` in the (t, d) data set) are called *factor groups* and the different options for these factor groups  are called *factors* (`t` vs. `d`, `Male` vs. `Female`). For regression modelling, independent variables in the analysis are usually called *predictors* and the different options for these predictors  are called *levels* of that predictor.
+:::
+
+There are two styles of mixed-effects logistic regression models commonly used by sociolinguists. One style is to look at whether or not the levels of a predictor are significantly different from the mean of that predictor. This is roughly what *Goldvarb* does. Factor weights are centred around .50, and significant factor groups are those where the factor weights of the factors are significantly different from .50. The equivalent logistic regression style in *R* tests what are called **sum contrasts** between levels of a predictor. The second style, which tests **treatment contrasts**, examines whether the levels of a predictor are significantly different from each other, rather than the mean. In this type of analysis one level is selected as a reference to which all other levels are compared. You can see the difference between sum and treatment contrasts in @fig-contrasts. 
+
+![Treatment contrasts (left) versus sum contrasts (right), ©️ Derek Denis, 2014](images/treatmentsum.png){#fig-contrasts}
+
+In [Part 2](112_lvcr.qmd) you will do an analyses with sum contrasts, then in [Part 3](114_lvcr.qmd) you will do the same analysis, but with treatment contrasts. While sum contrasts are consistent with a *Goldvarb*-type analysis, you can probe the constraint hierarchy of your fixed effects using treatment contrasts in a way not otherwise possible. 
+
