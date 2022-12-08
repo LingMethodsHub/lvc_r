@@ -190,7 +190,7 @@ Let's continue.
 # Combine Age and Sex
 
 td <-td %>% # pass td to next function
-     unite("Age_Sex", Age.Group:Sex, sep= "_", remove = FALSE) # using the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted
+     unite("Age_Sex", c(Age.Group, Sex), sep= "_", remove = FALSE) # using the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted
     
 # Break Phoneme.Dep.Var into two columns
 td <-td %>% # pass td to next function
