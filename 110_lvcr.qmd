@@ -96,5 +96,32 @@ There are two styles of mixed-effects logistic regression models commonly used b
 
 ![Treatment contrasts (left) versus sum contrasts (right), ©️ Derek Denis, 2014](images/treatmentsum.png){#fig-contrasts}
 
-In [Part 2](112_lvcr.qmd) you will do an analyses with sum contrasts, then in [Part 3](114_lvcr.qmd) you will do the same analysis, but with treatment contrasts. While sum contrasts are consistent with a *Goldvarb*-type analysis, you can probe the constraint hierarchy of your fixed effects using treatment contrasts in a way not otherwise possible. 
+In [Part 2](112_lvcr.qmd) you will do an analyses with sum contrasts, then in [Part 4](116_lvcr.qmd) you will do the same analysis, but with treatment contrasts. While sum contrasts are consistent with a *Goldvarb*-type analysis, you can probe the constraint hierarchy of your fixed effects using treatment contrasts in a way not otherwise possible. 
 
+## Making Your Depandent Variable Binary
+
+I recommend labelling application value tokens with `1` and non-application values as `0` because *R* eventually does this behind the scenes anyway. For example, with the `ctree()` function ([Conditional Inference Trees](080_lvcr.qmd)) and `glmer()` function below, the dependent variable used is `Dep.Var`. This variable has two levels `Realization` and `Deletion`. Before using these values in either model, *R* will convert each level to `0` and `1` in alphabetical order. So here `Deletion` becomes `0` and `Realization` becomes `1`. This causes complications for us because, for both `ctree()` and `glmer()`, likelihood is expressed as the likelihood of `1`, and `1` here is the non-application value. You don't want to use the likelihood of the non-application value in your manuscript tables and charts! You want to include values in your tables and charts that reflect the probability of, in this case, `0`.[^1] 
+
+^[1]: I also recognize that labelling the application value as `1` can get confusing when the phenomenon in question is `Deletion`. This is the advantage of having two `Dep.Var` columns: one with the dependant variable clearly labled (e.g., `Deletion` and `Realized`), and another column with the dependent variable in binary format (e.g., `1` and `0`). Having both ensures you are never confused as to what the simplified binary coding means. 
+
+There are two ways to overcome the above problem. You can change the ordering of the factors in the `Dep.Var` column so that the non-application value will be converted to `0` and the application value will be converted to `1`. This is exactly what was done when constructing the `ctree()` in [Conditional Inference Trees](080_lvcr.qmd) by changing the order of the levels in `Dep.Var` to `Realized` then `Deletion` (so `Realized` becomes `0` and `Deletion` becomes `1`). Alternatively, you can create a new column with `Realization` tokens coded as `0` and `Deletion` tokens coded as `1` (see the tip below), then use that new column in your models. The one disadvantage to this method is that in your figures, like the `ctree()` figure created in [Conditional Inference Trees](080_lvcr.qmd), the names of the two levels of `Dep.Var` on the figure itself will be `1` and `0`. For the `glmer()` function this doesn't really matter.
+
+
+```{r}
+
+# Reorder levels of Dep.Var to make application value second
+td$Dep.Var <- factor(td$Dep.Var, levels = c("Realized", "Deletion"))
+# Create New Column for binary Dependent Variable, all values 0
+td$Dep.Var.Binary <- "0"
+# Change all Dep.Var.Binary tokens to 1 where Dep.Var.Full is "Deletion". 
+td$Dep.Var.Binary[td$Dep.Var.Full == "Deletion"] <- "1"
+# Make Dep.Var.Binary a factor column
+td$Dep.Var.Binary <- factor(td$Dep.Var.Binary)
+```
+::: {.callout-tip collapse="false"}
+## A Note on Dependent Variables with 3+ levels
+
+Both the `ctree()` and `glmer()` functions require binary dependent variables. If you have a study in which you have a dependent variable with multiple variants (like the `Dep.Var.Full` column), you should make a separate column in which all the tokens with the application value are labelled as one thing, and all the tokens with any non-application value are labelled with another (this is effectively what the `Dep.Var` column is).
+
+Making this binary column is quite easy in *R*. I like to use the binary values `1` and `0`, with `1` as my application value and `0` as my non-application value. To do this recode, first you create a new column and make every value `0`. Then you change the value in this column to `1` for every token where `Dep.Var.Full` equals the application value. Lastly you make this column a factor column (though you could use the function `as.numeric()` to make a numeric column, if that were needed).
+:::
