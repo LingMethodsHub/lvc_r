@@ -1,0 +1,249 @@
+---
+title: "Mixed-Efects Logistic Regression Analysisː Part 4"
+date: "`r Sys.Date()`"
+license: "CC-BY-SA 4.0"
+format: 
+  html: default
+  pdf: default
+author:
+  - name:
+      given: Matt Hunt
+      family: Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
+description: "Doing a mixed-effects logistic regression analysis suitable for comparing to a *Goldvarb* analysis. Part 4: Treatment Contrast Coding"
+crossref:
+  fig-title: Table  
+  fig-prefix: Table
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(tidyr)
+td <- read.delim("Data/deletiondata.txt") %>%
+      filter(Before != "Vowel") %>%
+      mutate(After.New = recode(After, "H" = "Consonant"),  
+             Center.Age = as.numeric(scale(YOB, scale = FALSE)),
+             Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                                  labels = c("Old", "Middle", "Young")),
+             Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
+             Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
+             Phoneme.Dep.Var = NULL) %>%
+      mutate_if(is.character, as.factor)
+
+td.young <- td %>% 
+            filter(Age.Group == "Young") %>%
+            mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.middle <- td %>% 
+             filter(Age.Group == "Middle") %>%
+             mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.old <- td %>% 
+          filter(Age.Group == "Old") %>%
+          mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+ # Sum Coding (vs. mean)
+options(contrasts=c("contr.sum","contr.poly"))
+
+# Reorder levels of Dep.Var to make application value second
+td$Dep.Var <- factor(td$Dep.Var, levels = c("Realized", "Deletion"))
+td$Dep.Var.Binary <- "0"
+# Change all Dep.Var.Binary tokens to 1 where Dep.Var.Full is "Deletion". 
+td$Dep.Var.Binary[td$Dep.Var.Full == "Deletion"] <- "1"
+# Make Dep.Var.Binary a factor column
+td$Dep.Var.Binary <- factor(td$Dep.Var.Binary)
+
+# Generalized linear mixed effects model with the fixed main effects of Before, After.New, Morph.Type, Stress, Phoneme, center.Age, Sex and Education, and the random effect of Speaker
+library(lme4)
+library(car)
+options(digits=2)
+# td.glmer <-glmer(Dep.Var ~ Before + After.New + Morph.Type + Stress + Phoneme + Center.Age + Sex + Education + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# td.glmer1 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# td.glmer2 <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# td.glmer3 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + Center.Age + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# td.glmer4 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + Age.Group + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# td.glmer.null <-glmer(Dep.Var ~ (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa" ))
+#                       
+# # Re-create td.glmer with all parameters with reversed factor orders
+# td.glmer.reversed <-glmer(Dep.Var ~ fct_rev(Before) + fct_rev(After.New) + fct_rev(Morph.Type) + fct_rev(Stress) + fct_rev(Phoneme) + Center.Age + fct_rev(Sex) + Education + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# # Re-order Before in reverse alphabetical order 
+# td$Before.Reorder<-factor(td$Before, levels = c("Stop", "S", "Other Fricative", "Nasal", "Liquid"))
+# 
+# # Re-create td.glmer with reordered Before
+# td.glmer.reorder <- glmer(Dep.Var ~ Before.Reorder + After.New + Morph.Type + Stress + Phoneme +
+#     Center.Age + Sex + Education + (1 | Speaker), data = td, family = "binomial",
+#     control = glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+# 
+# # Alternative method 
+# td.glmer.reorder <- glmer(Dep.Var ~ fct_rev(Before) + After.New + Morph.Type + Stress + Phoneme +
+#     Center.Age + Sex + Education + (1 | Speaker), data = td, family = "binomial",
+#     control = glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+# summary(td.glmer.reorder)
+# 
+# td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# 
+# # Subset data
+# td.young <-td %>% subset(Age.Group == "Young")
+# td.not.young <- td %>% subset(Age.Group != "Young")
+# # Create young speaker regression model
+# td.glmer.young <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1 | Speaker), data = td.young, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+# 
+# 
+# # Create middle/old speaker regression model
+# td.glmer.not.young <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1 | Speaker), data = td.not.young, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+```
+
+
+
+Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](050_lvcr.qmd) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](110_lvcr.qmd). Next, you [set the global *R* options to employ sum contrast coding](112_lvcr.qmd).
+
+# Treatment Contrasts (vs. reference value)
+
+Rather than compare levels of each parameter to the [mean of that parameter](112_lvcr.qmd), you can instead specify one level as the reference level and then compare every other level to it (see [Part 1](110_lvcr.qmd)). To do this you need to set the global contrasts to `contr.treatment`.
+
+```{r}
+# Treatment Contrasts (vs. reference)
+options(contrasts=c("contr.treatment","contr.poly"))
+```
+
+This is actually the more common way to perform a mixed-effects logistic regression outside of sociolinguistics. With the contrasts now set to treatment contrasts you can re-run your most-parsimonious model. 
+
+```{r}
+# Most Parsimonious Model: Generalized linear mixed effects model with the  fixed main effects of Before, After.New, Morph.Type, Stress, Phoneme, and the random effect of Speaker
+library(lme4)
+td.glmer.parsimonious <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress +
+    Phoneme + (1 | Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 20000),
+    optimizer = "bobyqa"))
+summary(td.glmer.parsimonious)
+```
+
+The treatment contrast output looks very much like the model you constructed using sum contrasts (you'll notice that the measures of model fit and the description of the random effects are identical), but there are a few key differences. Firstly, the listed levels of each parameter are now written-out rather than just being numbers. This makes treatment contrast results somewhat easier to interpret. The levels that are listed are all the levels other than the first in that level's factor order. The default order of factors is alphabetic, though you can change this (as you did [previously](112_lvcr.qmd) for `Dep.Var` and `Age.Group`). The first level in each parameter is set as the **reference level**. The reference level for `Before` is `Liquid`, the reference level for `After.New` is `Consonant`, the reference level for `Morph.Type` is `Mono`, the reference level for `Stress` is `Stressed`, and the reference level for `Phoneme` is `d`. 
+
+The `(Intercept)` value is the likelihood of a given token being the application value if that token is coded with all the reference levels. In other words, `0.902` is the likelihood, in log odds, of a token being `Deletion` if that token has a preceding liquid, a following consonant, is mono-morphemic, is stressed, and is an underlying /d/. The estimate for each level is the change in likelihood if that parameter changes to the given level. The difference in likelihood resulting from a token being unstressed, instead of stressed, but with all other parameter settings the same, is `1.598` In other words, a token with a preceding liquid, following consonant, that is mono-morphemic, that is an underlying /d/, and is unstressed is $2.500$ log odds ($0.902+1.598$) or $92\%$ probability.
+
+```{r}
+plogis(2.5)
+```
+:::{.callout-warning}
+With treatment contrasts you **must** [center your continuous variables](040_lvcr.qmd).
+:::
+
+With sum contrasts the reference "level" is the mean for each parameter not a particular level of the parameter; this includes continuous factors. For this reason, whether or not you center continuous factors with sum contrast coding doesn't really matter. The reference level for treatment contrast coding is the first level of the parameter. For continuous variables this means the reference level is $0$. For some applications this might be okay --- for example, if your continuous variable is voice onset time. For most of your applications, though, where continuous factors represent age, this is not desirable. Zero is not a meaningful year of birth or a meaningful age. For this reason we center these factors, thereby changing the mean or average age to zero (so that $0$ equals something meaningful), and all other ages as differences from that mean.  This results in the intercept of a treatment contrast model being the overall likelihood when all the discrete parameters are set to their first value and the continuous parameters set to their mean value.
+
+The *p*-value for each level represents whether or not the resultant difference (e.g., estimate) is significantly different from zero.  The *p*-value for `BeforeStop` is $0.45350$. This is greater than $0.05$, and therefore you say there is not a significant difference in likelihood between tokens with a preceding liquid and tokens with a preceding stop. This changes the constraint hierarchy for this factor group to `S` > `Nasal` > `Other Fricative` > `Liquid/Stop`. It also justifies re-coding these two factors into a single parameter level.  
+
+![Treatment contrasts vs. sum contrasts](images/comparingcontrasts.png){#fig-contrasts width="80%"}
+
+As before, the correlation of fixed effects suggests where there might be non-orthogonality. Values over $|0.3|$ should be investigated, those above $|0.7|$ should be seriously investigated. Calculating the Variable Inflation Factor (VIF) and Condition Number ($\kappa$) is, as always, useful in determining if these correlations are within acceptable limits of collinearity (as discussed in [Part 3](114_lvcr.qmd)). 
+
+```{r}
+# Calculate the Variable Inflation Factor
+library(performance)
+check_collinearity(td.glmer.parsimonious)
+# Calculate Condition Number
+library(JGmermod)
+collin.fnc.mer(td.glmer.parsimonious)$cnumber
+
+```
+The highest VIF is (still) lower than $5$, indicating low collinearity but $\kappa = 7.6$, which is slightly above the threshold of $6$ indicating low-to-moderate collinearity. This latter value further suggests investigating the across-parameter correlations (see [Part 3](114_lvcr.qmd)). For the moment, however, you will keep using the `td.glmer.parsimonious` model. 
+
+You could choose to report the results of this treatment contrast analysis in your manuscript. If you do, a *Goldvarb*-style table wouldn't be appropriate. Instead a `lme4`-style table is needed.
+
+
+![Mixed-effects logistic regression testing the fixed effect of Following Context, Morpheme Type, Preceding Context, Stress, and Phoneme and a random intercept of Speaker on the deletion of word-final (t, d) in Cape Breton English](images/lme4table3.png){#fig-lme4table3 width="80%"}
+
+
+
+The order of parameters in @fig-lme4table3 is based on the the relative ordering presented in Table \ref{tab:wald1}. The parameter levels are also ordered by their estimates. You'll notice that all the estimates are negative and they don't match up to the results reported above. This is because, before creating this table, each factor was reordered based on level estimates so that the reference level, i.e., first level, was also the level that most favoured the application value. I find this makes understanding the constraint hierarchy easier. It also means that the intercept represents the likelihood of the the application value when it is most likely. Alternatively, you could re-arrange the factor levels so that the least likely levels were the reference levels. This would result in estimates that were all positive and showed how much switching levels improved the likelihood. What you choose to do is entirely up to you and the story you want to tell with your analysis. 
+
+
+```{r}
+# Reorder levels of Before from most favouring to least favouring 
+td$Before <-factor(td$Before, levels = c("S", "Nasal", "Other Fricative", "Liquid", "Stop"))
+# Reorder levels of After.New from most favouring to least favouring
+td$After.New <-factor(td$After.New, levels = c("Consonant", "Vowel", "Pause"))
+# Reorder levels of Morph.Type from most favouring to least favouring
+td$Morph.Type <-factor(td$Morph.Type, levels = c("Semi-Weak", "Mono", "Past"))
+# Reorder levels of Stress from most favouring to least favouring
+td$Stress <-factor(td$Stress, levels = c("Unstressed", "Stressed"))
+# Most Parsimonious Model:  Generalized linear mixed effects model with the fixed main effects of Before, After.New, Morph.Type, Stress, Phoneme, , and the random effect of Speaker
+td.glmer <-glmer(Dep.Var~Before+After.New+Morph.Type+ Stress + Phoneme+(1|Speaker), data = td, family ="binomial", control = glmerControl(optCtrl=list(maxfun=2e4),optimizer="bobyqa"))
+summary(td.glmer)
+```
+
+By reordering the levels of you verify some intuitions generated by [previous analyses](114_lvcr.qmd) about the constraint hierarchy for `Before`. There is not a significant difference between the reference level (`S`) and `Nasal` or between the reference level (`S`) and `Other Fricatives`. This suggests that your constraint hierarchy is actually `All Fricatives/Nasals` > `Liquids/Stops` (remember in the non-reordered `summary(td.glmer)` `Liquids` and `Stops` were not significantly different). This is an insight into the data that the `glmer()` model with sum contrasts couldn't have provided. 
+
+
+But what about the other parameter levels? For example, there is a significant difference between following consonant and following vowel. There is also a significant difference between following consonant and following pause. But is there a significant difference between following vowel and following pause? You could run a series of `glmer()` models in which you keep reordering the parameter levels to find out where the significant differences are. However, the `glmer()` model you've just constructed contains this information, you just need to know how to ask for it.
+
+The first task is to create a contrast matrix of all the comparisons you want to make. You use  `rbind()` to create two rows (which you call `"After.NewVowel vs. After.NewPause"` and `"Morph.TypeMono vs. Morph.TypePast"`). Each row has 11 cells. These 11 cells correspond to the 11 rows in the `glmer()` fixed effects results: the first cell corresponds to the `(Intercept)`, the second cell corresponds to `BeforeNasal`, etc. To compare two estimates place a `1` and `-1` in the corresponding cells and a `0` in all remaining cells. In the code below there is a `1` in the sixth and a `-1` in the seventh cells because `After.NewVowel` and `After.NewPause` are the sixth and seventh rows in the fixed effects results. You use the `glht()` function (a simultaneous test of the General Linear Hypotheses) in the `multcomp` package to calculate the comparisons. A `summary()` for that function displays the results.
+
+```{r, message=FALSE}
+# Create  contrast matrix
+d<-rbind(
+	"After.NewVowel vs. After.NewPause"	= c(0, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0),
+	"Morph.TypeMono vs. Morph.TypePast"	 = c(0, 0, 0, 0, 0, 0, 0, 1, -1, 0, 0)	
+	)
+# Test pairwise comparisons
+library(multcomp)
+summary(glht(td.glmer, d))
+```
+
+The results indicate that the difference in likelihood of `After.NewVowel` and `After.NewPause` on the `Intercept` are not  significantly different from zero ($p>0.05$). This means that the real contrast for this factor group is consonant versus not-consonant. On the other hand, there is a significant difference between `Morph.TypeMono` and `Morph.TypePast` indicating that this factor group has a real three-way contrast between semi-weak simple past, mono-morphemes and weak simple past. Again, by performing a detailed analysis of the contrasts between factors **in addition to** an analysis of the contrasts between factors and their mean, you achieve a much more nuanced (and I argue superior) understanding of the three lines of evidence because you can pinpoint exactly where significant contrasts exist. 
+
+An easier method for generating the contrast matrix is provided below. For a different analysis replace `td.glmer.parsimonious` with your model name, and replace `Before`, `After.New`, etc. with your own predictors. You don't need to include all predictors. You could also include more. Just adjust the number of `k1`, `k2`, etc. objects you create. This method provides all the contrasts for a single predictor variable, unlike the method above, in which you specify the specific contrasts you are interested in. I have not included `Phoneme` or `Stress` here as they are binary, so the contrast between the two levels is represented in the `summary(td.glmer.parsimonious)` output already. 
+
+```{r, message=FALSE}
+library(multcomp)
+k1<-glht(td.glmer.parsimonious, mcp(Before ="Tukey"))$linfct
+k2<-glht(td.glmer.parsimonious, mcp(After.New = "Tukey"))$linfct
+k3<-glht(td.glmer.parsimonious, mcp(Morph.Type = "Tukey"))$linfct
+
+summary(glht(td.glmer.parsimonious, linfct=rbind(k1,k2,k3)))
+```
+You can add the results from this `glht()` test to your manuscript table, as in @fig-lme4table3.
+
+## Visualizing the fixed effects
+
+As in [Part 2](112_lvcr.qmd), you can use the `plot_model()` function to examine the fixed effects. 
+
+```{r, message=FALSE}
+# Load required packages
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(ggplot2)
+
+
+# Plot fixed effects
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black", title = "Likelihood of (t,d) deletion") + theme_classic()
+```
+
+Unlike the fixed effects plot for the sum contrast coding model, in which  zero on the *x*-axis  represented the grand mean, or overall baseline likelihood, zero on the *x*-axis here represents the likelihood when all predictors are set to their reference values. You have arbitrarily set all the reference values to the most favouring values, so all the values represented  in the plot are below zero, as they have negative estimates (they all disfavour `Deletion` relative to the reference values). 
+
+Any predictor level whose error bars overlap the zero line are not significantly different from the reference level of that predictor. As is shown in the `glmer()` output, for preceding context, `Nasal` and `Other Fricative` are not significantly different from the reference value `S`. The error bars can also tell you how the non-reference values relate to each other, as with the `glht()` test. Any error bars for levels of the same predictor that overlap indicate those levesl are not significantly different from each other. By looking at the plot you can see that for preceding context `Nasal` and `Stop` and `Nasal` and `Liquid` do not overlap (though the space between `Nasal` and `Liquid` is quite hard to see), but all other non-reference values do. Likewise, for following context `Vowel` and `Pause` overlap, indicating that they are not significantly differnet from each other, despite both being significantly different from the reference level `Consonant`. For morpheme type, however, both `Mono` and `Past` are significantly different from the reference value `Semi-Weak` as their error bars do not cross the zero line, and also significantly different from each other, as their error bars do not overlap. 
+
+Instead of colouring all the predictor levels similarly (as they are all below zero), you can instead colour them by predictor type using the `group.terms=` option, and then specifying which group each term belongs to, as in the example below. The first four terms (the four `Before` levels) are all `1`, the next two (the two `After.New` levels)  are `2`, etc. This might make presenting a plot like this easier to read, especially as part of a slide presentation. 
+
+```{r}
+# Plot fixed effects
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black", title = "Likelihood of (t,d) deletion", group.terms = c(1,1,1,1,2,2,3,3,4,5)) + theme_classic()
+```

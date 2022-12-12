@@ -1,5 +1,5 @@
 ---
-title: "Mixed-Efects Logistic Regression Analysisː Part 3"
+title: "Mixed-Efects Logistic Regression Analysis: Part 3"
 date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
@@ -121,10 +121,10 @@ library(lme4)
 td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
 summary(td.glmer.parsimonious)
 ```
-Below the results for fixed effects is a table of the correlations of the fixed effects.  This table is a good way to spot non-[orthogonal](https://en.wikipedia.org/wiki/Orthogonality#Statistics,_econometrics,_and_economics) effects you might not yet have caught (though you should have caught these effects if you thoroughly explored your data using [summary statistics](060_lvcr.qmd)). Look at only the coefficients for the  correlations of levels of **different** parameters. Generally any value over $|0.3|$ should be investigated further. If you have any correlations over $|0.7|$ you should be worried. In your table there is no correlation higher than $|0.7|$ but there are a few over $|0.3|$: `After.New1*Before4` $|0.304|$; `After.New1*Stress1` $|0.432|$; `After.New2*Before4` $|0.431|$; `After.New2*Phoneme1` $|0.307|$; `Morph.Type1*Before3` $|0.319|$; `Morph.Type2*Before3` $|0.515|$; `Before1*Phoneme1` $|0.543|$; and `Before4*Phoneme1` $|0.438|$. These correlations suggest  it might be worthwhile to re-check the summary statistics, looking especially at the cross-tab of `After.New` and `Before`, `After.New` and `Phoneme`, `Morph.Type` and `Before`, `Morph.Type` and `Phoneme`, and `Before` and `Phoneme`.[^1] 
+Below the results for fixed effects is a table of the correlations of the fixed effects.  This table is a good way to spot non-[orthogonal](https://en.wikipedia.org/wiki/Orthogonality#Statistics,_econometrics,_and_economics) effects you might not yet have caught (though you should have caught these effects if you thoroughly explored your data using [summary statistics](060_lvcr.qmd)). Look at only the coefficients for the  correlations of levels of **different** parameters. Generally any value over $|0.3|$[^1] should be investigated further. If you have any correlations over $|0.7|$ you should be worried. In your table there is no correlation higher than $|0.7|$, but there are a few over $|0.3|$: `After.New1*Before4` $|0.304|$; `After.New1*Stress1` $|0.432|$; `After.New2*Before4` $|0.431|$; `After.New2*Phoneme1` $|0.307|$; `Morph.Type1*Before3` $|0.319|$; `Morph.Type2*Before3` $|0.515|$; `Before1*Phoneme1` $|0.543|$; and `Before4*Phoneme1` $|0.438|$. These correlations suggest  it might be worthwhile to re-check the summary statistics, looking especially at the cross-tab of `After.New` and `Before`, `After.New` and `Phoneme`, `Morph.Type` and `Before`, `Morph.Type` and `Phoneme`, and `Before` and `Phoneme`.[^2] 
 
-[^1]: See also *Notes on Interactions* by Derek Denis, available [here](Data/Denis_2010_Notes_On_Interactions.pdf).
-
+[^2]: See also *Notes on Interactions* by Derek Denis, available [here](Data/Denis_2010_Notes_On_Interactions.pdf).
+[^1]: Any absolute value greater than $3$, or rather any positive value higher than $+3$ or any negative value lower than $-3$.
 
 There are two other methods for testing for a relationship between your fixed effect predictors that relate to the kind of relationship your fixed effects predictors might have. The first is that the predictors have an **interaction** the other is that they are (multi-) **collinear**.
 
@@ -201,9 +201,9 @@ ggplot(td)+
   theme_mosaic()
 ```
 
-In a mosaic plot the size of the box for each combination of variables corresponds to the relative number of tokens of that combination. The first major observation from the mosaic plot is that there are no preceding /s/ tokens where the underlying phoneme is /d/, and there are remarkably few tokens in which /d/ is preceded by a non-nasal stop.[^2] This indicates that you shouldn't include both of these predictors in your model, or complexify the model by creating a interaction group of `Phoneme` and `Before`. This is because you can predict some of the values of `Phoneme` and `Before`. For example, if a token is underlyingly world-final /d/, the preceding segment will not be /s/. Likewise, if the preceding segment is /s/, the underlying phoneme must be /t/.
+In a mosaic plot the size of the box for each combination of variables corresponds to the relative number of tokens of that combination. The first major observation from the mosaic plot is that there are no preceding /s/ tokens where the underlying phoneme is /d/, and there are remarkably few tokens in which /d/ is preceded by a non-nasal stop.[^3] This indicates that you shouldn't include both of these predictors in your model, or complexify the model by creating a interaction group of `Phoneme` and `Before`. This is because you can predict some of the values of `Phoneme` and `Before`. For example, if a token is underlyingly world-final /d/, the preceding segment will not be /s/. Likewise, if the preceding segment is /s/, the underlying phoneme must be /t/.
 
-[^2]: I checked the data and there are only three such tokens: one token of *bugged* and two of *hugged*. 
+[^3]: I checked the data and there are only three such tokens: one token of *bugged* and two of *hugged*. 
 
 Lets look at another mosaic plot. 
 
@@ -224,21 +224,7 @@ ggplot(td)+
   theme_mosaic()
 ```
 
-This mosaic plot show that there are very few tokens with a preceding `Stop` and a following `Pause`. Though no apparent collinearity is present, this mosaic plot does reveal some interesting potential interactions. The effect of preceding /s/, liquids, and nasals appears to be specific to pre-consonental contexts, and perhaps also pre-vowel contexts for nasals. This suggests further exploration of the data is warranted --- perhaps by creating separate `glmer()` models for each of the following contexts, by complexifying your full model by creating a `Before` and `After.New` interaction group, or by simplifying your full model by [collapsing these two categories](040_lvcr.qmd) into simpler grouped categories, e.g., `Pre-Pause`, `Liquid-Consonant`, `Liquid-Vowel`,`Nasal-Consonant`, `Nasal-Vowel`, `S-Consonant`, `S-Vowel`, `Other-Consonant`, `Other-Vowel`, or similar. 
-
-It is important to point out that collinearity does not reduce the predictive power or reliability of the `glmer()` model as a whole --- it only affects calculations regarding individual predictors. That is, a `glmer()` model with correlated predictors can indicate how well the entire bundle of predictors predicts the outcome variable, but it may not give valid results about any individual predictor, or about which predictors are redundant with respect to others. In other words, collinearity prevents you from discovering the three lines of evidence. 
-
-
-So how can you test whether your predictors are collinear? There are two measures beyond just looking at the correlation matrix (which can point to either collinearity or interaction).
-
-
-The first method to test collinearity is to find the **Condition Number** ($\kappa$ a.k.a. kappa). The function to calculate this comes from a (package)[https://rdrr.io/github/jasongraf1/JGmermod/] created by linguist Jason Grafmiller, which adapts the `collin.fnc()` function from R. Harald Baayen's [`languageR`](https://cran.r-project.org/web/packages/languageR/index.html) package to work with `lme4` mixed models. To install this package you need to first install the `devtools()` package, and then you can download it. 
-
-```{r, eval=FALSE}
-# Install JGermod
-install.packages("devtools")
-devtools::install_github("jasongraf1/JGmermod")
-```
+This mosaic plot show that there are very few tokens with a preceding `Stop` and a following `Pause`. Though no apparent collinearity is present, this mosaic plot does reveal some interesting potential interactions. The effect of preceding /s/, liquids, and nasals appears to be specific to pre-consonental contexts, and perhaps also pre-vowel contexts for nasals. This suggests further exploration of the data is warranted --- perhaps by creating separate `glmer()` models for each of the following contexts, by complexifying your full model by creating a `Before` and `After.New` interaction group, or by simplifying your full model by [collapsing these two categories](040_lvcr.qmd) into simpler grouped categories, e.g., `Pre-Pause`, `Liquid-Consonant`, `Liquid-Vowel`,`Nasal-Consonant`, `Nasal-Vowel`, `S-Consonant`, `S-Vowel`, `Other-Consonant`, `Other-Vowel`, or similar.
 ```{r}
 # Create a new model using insights from the mosaic plots
 td<-td %>%
@@ -257,6 +243,27 @@ td<-td %>%
 
 td.glmer.parsimonious.new <- glmer(Dep.Var ~ Before.After + Morph.Type + Stress + (1 | Speaker), data = td, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
 
+# Compare fit of new parsimonious model with old parsimonious model
+anova(td.glmer.parsimonious, td.glmer.parsimonious.new)
+```
+The `anova()` function shows that `td.glmer.parsimonious.new` is a better fit model. In other words, it does a better job of predicting the variation in the data. 
+
+
+
+It is important, however,  to point out that collinearity does not reduce the predictive power or reliability of the `glmer()` model as a whole --- it only affects calculations regarding individual predictors. That is, a `glmer()` model with correlated predictors can indicate how well the entire bundle of predictors predicts the outcome variable, but it may not give valid results about any individual predictor, or about which predictors are redundant with respect to others. In other words, collinearity prevents you from discovering the three lines of evidence. 
+
+
+So how can you test whether your predictors are collinear? There are two measures beyond just looking at the correlation matrix (which can point to either collinearity or interaction).
+
+
+The first method to test collinearity is to find the **Condition Number** ($\kappa$ a.k.a. kappa). The function to calculate this comes from a (package)[https://rdrr.io/github/jasongraf1/JGmermod/] created by linguist Jason Grafmiller, which adapts the `collin.fnc()` function from R. Harald Baayen's [`languageR`](https://cran.r-project.org/web/packages/languageR/index.html) package to work with `lme4` mixed models. To install this package you need to first install the `devtools()` package, and then you can download it. We will return to the original `td.glmer.parsimonious` to do this test. 
+
+```{r, eval=FALSE}
+# Install JGermod
+install.packages("devtools")
+devtools::install_github("jasongraf1/JGmermod")
+```
+```{r}
 library(JGmermod)
 # Calculate Condition Number
 collin.fnc.mer(td.glmer.parsimonious)$cnumber
@@ -275,7 +282,13 @@ check_collinearity(td.glmer.parsimonious)
 ```
 According to the [`performance` package documentation](https://rdrr.io/cran/performance/man/check_collinearity.html), a `VIF` less than $5$ indicates a low correlation of that predictor with other predictors. A value between $5$ and $10$ indicates a moderate correlation, while VIF values larger than $10$ are a sign for high, not tolerable correlation of model predictors [(James et al. 2013)](https://link.springer.com/book/10.1007/978-1-4614-7138-7). The `Increased SE` column in the output indicates how much larger the standard error is due to the association with other predictors conditional on the remaining variables in the model. 
 
-Based on the Condition Number ($\kappa<6$) and the VIF ($<5$) you can report that any (multi-) collinearity in your model is within acceptably low limits. 
+Based on the Condition Number ($\kappa<6$) and the VIF ($<5$) you can report that any (multi-) collinearity in your model is within acceptably low limits. You can add this to your manuscript table, as in @fig-lme4table2 (based on `td.glmer.parsimonious`), though you should always contextualize what these measures indicate (i.e., low collinearity) in the text too.
+
+
+![Mixed effects logistic regression analysis of the contribution of external and internal factors to the probability of /t, d/ -deletion in Cape Breton English for two age groups](images/lme4table2.png){#fig-lme4table2 width="80%"}
+
+
+
 
 Keep in mind that if there are interaction terms (e.g., `Sex*Age.Group`) in your model high VIF values are expected. This is because you are explicitly expecting and testing a correlation between two predictors. The (multi-) collinearity among two components of the interaction term is also called "inessential ill-conditioning", which leads to inflated VIF values.
 

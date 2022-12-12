@@ -1,5 +1,5 @@
 ---
-title: "Mixed-Efects Logistic Regression Analysisː Part 2"
+title: "Mixed-Efects Logistic Regression Analysis: Part 2"
 date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
@@ -230,6 +230,7 @@ The `r.squaredGLMM()` function returns a matrix with two calculations each for `
 You cannot meaningfully compare model fit across different data sets. Identical tokens and an identical dependant variable must be included in the two models being compared.  This is equally true for comparing AIC and $R^2$. 
 :::
 
+### Random Effects {#sec-randomeffects}
 After the measures of model fit is information about the random effects. In `td.glmer` there is only one random effect: `Speaker`. It is listed under `Groups` because the model groups data by `Speaker`. The `(Intercept)` is listed under `Name` because the model allows for variation of the `(Intercept)` (i.e., baseline likelihood) by level of `Speaker`. The likelihood of `Deletion` for all levels of `Speaker` considered together is found below under `Fixed Effect`. It is the `Estimate` value of `(Intercept)`, e.g., `-0.255733` log odds. The `Variance` and the `Std.Dev` are two different ways of expressing how much the levels of `Speaker` vary around this baseline value.  The `Std.Dev` is simply the square root of the `Variance` ($\sqrt{0.6459} = 0.8036$. There is no consensus among sociolinguistics as to whether to report the value for `Variance` or `Std.Dev`. I prefer `Std.Dev` because it is the same units as the `(Intercept)`. In a manuscript you can therefore report that the overall baseline probability of the `td.glmer` model is $-0.255788$ log odds ($\pm 0.806$ log odds, by speaker). 
 
 Since we assume these likelihoods are normally-distributed, $95\%$ of the speakers' likelihoods will be within two standard deviations around the overall likelihood. We can calculate this using simple addition and subtraction, or we can calculate the range using an idealized normal distribution (using `qqnorm()`). The results of these two calculations are slightly different as they are derived using somewhat different mathematical operations. For your purposes, just choose one method and stick with it. To make your calculations easier you can assign the overall likelihood and random effects standard deviation to their own variables.
@@ -294,8 +295,57 @@ Based on the second calculations, you can report in a manuscript that the mean b
 inv.logit(qnorm(c(0.025,0.975),mean=td.intercept, sd=td.rsd))
 ```
 
-At the end of the details of the random effects you are presented with some useful information: `Number of obs: 1189, groups:  Speaker, 66`. This tells you the total number of tokens in your data set: `1189`, and the total number of speakers: `66`.
+To get the baseline likelihood for individual speakers you can extract the random effect values using `ranef()`. 
+```{r}
+# Get individual baseline likelihoods by speaker
+ranef(td.glmer)
+```
+For each individual speaker you add their random effect value to the overall baseline likelihood to get that speaker's baseline likelihood. The baseline likelihood of `Deletion` for speaker `ARSM91` is $32\%$. 
+```{r}
+ranef(td.glmer)$Speaker["ARSM91",]
 
+sum(ranef(td.glmer)$Speaker["ARSM91",], fixef(td.glmer)["(Intercept)"] )
+
+plogis(sum(ranef(td.glmer)$Speaker["ARSM91",], fixef(td.glmer)["(Intercept)"] ))
+```
+Below is a series of functions that extracts the coefficient (in log-odds) of the  random intercept for each speaker and then adds next to those coefficients the frequency of the application value for each speaker, as well as that speaker's total number of tokens. Finally it orders the speakers from lowest to highest random effect intercept coefficient. There is also an extra step to specify the order of the `Dep.Var` factor because the following `table()}` function specifies the level to extract by number and you want to make sure that is `Deletion`.
+
+```{r}
+# Create column of Speakers with intercept coefficient
+library(dplyr)
+td.ranef <-add_rownames(as.data.frame(ranef(td.glmer)$Speaker), "Speaker")
+colnames(td.ranef)[2]<-"Intercept"
+# Reorder levels of Dep.Var to make application value second
+td$Dep.Var <- factor(td$Dep.Var, levels = c("Realized", "Deletion"))
+ # Create column of Frequencies
+speaker.prop <-add_rownames(as.data.frame(prop.table(table(td$Speaker, td$Dep.Var),1)[,2]), "Speaker")
+colnames(speaker.prop)[2] <-"Percent"
+# Create column of token counts
+speaker.n <-as.data.frame(table(td$Speaker))
+colnames(speaker.n)<-c("Speaker","Total N")
+# Merge column of frequencies and column of token counts with column of Speakers
+td.ranef.speaker <-merge(td.ranef, speaker.prop, by ="Speaker")
+td.ranef.speaker <-merge(td.ranef.speaker, speaker.n, by ="Speaker")
+# Order data from lowest to highest Intercept, reset/delete row names
+td.ranef.speaker <- td.ranef.speaker[order(td.ranef.speaker$Intercept, td.ranef.speaker$Percent),]
+rownames(td.ranef.speaker) <-NULL
+# Show final table, supress rownames
+print(td.ranef.speaker, row.names=FALSE)
+```
+
+If you look at the top (`head()`) and bottom (`tail()`) of this new table you can see that speakers `LATF53` and `LELM91` are the most likely to produce fully-realized (t, d) (even though, in the case of `LATF53`, the frequency of `Deletion` is not the lowest), while `VICF91` and `MARM92` are the most likely to delete (t, d).  This is because the former have an overall higher baseline likelihood (`(Intercept)`+ random effect estimate) and the latter have an overall lower baseline likelihood (`(Intercept)` + random effect estimate). This information could be very useful to your analysis. 
+```{r}
+# Show first six rows of td.ranef.speaker
+head(td.ranef.speaker)
+# Show last six rows of td.ranef.speaker
+tail(td.ranef.speaker)
+```
+
+### Fixed Effects
+Looking back again at `summary(td.glmer)`, at the end of the details of the random effects you are presented with some useful information: `Number of obs: 1189, groups:  Speaker, 66`. This tells you the total number of tokens in your data set: `1189`, and the total number of speakers: `66`.
+```{r}
+summary(td.glmer)
+```
 Next you have the analysis of fixed effects. In the leftmost column you have a list of the levels of each parameter minus one. More on that in a moment. For each level there is an estimate value, also called the coefficient. This value, expressed in log odds, is like a factor weight. Unlike factor weights which are centred around $0.5$ and range from $0$ to $1$, log odds are centred around $0$ and range from $+\infty$ to $-\infty$. Parameter levels with positive polarity log odds favour the application value relative to that parameter's baseline likelihood. Parameter levels with negative polarity log odds disfavour the application value relative to that parameter's baseline likelihood.
 
 The coefficient for the `(Intercept)`, as described above, is the overall baseline likelihood. It is the likelihood, all things being equal, that any given token will have the application value rather than the non-application value. It is the mean of the baseline likelihoods of all the parameters in the model. It is just like the input value reported in *Goldvarb*. You can also refer to it as the centred mean. This value is usually reported in your manuscript as a probability. You can use the `inv.logit()` function to convert it to a probability (see above). 
@@ -393,6 +443,56 @@ For sum contrast coding, the `Pr(>|z|)` value for the `(Intercept)` tells you wh
 
 Following the fixed effects there is usually a matrix of correlations. With many predictors or with predictors with many levels this correlation matrix can be very large. If the matrix is too large *R* will not print it automatically. Don't worry too much about the correlation matrix right now. We will return to it in [Part 3](114_lvcr.qmd).
 
+::: {.callout-note collapse="true"}
+## Visualizing the Fixed Effects 
+A useful way to visualize the fixed effects is with the function `plot_model()` from the `sjPlot`  and affiliated packages. You should have `ggplot2` already installed if you've been following along. 
+```{r, eval=FALSE, message=FALSE}
+# Install sjPlot and affiliated pacakges
+install.packages(c("sjPlot", "sjlabelled", "sjmisc"))
+```
+```{r, message=FALSE}
+# Load required packages
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(ggplot2)
+
+
+# Plot fixed effects
+plot_model(td.glmer)
+```
+In the plot the default *x*-axis is transformed to odds ratios. You'll remember that odds ratios are mathematically equivalent to both log odds and probabilities. To show either of these in plot, you can use the `transform=` option, `NULL` (no transformation) for log odds and `"plogis"` for probabilities. 
+```{r}
+# Plot fixed effects with log odds as the x-axis
+plot_model(td.glmer, transform = NULL)
+# Plot fixed effects with probabilities as the x-axis
+plot_model(td.glmer, transform = "plogis")
+```
+You'll see that for the log odds plot the values are centered around $0$ (no effect), which is equivalent to 1 odds ratio in the odds ratio plot, or $0.50$ probability in the probability plot.
+The dots represent the estimate of the fixed effects. The lines extending to the right and left of the dots represent the bounds of the standard error. If the standard error does not cross the center line then the effect is statistically significant. The red dots in the log odds and odds ratio plots indicate values below the center line, red values indicate values below the center line. In the probability plot the values are all unfortunately red.  As with the output of the sum contrast `glmer()` model, there is also unfortunately one "missing" value for each predictor. 
+
+You can show the estimate values using the option `show.values = TRUE`. Doing so also adds the significance asterisks (which can be suppressed, if desired, with `show.p = FALSE`). The values will be plotted directly on top of the points, so use `value.offset` to adjust the relative positioning. You can also highlight the center line with the `vline.color` option. 
+
+```{r}
+# Plot fixed effects with log odds as the x-axis, estimates and significance showing, and highlighted center line
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black")
+```
+You can see that all error bars that cross the center line are not significant. You can sort the individual levels of the predictors from most favouring to least favouring using the option `sort.est = TRUE`. You can change the title using `title =`. You can also make this graph readable in non-colored manuscripts using `color="bw"` or `color = "gs"` and employ some of the themes you encountered [in previous chapters](070_lvcr.qmd).  Other tweaks to the plot can be found [here](https://cran.r-project.org/web/packages/sjPlot/vignettes/plot_model_estimates.html)
+```{r}
+# Plot fixed effects with log odds as the x-axis, estimates and significance showing, highlighted center line, and sorted estimates
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black", sort.est=TRUE, title = "Likelihood of (t,d) deletion", colors = "gs") + theme_classic()
+```
+While this type of plot may be less useful when reporting on a sum contrast regression analysis (as there are missing values), it is very useful when reporting on [treatment contrast regression analyses](116_lvcr.qmd).  You can also plot the random effects per `Speaker` by using the option `type = "rf"`. This provides similar information as you extracted from the `glmer()` model in @sec-randomeffects. To sort this plot by random effect estimate you also need to add `grid = FALSE`.
+
+```{r, fig.height=8}
+# Plot random effects with log odds as the x-axis, estimates and significance showing, highlighted center line, and sorted estimates
+plot_model(td.glmer, type = "re", transform = NULL, vline.color="black", sort.est="sort.all", grid=FALSE, title = "Random effect per Speaker") + theme_classic()
+```
+The above plot shows that, based on the standard error, only five speakers have baseline likelihoods of `Deletion` significantly different from the overall intercept: `GARF37` and `LATF53` have a significantly lower baseline likelihood of `Deletion`, while `VICF91`, `MARM92`, `NATF84`, `INGM84` and `HAWM90` have a significantly higher baseline likelihood of deletion. 
+:::
+
+
+
 ## Determining Significance and Magnitude of Effect
 
 Let's return now to the **three lines of evidence**. Does the model tell you which factors groups are significant predictors of the dependent variable? The answer: sort of. It tells you which levels of certain predictors are significantly different from the baseline, but this isn't the same thing as signalling which predictors, collectively, create the best (e.g., most explanatory) model of the variation --- the way *Goldvarb*'s step-up/step-down model does. In other words, you aren't provided with the first two lines of evidence. You can figure out the third line of evidence, constraint hierarchy, but this would be the constraint hierarchy in what could conceivably be an overstuffed model. What you need is a tool to determine which factors **should** be in the model --- or, rather, which factors actually explain the variation and which factors are erroneous. For this you can use the Wald $\chi^2$ test. The Wald $\chi^2$ test iteratively adds and removes each factor group/predictor, known as a parameter of the model, and compares how well each iteration fits the distribution of the data. If a parameter is found to be significant, it is interpreted as adding explanatory value. If a parameter is not significant, its contribution is superfluous to the understanding of the data and can be set aside. In this way, the Wald $\chi^2$ test is very similar to the step-up/step-up down procedure implemented by *Goldvarb*. The result of the Wald $\chi^2$ test reveals what combination of original parameters make the most parsimonious model, or rather, a group of original factors that only includes those that contribute significantly to predicting the variation.
@@ -422,7 +522,7 @@ td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress
 summary(td.glmer.parsimonious)
 ```
 
-### Creating a Manuscript-ready Table
+## Creating a Manuscript-ready Table
 
 The estimates or coefficients give us the last line of evidence --- and the last piece of statistical information that is generally reported in a standard *Goldvarb*-style manuscript table. @fig-gvtable1 is such a table constructed using the information from the `td.glmer.parsimonious` regression analysis. 
 
@@ -464,6 +564,8 @@ summary(td.glmer.not.young)
 ```
 
 Despite how useful a *Goldvarb*-style table is, it is not the only way to report the results you've produced. Nor is the estimate the only information you have. There are other interesting values in your `summary(td.glmer)` output. Going left to right, after the estimate there is the standard error, the $z$-value and the $p$-value. According to Gregory Guy in his [*LVC guidelines for reporting quantitative results*](http://gregoryrguy.com/wp-content/uploads/Guy-2018-Guidelines-for-reporting-quantitative-results-LVC-Nov-18-2018.pdf), reporting the estimates, standard errors, and significance is desirable. Whether reporting the $z$-scores is required is unclear. @fig-lme4table reports `td.glmer` in a format more similar to the `lme4` output. The likelihoods in @fig-lme4table are presented in log odds. They correspond exactly to the probabilities in @fig-gvtable1. One addition to the information in the `lme4` output included in @fig-lme4table is the Observation columns. It is very important to report these distributions by factor/parameter level, preferably in your table, or somewhere else in your manuscript. 
+
+You also may want to report in your table additional measures of model fit ($R^2$) and whether the model is an improvement over the null model. 
 
 
 
