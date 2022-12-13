@@ -3,8 +3,9 @@ title: "Mixed-Efects Logistic Regression Analysis: Part 2"
 date: "`r Sys.Date()`"
 license: "CC-BY-SA 4.0"
 format: 
-  html: default
-  pdf: default
+  html:
+    code-overflow: scroll
+# pdf: default
 author:
   - name:
       given: Matt Hunt
