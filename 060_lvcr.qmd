@@ -3,8 +3,9 @@ title: "Crosstabs: Counts, Proportions, and More"
 date: "2022-9-27"
 license: "CC-BY-SA 4.0"
 format: 
-  html: default
-  pdf: default
+  html:
+    code-overflow: scroll
+# pdf: default
 author:
   # - name:
   #     given: Matt Hunt
@@ -177,7 +178,7 @@ td %>%
   print(n = Inf) 
 ```
 
-The `summarize()` function can be used with a number of summary statistic functions, including, but not limited to. the following:
+The `summarize()` function can be used with a number of summary statistic functions, including, but not limited to, the following:
 
 | Type     | Some Useful Functions        |
 |----------|------------------------------|
@@ -228,7 +229,7 @@ td %>%
 *data frames* will display whole numbers, and numbers with decimals up to the total number of digits set by `options()` function. Keep in mind, though, that changing this value changes the global options for *R*. An alternative is to use the `format()` function.
 
 ```{r , message = FALSE}
-# Change number of significant digits displayed to 10
+# Change number of significant digits displayed to 6
 options(digits = 6)
 # Get mean year of birth by sex, converted to data frame
 td %>%
@@ -250,11 +251,19 @@ options(digits = 3)
 td %>%
   group_by(Sex) %>%
   summarize(Mean.YOB = mean(YOB)) %>%
+  as.data.frame()
+
+# Change number of significant digits displayed to 3
+options(digits = 3)
+# Get mean year of birth by sex, converted to data frame but showing 10 significant digits
+td %>%
+  group_by(Sex) %>%
+  summarize(Mean.YOB = mean(YOB)) %>%
   as.data.frame() %>%
   format(digits = 10)
 ```
 
-For very large numbers *R* will often display values in exponential notation. We can alter this by setting the value of `scipen` inside the `option()` function. Gain, though, remember that this is a global change for your whole *R* session. For `scipen` positive values increase the likelihood of using real numbers, negative values increase the likelihood of using exponential notation. To ensure printouts are always real numbers, set `scipen` to 9999 (this is the default). To ensure printouts are always exponential notation, set `scipen` to -9999. To demonstrate, below we multiply mean `YOB` by 10000.
+For very large numbers *R* will often display values in exponential notation. We can alter this by setting the value of `scipen` inside the `option()` function. Again, though, remember that this is a global change for your whole *R* session. For `scipen` positive values increase the likelihood of using real numbers, negative values increase the likelihood of using exponential notation. To ensure printouts are always real numbers, set `scipen` to 9999 (this is the default). To ensure printouts are always exponential notation, set `scipen` to -9999. To demonstrate, below we multiply mean `YOB` by 10000.
 
 ```{r , message = FALSE}
 # Change number of significant digits displayed to 6, alter the likelihood of use of real number rather than scientific notation by 0
@@ -321,7 +330,7 @@ td %>%
 
 ## More Summary Statistics for Continous Variables
 
-The other summary statistics for continuous variables include spread functions and the range functions. Some spread functions are `sd()`, which returns the standard deviation; and `IQR()` which returns the interquartile range.[^3] Some range functions include: `min()`, which returns the lowest value; `max()`, which returns the highest value. To find the maximum spread (from highest to lowest), we can either subtract the `min()` value from the `max()` value, or employ the `diff()` function plus the `range()` function(which produces a vector containing the minimum and maximum values).
+The other summary statistics for continuous variables include spread functions and the range functions. Some spread functions are `sd()`, which returns the standard deviation; and `IQR()` which returns the interquartile range.[^3] Some range functions include: `min()`, which returns the lowest value; `max()`, which returns the highest value. To find the maximum spread (from highest to lowest), we can either subtract the `min()` value from the `max()` value, or employ the `diff()` function plus the `range()` function (which produces a vector containing the minimum and maximum values).
 
 [^3]: If we order the data from lowest to highest values, 50% of the data will be less than the mean, and 50% of the data will be higher than the mean. The mean is also called the 2nd quartile. The first quartile is halfway between the mean and the lowest value in the data. The third quartile is halfway betwen the mean and the highest value in the data. The interquartile range is the difference between the 3rd quartile and the 1st quartile and represents the spread of the middle 50% of the data.
 
@@ -494,7 +503,7 @@ td %>%
   mutate(Prop = Count/sum(Count))
 ```
 
-After grouping the data by `Sex` and `Dep.Var`, we create a new column `Count` with values equal to the number of tokens for the particular combination, then we create a new column using `mutate()` and the a math equation to generate proportions. It is important here that your dependent variable `Dep.Var` is the last grouping variable. If we change the order, instead of generating the proportion of `Realized` and `Deletion` tokens, it will instead return the percentage of `Realized` tokens that are `M` and the percentage that are `F`, which is the incorrect denominator for our purposes. 
+After grouping the data by `Sex` and `Dep.Var`, we create a new column `Count` with values equal to the number of tokens for the particular combination, then we create a new column using `mutate()` and a math equation to generate proportions. It is important here that your dependent variable `Dep.Var` is the last grouping variable. If we change the order, instead of generating the proportion of `Realized` and `Deletion` tokens, it will instead return the percentage of `Realized` tokens that are `M` and the percentage that are `F`, which is the incorrect denominator for our purposes. 
 
 ```{r , message = FALSE}
 # Generate tibble of combination of Dep.Var and Sex with token counts and proportion of each level of Sex by Dep.Var 
@@ -531,10 +540,10 @@ results$Prop[is.nan(results$Prop)] <- 0
 print(results, n = Inf)
 ```
 
-The easiest way to convert `NaN` (or `Na`) to 0 is to assign the above to a variable, then replace `NaN` with 0 using the function `is.nan()`. IF there were `NA` values, you can do the same thing as above, but replace `is.nan()` with `is.na()`
+The easiest way to convert `NaN` (or `Na`) to 0 is to assign the above to a variable, then replace `NaN` with 0 using the function `is.nan()`. If there were `NA` values, you can do the same thing as above, but replace `is.nan()` with `is.na()`
 
 
-When we report proportions in sociolinguistics manuscripts, we often only report the proportion of one level of the dependent variable (called the application value). Do only display one of the two levels of `Dep.Var` --- for instance, if we just want to show the rates of `Deletion`, which we might decide is our application value --- we can use the `subset()` function. 
+When we report proportions in sociolinguistics manuscripts, we often only report the proportion of one level of the dependent variable (called the application value). To only display one of the two levels of `Dep.Var` --- for instance, if we just want to show the rates of `Deletion`, which we might decide is our application value --- we can use the `subset()` function. 
 
  
 ```{r , message = FALSE}

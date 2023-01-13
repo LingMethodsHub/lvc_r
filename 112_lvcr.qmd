@@ -1,0 +1,575 @@
+---
+title: "Mixed-Efects Logistic Regression Analysis: Part 2"
+date: "`r Sys.Date()`"
+license: "CC-BY-SA 4.0"
+format: 
+  html:
+    code-overflow: scroll
+# pdf: default
+author:
+  - name:
+      given: Matt Hunt
+      family: Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
+description: "Doing a mixed-effects logistic regression analysis suitable for comparing to a *Goldvarb* analysis. Part 2: Sum Contrast Coding"
+crossref:
+  fig-title: Table  
+  fig-prefix: Table
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+td <- read.delim("Data/deletiondata.txt") %>%
+      filter(Before != "Vowel") %>%
+      mutate(After.New = recode(After, "H" = "Consonant"),  
+             Center.Age = as.numeric(scale(YOB, scale = FALSE)),
+             Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                                  labels = c("Old", "Middle", "Young")),
+             Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
+             Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
+             Phoneme.Dep.Var = NULL) %>%
+      mutate_if(is.character, as.factor)
+
+td.young <- td %>% 
+            filter(Age.Group == "Young") %>%
+            mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.middle <- td %>% 
+             filter(Age.Group == "Middle") %>%
+             mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td.old <- td %>% 
+          filter(Age.Group == "Old") %>%
+          mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
+
+td$Dep.Var <- factor(td$Dep.Var, levels = c("Realized", "Deletion"))
+```
+# Sum Contrasts (vs. mean)
+
+Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](050_lvcr.qmd) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](110_lvcr.qmd). Next, you set the global *R* options to employ sum contrast coding. Now you are ready to create a mixed-effects logistic regression model that is comparable to the model produced by *Goldvarb*. 
+
+```{r}
+ # Sum Coding (vs. mean)
+options(contrasts=c("contr.sum","contr.poly"))
+```
+
+
+
+## Building Your Model
+
+The next step is creating the mixed-effects model. The following code tests the fixed effects of preceding phonological context (`Before`), following phonological context (`After.New`[^1]), morphological status (`Morph.Type`), lexical stress of the syllable (`Stress`), underlying phoneme (`Phoneme`), speaker age (`Centre.Age`), speaker sex (`Sex`) and speaker education level (`Education`[^2]), on the deletion of (t ,d) in the data set. It also takes into account the potential random effect of speaker (`Speaker`[^3]). The function for creating this model, `glmer()` (for Generalized Linear Mixed Effects model with Random effects, what I call the "glimmer" \[glɪmɚ\] function) is part of the `lme4` package.
+
+[^1]: Based on the random forest analysis performed in [Random Forests: The Basics](090_lvcr.qmd), you know that `After` does a better job of explaining the variation than `After.New`; however, you want to make your analysis comparable to analyses in the sociolinguistic literature that do not single out pre-/h/ contexts. See also *Re-coding Variables* in [Modifying Your Data](040_lvcr.qmd).
+
+[^2]: Again, the random forest analysis ([Random Forests: The Basics](090_lvcr.qmd)) indicated that `Job` will do a better job; however, I am specifically interested in education level, so I choose this variable instead.
+
+[^3]: It is also possible to include interaction groups in the model. For example, you could include the interaction group (`Age_Sex`), or you could tell *R* to make an *ad hoc* interaction group by specifying `Age*Sex` as a predictor in the model. I won't discuss interactions here, but you can learn all about them from the very well-written *Notes on Interactions* by Derek Denis, available [here](Data/Denis_2010_Notes_On_Interactions.pdf). They are also discussed in [Part 3](114_lvcr.qmd).  The interpretation of interaction groups for *Rbrul* and in a sum contrast `glmer()` models is identical.
+
+```{r, message=FALSE}
+
+# Generalized linear mixed effects model with the fixed main effects of Before, After.New, Morph.Type, Stress, Phoneme, Centre.Age, Sex and Education, and the random effect of Speaker
+library(lme4)
+td.glmer <-glmer(Dep.Var ~ Before + After.New + Morph.Type + Stress + Phoneme + Center.Age + Sex + Education + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+```
+
+As with the `ctree()` function, you construct your `gmler()` model by first specifying the dependent variable, here `Dep.Var`, then using `~` to indicate that everything to the right is a potential predictor of your dependent variable (e.g., the variable on the left varies as a function of the variables on the right). The predictors are separated by a `+`. You specify that `Speaker` is a random effect by enclosing it in `(1| )`. Here the `1` simply indicates the model's intercept. You are essentially telling *R* to assume a different intercept (i.e., baseline likelihood of `Deletion`) for each level of `Speaker`. This effectively resolves the non-independence that stems from having multiple tokens by the same speaker. If you wanted to include both speaker and word as random effects, assuming you had columns called `Speaker` and `Word`, you could specify `+ (1|Speaker) + (1|Word)` in your function. If you do not want any random effects in your model, you cannot use `glmer()`. Instead, you must use `glme()`.
+
+After specifying your predictors, you indicate that `family = "binomial"` because you are looking at the binary choice between `Deletion` and `Realization`. The specification `control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa")` simply tweaks how many function evaluations the `glmer()` optimizer will try before giving up and declaring non-convergence with an error message. You don't need to use these specifications. If you don't, you may get non-convergence warnings --- but even if you do, that isn't necessarily the end of the world. As long as the reason you're getting the the non-convergence warnings is NOT because of singletons or knockouts in some cells (as a good sociolinguist I know you've weeded all of these out based on your cross-tabs), a model with a non-convergence warning like `Model failed to converge with max|grad| = 0.0259806 (tol = 0.001, component 1)` will still yield explanatory, albeit sub-optimal, test statistic values.
+
+::: {.callout-note collapse="false"}
+## What causes non-convergence?
+
+There are several things that will cause the model not to converge (i.e., fail). The first (and most common cause) is that your model is too complex. Complexity arises from having too many potential predictors or too many levels within each predictor. This complexity is more pernicious if your data set is small. Tweaking the `glmer()` controls can help, but it won't always overcome extreme complexity. The first step, then, when dealing with non-convergence is thinking (from a theoretical perceptive) how you can simplify your model. Using a [Conditional Inference Tree](080_lvcr.qmd) or [Random Forest](090_lvcr.qmd) analyses can help --- so can a really thorough exploration of you data using [cross tabs](060_lvcr.qmd). Cross-tabs especially can help you find whether you have **singletons** or **knockouts**. These terms are hold-overs from *Goldvarb* for phenomena in your data that can cause non-convergence, but they can also cause non-convergence in a `glmer()` model. 
+
+The following will cause non-convergence or skewed results in your regression analysis. :
+
+1.  **singleton** --- a single-level predictor variable and/or its one level. In the partition `td.young` the predictor `Age.Group` is a singleton because the only value is `Young`. Solution: don't include this predictor in your model.
+2.  **knockout** --- when a level of a predictor variable always (100% of tokens) or never (0% tokens) occurs with the application value of the dependent variable.  Solution: don't include this level in your model (but account for it in your description of the data), or re-code in a thoeortetically-motivated way.
+:::
+
+In the code above you used the `<-` function to assign your model to the object  `td.glmer`. To see the results of the model, use the `summary()` function on the model object.
+
+```{r}
+summary(td.glmer)
+```
+
+## Interpreting Your Model, Getting Constraint Hierarchy
+
+Now that you have the model, what does it tell you? There are all sorts of details in the `summary(td.glmer)` output, but we're first just going to focus on the the first few lines.
+
+The beginning of the output simply tells you that you've completed a `Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [glmerMod]`. This is just name of the function you've just executed.
+
+::: {.callout-note collapse="true"}
+## Wait, I thought we were doing logistic regression?
+
+We are. See [here](https://psyteachr.github.io/stat-models-v1/generalized-linear-mixed-effects-models.html).
+
+The basic idea behind **Generalized Linear Models** (not to be confused with General Linear Models) is to specify a **link function** that transforms the response space into a modelling space where we can perform a linear regression, and to capture the dependence of the variance on the mean through a **variance function**. A **Logistic regression**, then, is simply a linear regression analysis of binary data that has been first converted to the logit scale (thus making it "logistic") and for which the variance function is the variance of the **binomial** distribution.
+
+The key to understanding why we do this is that linear regression predicts the relationship between continuous, unbounded variables. This means that if we model the likelihood of a binary variable (e.g., $0$ vs. $1$) using linear regression, the model will predict scenarios where the variable could be lower than $0$ or higher than $1$. This motivates the conversion of the binary variable onto the logit scale.
+
+Usually we express the probability of the application value occurring as a proportion (number of tokens of the application value/total number of tokens). This proportion is bounded by $0$ and $1$. We can also talk about the odds of the application value occurring, which is the ratio of application vales to non-application values. Odds ratios, like proportions, are also bounded on one end, ranging from $1$ to $+\infty$. Odds ratios, however, can be converted to the logit scale (making them log odds), which allows us to consider this likelihood of the application value on a continuous scale (log odds range from $-\infty$ to $+\infty$).
+:::
+::: {.callout-note collapse="true"}
+## Probability, Odds Ratios & Logg Odds
+
+Probability, odds ratios, and log odds are all the same thing, just expressed in different ways. It's similar to the idea of scientific notation: the number $1,000$ can be written as $1.0\times 10^3$ or even $10\times 10\times 10$.
+
+**Probability** is the probability that an event happens, i.e., that a token is the application value. For example, there are $1189$ tokens, of which $386$ are `Deletion`. The proportion of deletion is $386/1189$ or approximately $0.32$. This means any given token has a $32\%$ chance of being a `Deletion` token.
+
+**Odds** (more technically the odds of success) is defined as probability of success divided by the probability of failure. So the odds of a token being the application value ($32\%$ chance of `Deletion`) has an accompanying odds of failure ($68\%$ chance of `Realization`). Odds can be expressed as the ratio between these two, or as an **Odds Ratio**: $0.32/0.68$ or approximately $0.47$
+
+**Log odds** is the (natural) [logarithm](https://www.statisticshowto.com/integrals/integral-natural-log-logarithms/) of the odds: $log_e(0.47) = -0.75$. A logarithm is just another way to express an exponent: $log_e(0.47) = -0.75$ is identical to $e^{-0.75} = 0.47$, where $e$ is [Euler's number](https://en.wikipedia.org/wiki/E_(mathematical_constant)), which is a mathematical constant used for this purpose (the first few numbers of which are $2.718$). Converting probabilities or odds ratios to log odds results in symmetry around zero, as shown in the following table [(Jaccard, 2001)](https://books.google.com/books?id=tj1Wn5u9gSMC&printsec=frontcover#v=onepage&q&f=false):
+
+| Probability | Odds Ratio | Log Odds |
+|-------------|------------|----------|
+| $0.100$       | $0.111$      | $-2.197$   |
+| $0.200$       | $0.250$      | $-1.386$   |
+| $0.300$       | $0.428$      | $-0.847$   |
+| $0.400$       | $0.667$      | $-0.405$   |
+| $0.500$       | $1.000$      | $0.000$    |
+| $0.600$       | $1.500$      | $0.406$    |
+| $0.700$       | $2.333$      | $0.847$    |
+| $0.800$       | $4.000$      | $1.386$    |
+| $0.900$       | $9.000$      | $2.197$    |
+
+See also <https://www.statisticshowto.com/log-odds/>.
+:::
+
+The next lines of the `summary(td.glmer)` output is tells you the variance function `Family: binomial` and the link function `(logit)` and the formula used to construct the model `Formula: Dep.Var ~ Before + After.New + Morph.Type + Stress + Phoneme + Center.Age + Sex + Education + (1 | Speaker)`. Next is the data `Data: td` and the tweak you've made to the controls: `Control: glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa")`. This information is not new to you because it's exactly what you specified.
+
+You are then given some measures of model fit, including [`AIC`](https://en.wikipedia.org/wiki/Akaike_information_criterion), [`BIC`](https://en.wikipedia.org/wiki/Bayesian_information_criterion), `logLik` (log likelihood), and `deviance`.[^4] These values measure how well your model predicts the actual values of your data. They are measures of prediction error. This is similar to the log-likelihood reported by *Goldvarb*. Higher values for these measures indicate a worse fit to the data, lower values indicate a better fit to the data. Following these measures you are given the degrees of freedom of the residuals `df.resid`[^5] and then descriptors of the scaled residuals (`Min`, `Max`, and `Mean` values and 1st and 3rd quartiles, `1Q` and `3Q`). The scaled residuals are simply a description of the variation that is not predicted by the model, or rather, the difference between the predicted and observed results. In large data sets these residuals should be [normally distributed](https://en.wikipedia.org/wiki/Normal_distribution). These measures/residuals are more important for statisticians aiming to craft a model with the best possible fit to the data. They are also somewhat fuzzy to interpret for logistic regression modelling. For your purposes, where the goal is instead to test hypotheses or confirm trends, the goodness of fit of your model or the extent to which is explains all the data is only relevant insofar as it allows you to select the model built with the independent predictors (which you've selected to include in your analysis based of good theoretical linguistic/social reasoning) that best explain the variation. In other words, for you, a good model is not one that best fits the data, but rather that is the most sociolinguistically explanatory --- that tells the story of the variation in the best possible way.
+
+[^4]: Equivalent to $-2 \times$ `logLik` 
+[^5]: Equal to the sample size (e.g., the number of tokens, $1189$) minus the number of parameters being estimated in the model (levels of the fixed effect predictors plus the intercept).
+
+::: {.callout-tip collapse="false"}
+## Which model is best?
+
+Including all the independent predictors you want to test is called creating a **full model** or **maximal model**. Once you start removing un-informative independent predictors from your model, or pruning it, you are entering the territory of model selection, which is as much an art as it is a science. Some statisticians recommend reporting on the full/maximal model, others (like [Bates, Kleigl, Vasishth,and Baayen 2018](https://doi.org/10.48550/arXiv.1506.04967)) argue for reporting the most **parsimonious** or the least complex maximally predictive model. Depending on your goals, you may choose to report one or the other. For example, the maximal model may be useful when comparing the same regression analysis across multiple partitions/data sets.
+
+Comparing measures of model fit can be useful when you have two potential predictors that are non-orthogonal (not independent) like education and employment type. You would not include both education and employment type in the same model because in many communities these two factors are not independent of each other. In Cape Breton, for example, white collar workers have higher education levels than blue collar workers. Including only one in a model is usually fine given that both are proxies for social status anyway. But which one do you choose to include?
+
+One way to choose is to construct two identical models, one with `Education`, one with `Job`, and then compare how well each fits the data. If, for example, the model with `Education` fits the data better, you could argue that education level does a better job of explaining the variation than employment type. You could use this same strategy if you wanted to compare models with different coding schemes for certain parameters (like `After` and `After.New`).
+
+Comparing goodness of fit is not as easy as just comparing `AIC` or `BIC`, etc. though. Often values of goodness of fit measures that are very similar across models may in fact not be significantly different from one another given the differing number of parameter levels in each model. For example, the AIC of the most parsimonious model above constructed with `After` instead of `After.New` is $1049.9$ ($13$ parameters). The `AIC` of the model constructed with `After.New` (which you'll remember groups pre-/h/ contexts with other pre-consonantal contexts in order to compare with past research, see [Modifying Data](040_lvcr.qmd)) is $1113.8$ ($12$ parameters). This lower `AIC` with `After` indicates that this model is a better fit to the data than the model constructed with `After.New`. This is unsurprising given that /h/ disfavours `Deletion`, but other consonants do not (see the [Conditional Inference Tree analysis](080_lvcr.qmd)). The difference between the `AIC` of the two models (given the difference of 1 parameter between them, i.e., degrees of freedom/df = 1) is statistically significantly greater than zero ( `Pr(>Chisq) = 4.645e-16` or $4.645\times 10^{-16}$, i.e., $p<0.05$,). This can be determined using the function `anova(td.glmer1, td.glmer2)` where `td.glmer1` and `td.glmer2` are the same model, but with one using `After` and the other using `After.New`. Note that relevant function is `anova()`, which is used for comparing models, and not `Anova()`, which is used for evaluating the significance of fixed effects in a model.
+
+```{r}
+td.glmer1 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+
+td.glmer2 <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+
+anova(td.glmer1, td.glmer2)
+```
+You can visualize the model fit using the [`binnedplot()`](https://cran.r-project.org/web/packages/arm/arm.pdf) function from the `arm` package. 
+```{r, message=FALSE}
+library(arm)
+x<-predict(td.glmer1)
+y<-resid(td.glmer1)
+binnedplot(x,y)
+```
+
+In logistic regression, as with linear regression, the residuals are just the difference between the actual values and the values predicted by the model. Since the dependent variable is binary, the residuals will be binary too (either $1$ or $0$), so plotting the raw residuals is not really that informative. The binned residuals plot above divides the data into categories (bins) based on their fitted (predicted) values and then plots the average residual versus the average fitted value for each bin. In the plot the grey lines indicate plus and minus $2$ standard-error bounds. We expect about $95\%$ of the binned residuals (black dots) to fall between the two grey lines if the model is actually true. By default, for data sets larger than $100$ tokens, the number of bins is the square root of the total number of tokens. You can play with the number of bins with the option `nclass=`. 
+
+Compare the two binned residual plots (above and below). You can see that for the `td.glmer2` residual plot there are more black dots outside the grey lines, indicating an inferior fit. 
+```{r, message=FALSE}
+library(arm)
+x<-predict(td.glmer2)
+y<-resid(td.glmer2)
+binnedplot(x,y)
+```
+
+We can do the same thing, but instead testing the difference between models built using a discrete age predictor: `Age.Group`, versus a continuous age predictor: `Center.Age`.
+
+```{r}
+td.glmer3 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + Center.Age + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+
+td.glmer4 <-glmer(Dep.Var ~ After + Morph.Type + Before + Stress + Phoneme + Age.Group + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+
+anova(td.glmer3, td.glmer4)
+```
+
+The results of this `anova()` show that the difference in fit of a model built with `Center.Age` (`AIC` $= 1051.0$) and `Age.Group` (`AIC` $= 1052.9$) is not significant (`Pr(>Chisq) = 0.7619`, or $p>0.05$), or rather, the choice between the two is inconsequential to modelling the variation in the data.
+
+
+In may also be useful to report in your manuscript that a model built with your fixed effects does a better job at predicting the variation than a model built with just the random effects (i.e., a **null model**). To make this comparison you build a model with no fixed effects and compare that using the `anova()` function to your model with fixed effects. 
+```{r}
+
+td.glmer.null <-glmer(Dep.Var ~ (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa" ))
+                      
+anova(td.glmer1, td.glmer.null)
+```
+In a manuscript you would report that the model built with fixed effect predictors and the random effect of `Speaker` (`AIC`$=1049.9$) does a significantly better job at predicting the variation in the data than a null model built with just the random effect of  `Speaker` (`AIC`$=1455.8$; $\chi^2=437.86$, $\text{df}=11$, $p<0.001$). 
+
+An additional measure of the success of your model is the $R^2$ value. This value tells you the proportion of the variability of the dependent variable that is explained by the independent predictors collectively. $R^2$ squared is a useful metric for multiple linear regression and as such is often requested by reviewers. But $R^2$ does not have the same meaning for logistic regression (binary dependant variables) as it does for linear regression (continuous dependant variables).  Statisticians have come up with a variety of analogues of $R^2$ squared for multiple logistic regression referred to collectively as "pseudo $R^2$". Given that there are multiple methods of calculating $R^2$, and that its use for non-linear models is still debated by statisticians, use and report it with a grain of salt. 
+
+The easiest way to calculate a (pseudo-)*R^2* value using the [Nakagawa & Schielzeth's (2012)](https://doi.org/10.1111/j.2041-210x.2012.00261.x) method is to use the function `r.squaredGLMM()` from the `MuMIn` package. 
+```{r, eval=FALSE}
+install.packages("MuMIn")
+``` 
+```{r, warning =FALSE, message=FALSE}
+library(MuMIn)
+r.squaredGLMM(td.glmer)
+```
+The `r.squaredGLMM()` function returns a matrix with two calculations each for `R2m` and `R2c`. The first, `R2m` or the marginal *R^2* value, represents the variance explained by the fixed effects alone. The function calculates this using two different methods. You can just look at the `theoretical`  calculation. It tells you that `0.43` or $43\%$ of the variance is explained by the fixed effects. The second set of values, the `R2c` or the conditional *R^2* value, represents the variance that is explained by the fixed effects plus the random effects. Here `0.52` or $53\%$ of the variance is explained by the combination of fixed and random effects. 
+
+:::
+
+::: callout-warning
+You cannot meaningfully compare model fit across different data sets. Identical tokens and an identical dependant variable must be included in the two models being compared.  This is equally true for comparing AIC and $R^2$. 
+:::
+
+### Random Effects {#sec-randomeffects}
+After the measures of model fit is information about the random effects. In `td.glmer` there is only one random effect: `Speaker`. It is listed under `Groups` because the model groups data by `Speaker`. The `(Intercept)` is listed under `Name` because the model allows for variation of the `(Intercept)` (i.e., baseline likelihood) by level of `Speaker`. The likelihood of `Deletion` for all levels of `Speaker` considered together is found below under `Fixed Effect`. It is the `Estimate` value of `(Intercept)`, e.g., `-0.255733` log odds. The `Variance` and the `Std.Dev` are two different ways of expressing how much the levels of `Speaker` vary around this baseline value.  The `Std.Dev` is simply the square root of the `Variance` ($\sqrt{0.6459} = 0.8036$. There is no consensus among sociolinguistics as to whether to report the value for `Variance` or `Std.Dev`. I prefer `Std.Dev` because it is the same units as the `(Intercept)`. In a manuscript you can therefore report that the overall baseline probability of the `td.glmer` model is $-0.255788$ log odds ($\pm 0.806$ log odds, by speaker). 
+
+Since we assume these likelihoods are normally-distributed, $95\%$ of the speakers' likelihoods will be within two standard deviations around the overall likelihood. We can calculate this using simple addition and subtraction, or we can calculate the range using an idealized normal distribution (using `qqnorm()`). The results of these two calculations are slightly different as they are derived using somewhat different mathematical operations. For your purposes, just choose one method and stick with it. To make your calculations easier you can assign the overall likelihood and random effects standard deviation to their own variables.
+
+```{r}
+
+# Calculating the 95% range for a normal distribution on the logit scale
+
+# Assign overall likelihood and random effect standard deviations to their own variables
+
+td.intercept <- -0.255788
+td.rsd <- 0.8036
+
+# or
+
+td.intercept <- fixef(td.glmer)[1]
+td.rsd <- sqrt(unlist(VarCorr(td.glmer)))
+
+# Calculate +/- 2 standard deviations using a mathematical formula, lower then higher
+
+td.intercept - 2*td.rsd
+td.intercept + 2*td.rsd
+
+
+# Calculate the 95% range (2.5% to 97.5%) using an idealized normal distribution on the logit scale
+qnorm(c(0.025,0.975),mean=td.intercept, sd=td.rsd)
+
+```
+
+The results of the calculations are reported in log odds. It may be more interpretable to report these values as probabilities. 
+
+::: {.callout-note collapse="true"}
+## Converting betweeen Log Odds and Probabilities (Factor Weights)
+
+*Goldvarb* reports **factor weights**, which are expressed as probabilities; the `glmer()` function reports **log odds**.
+
+To convert probabilities to log odds use the logit formula $x=log(\frac{p}{1-p})$, where $p$ is the probability and $x$ is the log odds value. It is much easier, however, to just use the `logit()` function.
+
+```{r, include=FALSE}
+options(digits=3)
+```
+
+```{r, message=FALSE}
+library(car)
+# Convert probabilities to log odds
+logit(0.400)
+
+```
+
+To convert log odds to probabilities you can use the inverse logit formula $p=\frac{e^x}{(1+e^x)}$, or the `inv.logit()` function from the `boot` package. (If you've still got the `car` package loaded from earlier you may need to reload the `boot` package.)
+
+```{r, message=FALSE}
+# Convert log odds to probabilities
+library(boot)
+inv.logit(-0.405)
+```
+:::
+
+Based on the second calculations, you can report in a manuscript that the mean baseline probability of `Deletion` in the data is $44\%$ and that the $95\%$ range for individual speakers' baseline probabilities is $14\%$ to $79\%$.
+```{r}
+# 95% range converted to probabilities
+inv.logit(qnorm(c(0.025,0.975),mean=td.intercept, sd=td.rsd))
+```
+
+To get the baseline likelihood for individual speakers you can extract the random effect values using `ranef()`. 
+```{r}
+# Get individual baseline likelihoods by speaker
+ranef(td.glmer)
+```
+For each individual speaker you add their random effect value to the overall baseline likelihood to get that speaker's baseline likelihood. The baseline likelihood of `Deletion` for speaker `ARSM91` is $32\%$. 
+```{r}
+ranef(td.glmer)$Speaker["ARSM91",]
+
+sum(ranef(td.glmer)$Speaker["ARSM91",], fixef(td.glmer)["(Intercept)"] )
+
+plogis(sum(ranef(td.glmer)$Speaker["ARSM91",], fixef(td.glmer)["(Intercept)"] ))
+```
+Below is a series of functions that extracts the coefficient (in log-odds) of the  random intercept for each speaker and then adds next to those coefficients the frequency of the application value for each speaker, as well as that speaker's total number of tokens. Finally it orders the speakers from lowest to highest random effect intercept coefficient. There is also an extra step to specify the order of the `Dep.Var` factor because the following `table()}` function specifies the level to extract by number and you want to make sure that is `Deletion`.
+
+```{r}
+# Create column of Speakers with intercept coefficient
+library(dplyr)
+td.ranef <-add_rownames(as.data.frame(ranef(td.glmer)$Speaker), "Speaker")
+colnames(td.ranef)[2]<-"Intercept"
+# Reorder levels of Dep.Var to make application value second
+td$Dep.Var <- factor(td$Dep.Var, levels = c("Realized", "Deletion"))
+ # Create column of Frequencies
+speaker.prop <-add_rownames(as.data.frame(prop.table(table(td$Speaker, td$Dep.Var),1)[,2]), "Speaker")
+colnames(speaker.prop)[2] <-"Percent"
+# Create column of token counts
+speaker.n <-as.data.frame(table(td$Speaker))
+colnames(speaker.n)<-c("Speaker","Total N")
+# Merge column of frequencies and column of token counts with column of Speakers
+td.ranef.speaker <-merge(td.ranef, speaker.prop, by ="Speaker")
+td.ranef.speaker <-merge(td.ranef.speaker, speaker.n, by ="Speaker")
+# Order data from lowest to highest Intercept, reset/delete row names
+td.ranef.speaker <- td.ranef.speaker[order(td.ranef.speaker$Intercept, td.ranef.speaker$Percent),]
+rownames(td.ranef.speaker) <-NULL
+# Show final table, supress rownames
+print(td.ranef.speaker, row.names=FALSE)
+```
+
+If you look at the top (`head()`) and bottom (`tail()`) of this new table you can see that speakers `LATF53` and `LELM91` are the most likely to produce fully-realized (t, d) (even though, in the case of `LATF53`, the frequency of `Deletion` is not the lowest), while `VICF91` and `MARM92` are the most likely to delete (t, d).  This is because the former have an overall higher baseline likelihood (`(Intercept)`+ random effect estimate) and the latter have an overall lower baseline likelihood (`(Intercept)` + random effect estimate). This information could be very useful to your analysis. 
+```{r}
+# Show first six rows of td.ranef.speaker
+head(td.ranef.speaker)
+# Show last six rows of td.ranef.speaker
+tail(td.ranef.speaker)
+```
+
+### Fixed Effects
+Looking back again at `summary(td.glmer)`, at the end of the details of the random effects you are presented with some useful information: `Number of obs: 1189, groups:  Speaker, 66`. This tells you the total number of tokens in your data set: `1189`, and the total number of speakers: `66`.
+```{r}
+summary(td.glmer)
+```
+Next you have the analysis of fixed effects. In the leftmost column you have a list of the levels of each parameter minus one. More on that in a moment. For each level there is an estimate value, also called the coefficient. This value, expressed in log odds, is like a factor weight. Unlike factor weights which are centred around $0.5$ and range from $0$ to $1$, log odds are centred around $0$ and range from $+\infty$ to $-\infty$. Parameter levels with positive polarity log odds favour the application value relative to that parameter's baseline likelihood. Parameter levels with negative polarity log odds disfavour the application value relative to that parameter's baseline likelihood.
+
+The coefficient for the `(Intercept)`, as described above, is the overall baseline likelihood. It is the likelihood, all things being equal, that any given token will have the application value rather than the non-application value. It is the mean of the baseline likelihoods of all the parameters in the model. It is just like the input value reported in *Goldvarb*. You can also refer to it as the centred mean. This value is usually reported in your manuscript as a probability. You can use the `inv.logit()` function to convert it to a probability (see above). 
+
+
+
+After the `(Intercept)` is the name of each predictor followed by a number (e.g., `Before1`). Each number represents a different level of that predictor, but one level is missing. This is an annoying consequence of the `lme4` package being built for the conventions of other disciplines where sum contrasts are less commonly used. The numbers correspond to the order of factors within the level. You can double-check this order using the function \texttt{levels()}
+
+```{r}
+# Display the levels of a column Before
+levels(td$Before)
+```
+
+The levels will always be in alphabetical order unless you explicitly change them. In your results, `Before1` is `Liquid`, `Before2` is `Nasal`, `Before3` is `Other Fricative`, and `Before4` is `S`. The "missing" level is the last level, `Stop`. Because the log odds for all levels of a parameter are centred around the mean, you can actually calculate the estimate/coefficient for this last level. The sum off all coefficients for a single parameter will equal zero. Therefore the coefficient of the missing level will be 0 minus the sum of all the remaining coefficients for that parameter. So the estimate for `Stop` is:
+
+$$\begin{equation*}
+0= [\text{Before1}x + \text{Before2}x + \text{Before3}x + \text{Before4}x] + \text{Missing Coefficient}\\
+\end{equation*}$$ 
+Thus...
+$$\begin{equation*}
+0- [\text{Before1}x + \text{Before2}x + \text{Before3}x + \text{Before4}x] =\text{Missing Coefficient}
+\end{equation*}$$ 
+
+We can extract the specific values using the `fixef()` function and the position of the coefficients in the list.
+
+```{r}
+# Get the coefficients for the fixed effects
+fixef(td.glmer)
+# Subtract the sum of the coefficients from 0 by name
+0-sum(fixef(td.glmer)[c("Before1", "Before2", "Before3", "Before4")])
+# Subtract the sum of the coefficients from 0 more easily by position
+0-sum(fixef(td.glmer)[2:5])
+```
+Using the `inv.logit()`  function, you can also calculate the probabilities (e.g., centered factor weights) for each of these parameter levels. We can adjust the number of significant digits so that *R* does your rounding automatically. 
+
+```{r}
+# Set number of significant digits to 2
+options(digits=2)
+# Probability of Liquid
+inv.logit(fixef(td.glmer)["Before1"])
+# Probability of Nasal
+inv.logit(fixef(td.glmer)["Before2"])
+# Probability of Other Fricative
+inv.logit(fixef(td.glmer)["Before3"])
+# Probability of S
+inv.logit(fixef(td.glmer)["Before4"])
+# Probability of Stop
+inv.logit(0-sum(fixef(td.glmer)[2:5]))
+```
+
+Based on this calculation you now know that the constraint hierarchy based on factor weight-like probabilities for preceding segment is `S` ($0.67$) > `Nasal` ($0.63$) >`Other Fricative` ($0.53$) > `Liquid` ($0.36$) > `Stop` ($0.31$). An easier way to get these values is with the combination of `plogis()`, which converts log odds to probabilities like `inv.logit()`, and `fct_rev()`, which reverses the order of factors. Re-creating `td.glmer` with all parameter levels being reversed means the final/"missing" levels in `td.glmer` are now the first levels. So, for `td.glmer.reversed` we only look at `fct_rev(Before)1`, `fct_rev(Morph.Type)1`, etc. This is a quick way to get the values for the missing levels. 
+```{r}
+# Get probabilities for all estimates in td.glmer
+plogis(fixef(td.glmer))
+# Re-create td.glmer with all parameters with reversed factor orders
+td.glmer.reversed <-glmer(Dep.Var ~ fct_rev(Before) + fct_rev(After.New) + fct_rev(Morph.Type) + fct_rev(Stress) + fct_rev(Phoneme) + Center.Age + fct_rev(Sex) + Education + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+# Get probabilities for all estimates in td.glmer.reversed. Just looking at the first value (which corresponds to the final/missing value in td.glmer)
+plogis(fixef(td.glmer.reversed))
+```
+
+
+These values are not the overall probability for each level, but rather centred probablity/factor weights. An estimate of $0$ log odds ($0.50$ probability) indicates the likelihood/probability for tokens of that predictor level is equal to the overall likelihood `(Intercept)`. To get the actual probability for a given level, you have to add its estimate to the `(Intercept)`. The overall likelihood for `Female` (e.g.,`Sex1`) tokens is thus  $-0.38$ log odds or $41\%$.
+```{r}
+# Add the estimate for Sex1 to the estimate for (Intercept)
+sum(fixef(td.glmer)["Sex1"], fixef(td.glmer)["(Intercept)"])
+# Convert the sum of the estimates for Sex1 and (Intercept) to probability
+inv.logit(sum(fixef(td.glmer)["Sex1"], fixef(td.glmer)["(Intercept)"]))
+```
+
+Returning now to the `summary(td.glmer)`, in the second and third columns of the fixed effects, the standard error and $z$ value are reported. Both are used to calculate the estimate. Whether the difference in likelihood represented by the estimate/coefficient for each level is significantly different from zero (i.e., equal to the overall likelihood `(Intercept)`) is also calculated using the standard error and is reported in the fourth column.  The `Pr(>|z|)` value is the probability that this difference is equal to zero. The asterisks indicate whether this probability is lower than increasingly smaller thresholds. Generally, in the humanities and social sciences we use $p>0.05$ as our significance threshold,[^6] so anything with at least one asterisk is considered significant. For the levels of `Before`, the coefficients for `Liquid` (`Before1`), `Nasal` (`Before1`), and `S` (`Before4`) are significantly different from zero. In other words, the likelihood of `Deletion` for these tokens is significantly different from the baseline. This is not the case for `Other Fricative` (`Before3`) tokens. For the "missing" level, `Stop`, you know that the coefficient/estimate is `-0.8020349596` which is a greater negative number than the estimate for `Before1`, so you can infer that this difference must also be significant. To verify you can reorder the levels of `Before` such that `Stop` is no longer the last factor. You can do this by creating a new column with reordered factors, or you can use the `fct_rev()` function to do the same inside the `glmer()` formula. 
+
+
+
+[^6]: As is generally the convention since Sir Ronald Fischer (1925) said it should be. $p>0.05$, or 5% probability that the null hypotheses is true, corresponds to allowing as much as about two standard deviations of acceptable variation before rejecting the null hypothesis. Said another way, this threshold means the null hypothesis will be false $19$ times out of $20$. See also [Cowles & Davis (1982)](http://www.radford.edu/%7Ejaspelme/611/Spring-2007/Cowles-n-Davis_Am-Psyc_orignis-of-05-level.pdf)
+
+```{r}
+# Re-order Before in reverse alphabetical order 
+td$Before.Reorder<-factor(td$Before, levels = c("Stop", "S", "Other Fricative", "Nasal", "Liquid"))
+
+# Re-create td.glmer with reordered Before
+td.glmer.reorder <- glmer(Dep.Var ~ Before.Reorder + After.New + Morph.Type + Stress + Phoneme +
+    Center.Age + Sex + Education + (1 | Speaker), data = td, family = "binomial",
+    control = glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+
+# Alternative method 
+td.glmer.reorder <- glmer(Dep.Var ~ fct_rev(Before) + After.New + Morph.Type + Stress + Phoneme +
+    Center.Age + Sex + Education + (1 | Speaker), data = td, family = "binomial",
+    control = glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+summary(td.glmer.reorder)
+```
+
+You can see above that the coefficient/estimate for `Before.Reorder`, which you know is `Stop`, is `-0.80205`--- nearly identical to what you calculated (the difference is due to rounding). You can see based on the value for `Pr(.|z|)` that $p=2.2\times 10^{-5]}$, which is definitely lower than $0.05$, i.e., significant.
+
+For sum contrast coding, the `Pr(>|z|)` value for the `(Intercept)` tells you whether the baseline likelihood is significantly different from $0$ --- but remember, $0$ log odds is equivalent to a probability of $50\%$ or a $50/50$ chance of a token being `Deletion`. For the intercept here, the value is $-0.277$ log odds (or $44\%$ probability), which the model can't verify as being statistically significantly different from $0$ log odds ($50\%$ probability). 
+
+Following the fixed effects there is usually a matrix of correlations. With many predictors or with predictors with many levels this correlation matrix can be very large. If the matrix is too large *R* will not print it automatically. Don't worry too much about the correlation matrix right now. We will return to it in [Part 3](114_lvcr.qmd).
+
+::: {.callout-note collapse="true"}
+## Visualizing the Fixed Effects 
+A useful way to visualize the fixed effects is with the function `plot_model()` from the `sjPlot`  and affiliated packages. You should have `ggplot2` already installed if you've been following along. 
+```{r, eval=FALSE, message=FALSE}
+# Install sjPlot and affiliated pacakges
+install.packages(c("sjPlot", "sjlabelled", "sjmisc"))
+```
+```{r, message=FALSE}
+# Load required packages
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(ggplot2)
+
+
+# Plot fixed effects
+plot_model(td.glmer)
+```
+In the plot the default *x*-axis is transformed to odds ratios. You'll remember that odds ratios are mathematically equivalent to both log odds and probabilities. To show either of these in plot, you can use the `transform=` option, `NULL` (no transformation) for log odds and `"plogis"` for probabilities. 
+```{r}
+# Plot fixed effects with log odds as the x-axis
+plot_model(td.glmer, transform = NULL)
+# Plot fixed effects with probabilities as the x-axis
+plot_model(td.glmer, transform = "plogis")
+```
+You'll see that for the log odds plot the values are centered around $0$ (no effect), which is equivalent to 1 odds ratio in the odds ratio plot, or $0.50$ probability in the probability plot.
+The dots represent the estimate of the fixed effects. The lines extending to the right and left of the dots represent the bounds of the standard error. If the standard error does not cross the center line then the effect is statistically significant. The red dots in the log odds and odds ratio plots indicate values below the center line, red values indicate values below the center line. In the probability plot the values are all unfortunately red.  As with the output of the sum contrast `glmer()` model, there is also unfortunately one "missing" value for each predictor. 
+
+You can show the estimate values using the option `show.values = TRUE`. Doing so also adds the significance asterisks (which can be suppressed, if desired, with `show.p = FALSE`). The values will be plotted directly on top of the points, so use `value.offset` to adjust the relative positioning. You can also highlight the center line with the `vline.color` option. 
+
+```{r}
+# Plot fixed effects with log odds as the x-axis, estimates and significance showing, and highlighted center line
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black")
+```
+You can see that all error bars that cross the center line are not significant. You can sort the individual levels of the predictors from most favouring to least favouring using the option `sort.est = TRUE`. You can change the title using `title =`. You can also make this graph readable in non-colored manuscripts using `color="bw"` or `color = "gs"` and employ some of the themes you encountered [in previous chapters](070_lvcr.qmd).  Other tweaks to the plot can be found [here](https://cran.r-project.org/web/packages/sjPlot/vignettes/plot_model_estimates.html)
+```{r}
+# Plot fixed effects with log odds as the x-axis, estimates and significance showing, highlighted center line, and sorted estimates
+plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black", sort.est=TRUE, title = "Likelihood of (t,d) deletion", colors = "gs") + theme_classic()
+```
+While this type of plot may be less useful when reporting on a sum contrast regression analysis (as there are missing values), it is very useful when reporting on [treatment contrast regression analyses](116_lvcr.qmd).  You can also plot the random effects per `Speaker` by using the option `type = "rf"`. This provides similar information as you extracted from the `glmer()` model in @sec-randomeffects. To sort this plot by random effect estimate you also need to add `grid = FALSE`.
+
+```{r, fig.height=8}
+# Plot random effects with log odds as the x-axis, estimates and significance showing, highlighted center line, and sorted estimates
+plot_model(td.glmer, type = "re", transform = NULL, vline.color="black", sort.est="sort.all", grid=FALSE, title = "Random effect per Speaker") + theme_classic()
+```
+The above plot shows that, based on the standard error, only five speakers have baseline likelihoods of `Deletion` significantly different from the overall intercept: `GARF37` and `LATF53` have a significantly lower baseline likelihood of `Deletion`, while `VICF91`, `MARM92`, `NATF84`, `INGM84` and `HAWM90` have a significantly higher baseline likelihood of deletion. 
+:::
+
+
+
+## Determining Significance and Magnitude of Effect
+
+Let's return now to the **three lines of evidence**. Does the model tell you which factors groups are significant predictors of the dependent variable? The answer: sort of. It tells you which levels of certain predictors are significantly different from the baseline, but this isn't the same thing as signalling which predictors, collectively, create the best (e.g., most explanatory) model of the variation --- the way *Goldvarb*'s step-up/step-down model does. In other words, you aren't provided with the first two lines of evidence. You can figure out the third line of evidence, constraint hierarchy, but this would be the constraint hierarchy in what could conceivably be an overstuffed model. What you need is a tool to determine which factors **should** be in the model --- or, rather, which factors actually explain the variation and which factors are erroneous. For this you can use the Wald $\chi^2$ test. The Wald $\chi^2$ test iteratively adds and removes each factor group/predictor, known as a parameter of the model, and compares how well each iteration fits the distribution of the data. If a parameter is found to be significant, it is interpreted as adding explanatory value. If a parameter is not significant, its contribution is superfluous to the understanding of the data and can be set aside. In this way, the Wald $\chi^2$ test is very similar to the step-up/step-up down procedure implemented by *Goldvarb*. The result of the Wald $\chi^2$ test reveals what combination of original parameters make the most parsimonious model, or rather, a group of original factors that only includes those that contribute significantly to predicting the variation.
+
+The Wald $\chi^2$ test is part of the `car` package. The function, `Anova()` is performed on an object, in this case `td.glmer`, which is the result of a previously-performed logistic regression. Be careful, though! There is another function `anova()`, which does not perform the Wald $\chi^2$ test and is instead used for comparing different models.
+
+```{r, message=FALSE}
+# Wald Chi-Square test of most parsimonious model
+library(car)
+Anova(td.glmer)
+```
+
+The results of the Wald $\chi^2$ test gives you the first line of evidence. They show you which factor groups, or parameters, add explanatory value to the model and which don't. This is functionally equivalent to the selection of significant factors in a step-up/step-down procedure. The results also tell you the relative magnitude of effect of each parameter. The larger the $\chi^2$ statistic (`Chisq`), the greater magnitude of effect. Using $p>0.05$ as the cut-off you see that `Before`, `After.New`, `Morph.Type`, `Stress`, and `Phoneme` all add explanatory value. `Centre.Age`, `Sex`, and `Education` do not (unsurprising given the results of the [Random Forest](090_lvcr.qmd) analysis). This means that the finding that there is a division between men and women, and among men between those born before and after 1990 (as suggested by the [Conditional Inference Tree](080_lvcr.qmd) analysis), is in fact not real once you take the linguistic factors, and the random effect of speaker, into account. Put another way, you do not have statistical validation for the observed trend in the summary statistics. In the Wald $\chi^2$ results, `After.New` has the largest $\chi^2$ value ($147.85$) indicating it has the largest magnitude of effect on the variation. This is functionally equivalent to saying that its factor weights have the largest range. In descending order you then have `Morph.Type` ($\chi^2 = 77.77$), `Before` ($\chi^2 = 38.67$), `Stress` ($\chi^2 = 33.28$), and `Phoneme` ($\chi^2 = 4.82$).
+
+Here is how you might represent these results in a manuscript:
+
+![Analysis of deviance, Wald $\chi^2$ test for full model, Deletion of word-final (t, d) in Cape Breton English](images/waldtest.png){#fig-wald width="60%"}
+
+
+The last line of evidence is the constraint hierarchy, or rather, the order of constraints from most favouring to least favouring. This last line of evidence in *Goldvarb* requires factor weights. Specifically, it requires the factor weights from the best step-up model and best step-down model --- which should match. To re-create the equivalent model you simply create the most parsimonious model identified by the Wald $\chi^2$ test. Here, that is a model constructed with only `After.New`, `Morph.Type`, `Before`, `Stress`, and `Phoneme`.
+
+```{r, message=FALSE}
+
+# Most Parsimonious Model: Generalized linear mixed effects model with the fixed main effects of Before, After.New, Morph.Type, Stress, Phoneme, and the random effect of Speaker
+library(lme4)
+td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+summary(td.glmer.parsimonious)
+```
+
+## Creating a Manuscript-ready Table
+
+The estimates or coefficients give us the last line of evidence --- and the last piece of statistical information that is generally reported in a standard *Goldvarb*-style manuscript table. @fig-gvtable1 is such a table constructed using the information from the `td.glmer.parsimonious` regression analysis. 
+
+
+![Mixed effects logistic regression analysis of the contribution of external and internal factors to the probability of /t, d/ -deletion in Cape Breton English](images/gvtable.png){#fig-gvtable1 width="80%"}
+
+
+The *Input* is the estimate of the intercept, converted to a probability using the `inv.logit()` function. You can quickly get these values using `plogis(fixef(td.glmer.parsimonious))`. The *Total N*, frequencies and *n* counts for each factor come from the summary statistics you [performed earlier](060_lvcr.qmd). The factor weights for each factor are that factor's estimates converted to probabilities, again using the `inv.logit()`  or `plogis()` function. Any mixed-effects model with a random effect should report the random effect. *Speaker* is listed as a random effect, and the dispersion among speakers is reported. As noted above, there is no consensus around whether to report the `Variance` or `Std.Dev` as the measure of this dispersion (remember standard deviation is simply the square root of the variance). Here I've reported standard deviation. 
+
+```{r}
+plogis(fixef(td.glmer.parsimonious))
+```
+
+The range for each factor group is the difference between the largest factor weight and the lowest factor weight expressed as a whole number. Notice that the ordering of magnitude of effect by the range of probabilities is slightly different from the ordering of magnitude of effect based on the $\chi^2$ coefficient from the Wald $\chi^2$ test and the ordering from the [Random Forest](090_lvcr.qmd) analysis.  For this reason it may be prudent to be very careful when using magnitude of effect/the second line of evidence to compare similarity/difference across data sets. Using multiple means to assess magnitude of effect is warranted, as is being very transparent about the means you use. 
+
+Many who create *Goldvarb*-style tables using data from either *Rbrul* or *R*'s `glmer()` function report both the log odds and factor weights for a given factor (e.g., [Drummond 2012](https://doi.org/10.1017/S0954394512000026), Tables 3-8; [Becker 2014](https://doi.org/10.1017/S0954394514000064), Tables 5-6, etc.). I have not done so in the @fig-gvtable1 because reporting both is redundant: probability (factor weights),  odds-ratios,  and likelihood (log odds) are functionally the same, and one can be derived from the other mathematically. Finally, if you wanted to report the factor weights, proportions, and token counts for non-significant factors you could do so (of course, following conventions of the field  by enclosing the factor weights in square brackets and not reporting the range) with values taken from the full (not most-parsimonious) model and the summary statistics. The full model is equivalent to the first model in a step-up/step-down analysis, or one-way analysis.
+
+
+While it may seem retrogressive to report the results of an `lme4` analysis in the style of *Goldvarb*, presenting results in this fashion is highly readable and easily interpreted by other sociolinguistic researchers. Further, it is a succinct format for doing cross-model/data set comparisons. It also fulfills the requisites described by Gregory Guy in his [*LVC guidelines for reporting quantitative results*](http://gregoryrguy.com/wp-content/uploads/Guy-2018-Guidelines-for-reporting-quantitative-results-LVC-Nov-18-2018.pdf). For example, @fig-gvtable2 compares the (t, d) deletion among young speakers with (t, d) deletion among middle/old speakers (see [Modifying Data](040_lvcr.qmd)). It very easily shows how the three lines of evidence are both similar and different between the two age cohorts. Representing this comparison using raw `lme4`/`glmer()` outputs (or tables resembling this output) would be harder to read and thus less immediately interpretable. 
+
+
+
+![Mixed effects logistic regression analysis of the contribution of external and internal factors to the probability of /t, d/ -deletion in Cape Breton English for two age groups](images/gvtable2.png){#fig-gvtable2 width="80%"}
+
+From @fig-gvtable2 you can observe several patterns. Firstly, the overall probability of `Deletion` among young speakers is $.41$ and among middle/old speakers is $.34$. This indicates that `Deletion` is more likely to occur among young speakers (though given that two measures of age are not significant when the data is combined suggests that this difference cannot be verified to be greater than chance variation). With respect to the first line of evidence (significance), you can see that for both age cohorts the same linguistic factors are significant predictors of the variation, indicating similar grammatical systems. Also important is that the same predictor, `Phoneme`, is not significant, also indicating similar grammatical systems. `Gender` is significant among middle/older speakers but not among younger speakers. This aligns with the findings from the [Conditional Inference Tree](080_lvcr.qmd), which shows that older men delete at a greater rate than everyone else. You can see some difference between cohorts when you consider magnitude of effect. For both cohorts following context (`After.New`) has a greater magnitude of effect than stress or preceding context (`Before`). Morpheme type (`Morph.Type`), however, has a greater magnitude of effect among middle/older speakers relative to other predictors, while among younger speakers morpheme type has a lesser magnitude of effect compared to following context. This would be a pertinent finding to discuss in your manuscript. For the third line of evidence, constraint hierarchy, both cohorts have the same ranking of predictor levels for morpheme type, following context, stress, and, for the most part, preceding context. The one difference is preceding /s/, which highly favours deletion among younger speakers, but slightly disfavours deletion among older speakers. The one disadvantage of this *Goldvarb*-style table is that it does not show the individual, per-level significance measures. Looking at `td.glmer.not.young` below shows that the probability of `Deletion` among middle/older speakers' preceding /s/ tokens is not statistically different from the mean. In other words, predicting /s/ is a strong favouring predictor of `Deletion` among young speakers, but an inconsequential predictor among middle/older speakers. When examining the `glmer()` outputs below, preceding /s/ is `Before4`. What the output of `td.glmer.not.young` also shows is that preceding other fricatives are also not significantly different from the mean. This suggests that for middle/older speakers /s/ and other fricatives behaving similarly, while for younger speakers /s/ and other fricatives do not behave similarly. We will delve into this phenomenon in [Part 4](116_lvcr.qmd). 
+```{r}
+# Subset data
+td.young <-td %>% subset(Age.Group == "Young")
+td.not.young <- td %>% subset(Age.Group != "Young")
+# Create young speaker regression model
+td.glmer.young <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1 | Speaker), data = td.young, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+
+summary(td.glmer.young)
+
+# Create middle/old speaker regression model
+td.glmer.not.young <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1 | Speaker), data = td.not.young, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
+
+summary(td.glmer.not.young)
+```
+
+Despite how useful a *Goldvarb*-style table is, it is not the only way to report the results you've produced. Nor is the estimate the only information you have. There are other interesting values in your `summary(td.glmer)` output. Going left to right, after the estimate there is the standard error, the $z$-value and the $p$-value. According to Gregory Guy in his [*LVC guidelines for reporting quantitative results*](http://gregoryrguy.com/wp-content/uploads/Guy-2018-Guidelines-for-reporting-quantitative-results-LVC-Nov-18-2018.pdf), reporting the estimates, standard errors, and significance is desirable. Whether reporting the $z$-scores is required is unclear. @fig-lme4table reports `td.glmer` in a format more similar to the `lme4` output. The likelihoods in @fig-lme4table are presented in log odds. They correspond exactly to the probabilities in @fig-gvtable1. One addition to the information in the `lme4` output included in @fig-lme4table is the Observation columns. It is very important to report these distributions by factor/parameter level, preferably in your table, or somewhere else in your manuscript. 
+
+You also may want to report in your table additional measures of model fit ($R^2$) and whether the model is an improvement over the null model. 
+
+
+
+![Mixed effects logistic regression analysis of the contribution of external and internal factors to the probability of /t, d/ -deletion in Cape Breton English for two age groups](images/lme4table.png){#fig-lme4table width="80%"}
+
+
