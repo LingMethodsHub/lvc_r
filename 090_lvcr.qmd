@@ -5,11 +5,27 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: false
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
+  - name: Matt Hunt Gardner
     orcid: 0000-0002-1878-4232
     email: matt.gardner@ling-phil.ox.ac.uk
     corresponding: true
@@ -19,11 +35,12 @@ author:
         city: Oxford
         country: UK
 description: "Doing a basic random forest analysis. "
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -52,13 +69,11 @@ td.old <- td %>%
           mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE)))
 ```
 
-Another useful type of analysis available as part of the `partykit` package is a random forest analysis. This algorithm determines the most common classification tree (like the one above) among a large collection of trees built on random subsets of a dataset. Random forests are useful because they can rank the relative importance of independent variables with respect to a dependent variable. They can also simultaneously test variables that are (multi)collinear. Logistic regression (discussed in [Mixed-Efects Logistic Regression Analysis](110_lvcr.qmd)) assumes little or no collinearity among independent predictor variables. Variables like lexical status (`Category`) and morphological type (`Morph.Type`) are highly correlated (i.e., semi-weak and past-tense verbs are all lexical), thus should not be included as predictors in the same logistic regression model.[^1]
-
-[^1]: See [Tagliamonte 2012](https://www.wiley.com/en-gb/Variationist+Sociolinguistics:+Change,+Observation,+Interpretation-p-9781405135900) and [Tagliamonte & Baayen (2012)](https://doi.org/10.1017/S0954394512000129)  for a variationist-focused explanation of random forest analysis and its relationship to other analyses.
+Another useful type of analysis available as part of the `partykit` package is a random forest analysis. This algorithm determines the most common classification tree (like the one above) among a large collection of trees built on random subsets of a dataset. Random forests are useful because they can rank the relative importance of independent variables with respect to a dependent variable. They can also simultaneously test variables that are (multi)collinear. Logistic regression (discussed in [Mixed-Efects Logistic Regression Analysis](https://lingmethodshub.github.io/content/R/lvc_r/110_lvcr.html)) assumes little or no collinearity among independent predictor variables. Variables like lexical status (`Category`) and morphological type (`Morph.Type`) are highly correlated (i.e., semi-weak and past-tense verbs are all lexical), thus should not be included as predictors in the same logistic regression model.[^1]
 
 
 
- 
+[^1]: See @Tagliamonte2012  and @Tagliamonte2012b  for a variationist-focused explanation of random forest analysis and its relationship to other analyses.
 
 Random forest analysis take a lot of computing power and time. I usually leave my computer to run the analysis overnight. The bigger your dataset and the more predictors you include, the longer the analysis will take. 
 
@@ -71,11 +86,14 @@ set.seed(123456)
 
 The random forest algorithm finds the most common classification tree from those built on random samplings of the data. Setting the seed for *R*'s random number generator means you can both generate random samples of your data for creating these trees, and you can also make your analysis reproducible. Think of each seed as a list of random numbers. Above, the seed `123456` is used, but the seed you select is arbitrary. The one time it is important to select a specific seed is if you are trying to reproduce results. In that case, you must use the same seed as the previous analysis. Keeping a record of your seed setting in a script file and reporting your seed setting in a manuscript is therefore very important. 
 
-You build your random forest formula just like you built the formula for your `ctree()`, but with the  function `cforest()`. The formula here uses `Dep.Var` as the dependent variable and `Stress`, `Category`, `Morph.Type`, `Before`, `After`, `Sex`, `Education`, `Job`, `After.New`, `Center.Age`, `Age.Group`, and `Phoneme` as predictor variables. The data tested is set using `data=td`.[^2] 
+You build your random forest formula just like you built the formula for your `ctree()`, but with the  function `cforest()`. The formula here uses `Dep.Var` as the dependent variable and `Stress`, `Category`, `Morph.Type`, `Before`, `After`, `Sex`, `Education`, `Job`, `After.New`, `Center.Age`, `Age.Group`, and `Phoneme` as predictor variables. The data tested is set using `data=td`.
 
-[^2]: If you don't have the `td` dataset loaded in *R*, go back to [Doing it all again, but `tidy`](050_lvcr.qmd) and run the code.
+::: {.callout-tip}
+## Get the data first
+If you don't have the `td` data loaded in *R*, go back to [Doing it all again, but `tidy`](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and run the code.
+:::
 
-The setting `ntree=128`  specifies the number of trees to grow. I have run analyses where I've specified 10,000 trees and it took almost 24 hours to compute on my 2015 MacBook Pro. As a rule, the more data/independent variables you have, the more trees you should specify; however, [Oshiro *et al.* (2012)](http://dx.doi.org/10.1007/978-3-642-31537-4_13) point out, based on their test with 29 different datasets, that after 128 trees there is no significant improvement in the accuracy of the resulting random forest. As a random forest is never my only analysis, I now specify 128 trees for casual data exploration. I use at least 5,000 for any random forest that I include in a published manuscript. 
+The setting `ntree=128`  specifies the number of trees to grow. I have run analyses where I've specified 10,000 trees and it took almost 24 hours to compute on my 2015 MacBook Pro. As a rule, the more data/independent variables you have, the more trees you should specify; however, @Oshiro2012  point out, based on their test with 29 different datasets, that after 128 trees there is no significant improvement in the accuracy of the resulting random forest. As a random forest is never my only analysis, I now specify 128 trees for casual data exploration. I use at least 5,000 for any random forest that I include in a published manuscript. 
 
 The `cforest()` function creates the random forest, but you still need to determine which independent variables do the best job of describing the data averaged over all of the trees created. To do this you use the function `varimp()` on the result of `cforest()` (here the object `td.cforest`). The setting `conditional=TRUE` is important when independent variables are collinear; it should always be used. In simple terms, this setting ensures that, if two independent variables are collinear, only the variable that does a better job at explaining the variation in the data will be considered as an important descriptor and the other will be ignored.
 
@@ -171,11 +189,11 @@ dotplot
 
 To save the graph use the function `ggsave()`. The first argument is the save destination. You can specify which type of file you want to save your image as by using different file extensions: .png, .pdf, etc. I generally only use PNG or PDF files. The second argument is the name of the object to save (here `dotplot`). Next you specify the `width` and `height` of the image you want to create and the `units` of the values you specify. You don't need to do this, but I like to so that I know exactly how big my image will be. I find this helpful when later inserting images in my manuscripts. It is also a good way to ensure consistency in size from graph to graph. For PNG you can also specify the `dpi` (dots per inch/pixels per inch), which will be the resolution of the final image. The higher the `dpi`, the bigger the file, but also the clearer the image will be if you decide later to zoom in on it or enlarge it. Though, if you need a bigger image it's better to just specify the exact size using the height and width arguments, rather than enlarging a smaller image. For graphs with little to no text `300` dpi is sufficient. If there is a lot of text, you may want to bump it up to `600` dpi. For certain publishers there may be a specific dpi needed. 
 
-In the dotplot above, the descriptor variables are ordered top to bottom from most important to least important. Variables can be considered informative if their variable importance is above the absolute value of the lowest negative-scoring variable. The rationale for this rule of thumb, according to [Strobl *et al.* (2009: 342)](https://doi.org/10.1037%2Fa0016973), is that importance of irrelevant variables varies randomly around zero. In other words, everything to the right of the dashed line is a useful in describing `Deletion` in the data. The further to the right of the dashed line, the more useful. 
+In the dotplot above, the descriptor variables are ordered top to bottom from most important to least important. Variables can be considered informative if their variable importance is above the absolute value of the lowest negative-scoring variable. The rationale for this rule of thumb, according to @Strobl2009 [p. 342], is that importance of irrelevant variables varies randomly around zero. In other words, everything to the right of the dashed line is a useful in describing `Deletion` in the data. The further to the right of the dashed line, the more useful. 
 
 The variables with the highest variable importance are `Before` and `Morph.Type`, followed by `Center.Age`, `After`, `Job`, `Education`, `After.New` and `Stress`. The variables `Category`, `Age.Group`, `Sex`, and `Phoneme` are all to the left of the dashed line, so you can consider them as not useful in describing the variation. 
 
-You'll notice that many of the independent variables included are collinear --- in other words, the value of one can predict (all or some of) the values of the other. As I noted above, `Category` and `Morph.Type` are collinear because all `Semi-Weak` and `Past` tokens are also `Lexical`. Likewise `Age.Group` and `Center.Age` are completely collinear; the value of `Center.Age` can exactly predict the value of `Age.Group`. Values for both age measures can also do a good job of predicting both `Education` and `Job` in the Cape Breton data. Younger speakers are generally `Educated` and have `White` (collar) or `Service` jobs. All `Students` in the variable `Education` are also `Students` for the variable `Job`, and all are also `Young`. It would violate the assumptions of the model to include all these predictors at the same time in the same regression (see [next chapter](100_lvcr.qmd)); however, these collinear variables can be included in a random forest. One of the greatest uses of a random forest analysis is when you have multiple ways of categorizing the same phenomenon (like social class, which can be operationalized by either `Job` or `Education`, or age which can be operationalized as a continuous variable like `Center.Age`, or a discrete variable like `Age.Group`) and you want to decide which categorization to use.
+You'll notice that many of the independent variables included are collinear --- in other words, the value of one can predict (all or some of) the values of the other. As I noted above, `Category` and `Morph.Type` are collinear because all `Semi-Weak` and `Past` tokens are also `Lexical`. Likewise `Age.Group` and `Center.Age` are completely collinear; the value of `Center.Age` can exactly predict the value of `Age.Group`. Values for both age measures can also do a good job of predicting both `Education` and `Job` in the Cape Breton data. Younger speakers are generally `Educated` and have `White` (collar) or `Service` jobs. All `Students` in the variable `Education` are also `Students` for the variable `Job`, and all are also `Young`. It would violate the assumptions of the model to include all these predictors at the same time in the same regression (see [next chapter](https://lingmethodshub.github.io/content/R/lvc_r/100_lvcr.html)); however, these collinear variables can be included in a random forest. One of the greatest uses of a random forest analysis is when you have multiple ways of categorizing the same phenomenon (like social class, which can be operationalized by either `Job` or `Education`, or age which can be operationalized as a continuous variable like `Center.Age`, or a discrete variable like `Age.Group`) and you want to decide which categorization to use.
 
 In the dotplot the variable `After` is higher ranked than `After.New`. This would be good justification for choosing `After` --- which includes a separate level for (t, d) before /h/ --- instead of `After.New` in further analyses. Likewise,  `Job` is describes the variation better than `Education`; the random forest therefore points to `Job` being a more useful reflection of social class stratification than `Education` for the (t, d) variable. The only caveat is that when selecting between independent variables that are collinear, you must also take into account the hypotheses that you aim to test. In other words, selection of  variables should be also be independently motivated. 
 
@@ -203,10 +221,13 @@ ggplot(td.cforest2.results, aes(x = value, y = variable))+
 	geom_vline(xintercept = td.cforest.min, linetype=2, alpha=.5)
 ```
 
-Another important thing to remember when using random forest analyses is that the values along the `x`-axis are only relative rankings for a specific random forest. The absolute values shouldn't be interpreted or compared across different studies [(Strobl *et al.* 2009: 336)](https://doi.org/10.1037%2Fa0016973). What you can compare across studies is the relative ranking of variables along the `y`-axis and which variables are on each side of the dashed line. Further, random forests do not take into account the weirdness of sociolinguisic data, which generally includes an inconsistent number of tokens from each speaker. Mixed-effects regression *can* do this.  So, random forests should always be used in conjunction with other forms of data modelling like mixed-effects regression. 
+Another important thing to remember when using random forest analyses is that the values along the `x`-axis are only relative rankings for a specific random forest. The absolute values shouldn't be interpreted or compared across different studies @Strobl2009 [p. 336]. What you can compare across studies is the relative ranking of variables along the `y`-axis and which variables are on each side of the dashed line. Further, random forests do not take into account the weirdness of sociolinguisic data, which generally includes an inconsistent number of tokens from each speaker. Mixed-effects regression *can* do this.  So, random forests should always be used in conjunction with other forms of data modelling like mixed-effects regression. 
 
 
+### References
 
+::: {#refs}
+:::
 
 
 

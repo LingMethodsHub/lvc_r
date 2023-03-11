@@ -5,11 +5,27 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: false
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
+  - name: Matt Hunt Gardner
     orcid: 0000-0002-1878-4232
     email: matt.gardner@ling-phil.ox.ac.uk
     corresponding: true
@@ -19,6 +35,7 @@ author:
         city: Oxford
         country: UK
 description: "How to import your data into *R*."
+bibliography: references.bib
 ---
 
 
@@ -40,10 +57,16 @@ The function creates an *R* "object" called `td` and then uses the assignment op
 td <-read.delim("https://www.dropbox.com/s/pi8xz1kuo6cz60l/deletiondata.txt?dl=1")
 ```
 
-This data file contains tokens of word-final (t, d) and was created for a project studying different pronunciations of word-final (t, d), including deletion. The data comes from a corpus collected for Gardner (2010; [2017](https://hdl.handle.net/1807/80940)) among English speakers on [Cape Breton Island, Nova Scotia, Canada](https://en.wikipedia.org/wiki/Cape_Breton_Island).
+This data file contains tokens of word-final (t, d) and was created for a project studying different pronunciations of word-final (t, d), including deletion. The data comes from a corpus collected for Gardner [-@Gardner2010;-@Gardner2013c;-@Gardner2017] among English speakers on [Cape Breton Island, Nova Scotia, Canada](https://en.wikipedia.org/wiki/Cape_Breton_Island).
 
 If you prefer to save your data files as comma-separated-values files (even though you shouldn't, see above), you can read them into *R* using the function `read.csv2()`. If you find it tricky to figure out the file path of your data file you can instead write `file.choose()` (OS X) or `choose.files()` (PC) instead of the file path inside the `read.delim()`/`read.csv2()` function, with no quotation marks. This will create a pop-up window where you can browse through your files and select one. While this *seems* easier, it is not worth it. By not explicitly writing out the file path you introduce a non-replicable element in your script file because there is no record of what you browse to in the actual script file. This means that if you return to your project a year later, or someone else is looking over your code, it might not be clear which data file is supposed to be used. If you choose to use an *R* script file you can actually just drag and drop your data file (or any file) into the script window itself and the full file path will be automatically inserted.
 
 You can also copy a file's filepath to the clipboard on a Mac by pressing **Control** while clicking on the file, then pressing **Option** and selecting **Copy "\[your file\]" as Pathname**. On a PC you can do the same thing by right-clicking on a file, or (if using Windows 10) using the **Copy path** button on the **Home** tab ribbon in *Windows File Explorer*.
 
 For more information about reading files into *R*, go [here](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html)
+
+
+### References
+
+::: {#refs}
+:::

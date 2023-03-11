@@ -5,11 +5,27 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: false
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
+  - name: Matt Hunt Gardner
     orcid: 0000-0002-1878-4232
     email: matt.gardner@ling-phil.ox.ac.uk
     corresponding: true
@@ -22,11 +38,13 @@ description: "Doing a mixed-effects logistic regression analysis suitable for co
 crossref:
   fig-title: Table  
   fig-prefix: Table
+  fig-labels: arabic
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -111,7 +129,7 @@ options(digits=2)
 # td.glmer.not.young <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1 | Speaker), data = td.not.young, family = "binomial", glmerControl(optCtrl = list(maxfun = 20000), optimizer = "bobyqa"))
 ```
 
-Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](050_lvcr.qmd) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](110_lvcr.qmd). Next, you [set the global *R* options to employ sum contrast coding](112_lvcr.qmd).
+Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](https://lingmethodshub.github.io/content/R/lvc_r/110_lvcr.html). Next, you [set the global *R* options to employ sum contrast coding](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html).
 
 
 ## Correlations, Interactions, & Collinearity
@@ -119,18 +137,19 @@ Before you proceed with this section, please make sure that you have your data l
 Lets look again at the results of the most parsimonious analysis of the full data set. 
 ```{r}
 library(lme4)
-td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
+td.glmer.parsimonious <-glmer(Dep.Var ~ After.New + Morph.Type + Before + Stress + Phoneme + (1|Speaker), data = td, family = "binomial", 
+                              control = glmerControl(optCtrl = list(maxfun = 2e4), optimizer = "bobyqa"))
 summary(td.glmer.parsimonious)
 ```
-Below the results for fixed effects is a table of the correlations of the fixed effects.  This table is a good way to spot non-[orthogonal](https://en.wikipedia.org/wiki/Orthogonality#Statistics,_econometrics,_and_economics) effects you might not yet have caught (though you should have caught these effects if you thoroughly explored your data using [summary statistics](060_lvcr.qmd)). Look at only the coefficients for the  correlations of levels of **different** parameters. Generally any value over $|0.3|$[^1] should be investigated further. If you have any correlations over $|0.7|$ you should be worried. In your table there is no correlation higher than $|0.7|$, but there are a few over $|0.3|$: `After.New1*Before4` $|0.304|$; `After.New1*Stress1` $|0.432|$; `After.New2*Before4` $|0.431|$; `After.New2*Phoneme1` $|0.307|$; `Morph.Type1*Before3` $|0.319|$; `Morph.Type2*Before3` $|0.515|$; `Before1*Phoneme1` $|0.543|$; and `Before4*Phoneme1` $|0.438|$. These correlations suggest  it might be worthwhile to re-check the summary statistics, looking especially at the cross-tab of `After.New` and `Before`, `After.New` and `Phoneme`, `Morph.Type` and `Before`, `Morph.Type` and `Phoneme`, and `Before` and `Phoneme`.[^2] 
+Below the results for fixed effects is a table of the correlations of the fixed effects.  This table is a good way to spot non-[orthogonal](https://en.wikipedia.org/wiki/Orthogonality#Statistics,_econometrics,_and_economics) effects you might not yet have caught (though you should have caught these effects if you thoroughly explored your data using [summary statistics](https://lingmethodshub.github.io/content/R/lvc_r/060_lvcr.html)). Look at only the coefficients for the  correlations of levels of **different** parameters. Generally any value over $|0.3|$[^1] should be investigated further. If you have any correlations over $|0.7|$ you should be worried. In your table there is no correlation higher than $|0.7|$, but there are a few over $|0.3|$: `After.New1*Before4` $|0.304|$; `After.New1*Stress1` $|0.432|$; `After.New2*Before4` $|0.431|$; `After.New2*Phoneme1` $|0.307|$; `Morph.Type1*Before3` $|0.319|$; `Morph.Type2*Before3` $|0.515|$; `Before1*Phoneme1` $|0.543|$; and `Before4*Phoneme1` $|0.438|$. These correlations suggest  it might be worthwhile to re-check the summary statistics, looking especially at the cross-tab of `After.New` and `Before`, `After.New` and `Phoneme`, `Morph.Type` and `Before`, `Morph.Type` and `Phoneme`, and `Before` and `Phoneme`.[^2] 
 
-[^2]: See also *Notes on Interactions* by Derek Denis, available [here](Data/Denis_2010_Notes_On_Interactions.pdf).
+[^2]: See also *Notes on Interactions* by Derek Denis, available at [https://www.dropbox.com/s/7c4tzc8st5dmeit/Denis_2010_Notes_On_Interactions.pdf](https://www.dropbox.com/s/7c4tzc8st5dmeit/Denis_2010_Notes_On_Interactions.pdf).
 [^1]: Any absolute value greater than $3$, or rather any positive value higher than $+3$ or any negative value lower than $-3$.
 
 There are two other methods for testing for a relationship between your fixed effect predictors that relate to the kind of relationship your fixed effects predictors might have. The first is that the predictors have an **interaction** the other is that they are (multi-) **collinear**.
 
 ### Interactions
-An interaction arises when two independent fixed effects work together to predict the variation of the application value. For example, based on the [Conditional Inference Tree](080_lvcr.qmd) analysis you know that it is not case that gender itself explains the social variation in `Deletion` vs. `Realized` (this is confirmed by the [analysis of data from just young speakers](112_lvcr.qmd), where `Sex` is not significant), nor is it that age explains the social variation (confirmed by the non-significance of both `Age.Group` and `Center.Age` in [the full model](112_lvcr.qmd)). Instead, it seems that older men use `Deletion` more frequently than everyone else. This is an interaction. It is the combination of `Age.Group` and `Sex` that (potentially) best explains the social variation. You can test this in your model by creating an interaction group with these two fixed effect predictors. You do this by including the interaction term `Sex*Age.Group` in your analysis. To make things easier here you can simplify and again consider middle-age and older speakers together. You can also drop `Phoneme` as it is non-significant among both cohorts. When you include an interaction term, the individual components of the interaction will also be included as singular predictors. 
+An interaction arises when two independent fixed effects work together to predict the variation of the application value. For example, based on the [Conditional Inference Tree](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html) analysis you know that it is not case that gender itself explains the social variation in `Deletion` vs. `Realized` (this is confirmed by the [analysis of data from just young speakers](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html), where `Sex` is not significant), nor is it that age explains the social variation (confirmed by the non-significance of both `Age.Group` and `Center.Age` in [the full model](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html)). Instead, it seems that older men use `Deletion` more frequently than everyone else. This is an interaction. It is the combination of `Age.Group` and `Sex` that (potentially) best explains the social variation. You can test this in your model by creating an interaction group with these two fixed effect predictors. You do this by including the interaction term `Sex*Age.Group` in your analysis. To make things easier here you can simplify and again consider middle-age and older speakers together. You can also drop `Phoneme` as it is non-significant among both cohorts. When you include an interaction term, the individual components of the interaction will also be included as singular predictors. 
 
 ```{r}
 # Create a simplified Age.Group.Simple column
@@ -154,14 +173,14 @@ Anova(td.glmer.sex.age.interaction)
 ```
 You can see that the coefficient for the interaction term is identical, but with reverse polarity. It indicates that when `Sex` is `Male` and `Age.Group.Simple` is `Old/Middle` the extra effect is $+0.1750$, but again, as you saw above, this difference is not significantly different from zero/no effect $p = 0.19902$.  
 
-An alternative way to test this interaction is to [create a four-way `Sex:Age.Group.Simple` interaction group](050_lvcr.qmd) and include it as a fixed effect. By doing this instead of testing for an extra effect caused by the interaction of these two variables, you are instead testing the difference in likelihood from the overall likelihood for each combination of age and sex, and determining whether this is significantly different from zero. 
+An alternative way to test this interaction is to [create a four-way `Sex:Age.Group.Simple` interaction group](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and include it as a fixed effect. By doing this instead of testing for an extra effect caused by the interaction of these two variables, you are instead testing the difference in likelihood from the overall likelihood for each combination of age and sex, and determining whether this is significantly different from zero. 
 
 ```{r}
 # Create a four-way interaction group
 td <-td %>% unite("Sex.Age.Group.Simple", c(Sex, Age.Group.Simple), sep= ":", remove = FALSE)
 levels(as.factor(td$Sex.Age.Group.Simple))
 ```
-The levels of the four-way interaction group are `F:Old/Middle`, `F:Young`, `M:Old/Middle`, and `M:Young`. If you recreate your `glmer()` analysis you will expect the third level,`M:Old/Middle`, to have a positive coefficient (`Deletion` more likely than the mean), and the others to have a negative coefficient (`Deletion` less likely than the mean). 
+The levels of the four-way interaction group are `F:Old/Middle`, `F:Young`, `M:Old/Middle`, and `M:Young`. If you recreate your `glmer()` analysis, you should find that the third level, `M:Old/Middle`, to have a positive coefficient (`Deletion` more likely than the mean), and the others to have a negative coefficient (`Deletion` less likely than the mean). 
 
 ```{r}
 # Create a regression analysis with the Age.Simple:Sex interaction group 
@@ -179,21 +198,21 @@ td.glmer.sex.age.interaction <- glmer(Dep.Var ~ After.New + Morph.Type + Before 
 summary(td.glmer.sex.age.interaction)
 Anova(td.glmer.sex.age.interaction)
 ```
-As with the other levels,`Men:Young` (`fct_rev(Sex.Age.Group.Simple)1`), is not significant. What you can conclude is that all women and young men are not significantly different from the overall probability (and by extension each other), but old/middle men are significantly different from the overall probability. Creating this four-way interaction group and including it as a fixed effect reveals this pattern in a way that including the interaction term `Sex:Age.Simple` does not. That being said, the results of the `Anova()` indicate that this predictor still does not add explanatory value to the analysis.  
+As with the other levels, `Men:Young` (`fct_rev(Sex.Age.Group.Simple)1`) is not significant. What you can conclude is that all women and young men are not significantly different from the overall probability (and by extension each other), but old/middle men are significantly different from the overall probability. Creating this four-way interaction group and including it as a fixed effect reveals this pattern in a way that including the interaction term `Sex:Age.Simple` does not. That being said, the results of the `Anova()` indicate that this predictor still does not add explanatory value to the analysis.  
 
 
 
 ### Collinearity 
 
-When fixed effects predictors are not independent we say they are (multi-) [collinear](https://www.britannica.com/topic/collinearity-statistics). Collinearity and interactions are similar but separate phenomena. 
+When fixed effects predictors are not independent we say they are (multi-) [collinear](https://www.britannica.com/topic/collinearity-statistics). Collinearity and interactions are similar, but separate, phenomena. 
 
-Collinearity is the phenomenon whereby two or more predictor variables are highly correlated, such that the value of one can be predicted from the level of the other with a non-trivial degree of accuracy. Including both in an anlysis 1) violates the assumptions of the model; and 2) can actually result in diminished liklihood estimates for both predictors, masking real effects. As discussed [before](080_lvcr.qmd), in this Cape Breton data, `Education`, `Job`, and `Age.Group` are all collinear to various degrees. For example, if `Job` is `Student`, then the level of  `Education` can be predicted (it will also be `Student`), and vice versa. For both, `Age.Group` can be predicted too (`Young`). These types of correlations are easy to see for social categories, but somewhat more difficult to tease out for linguistic categories. The first step is always a thorough [cross tabulation](060_lvcr.qmd) of your independent variables. For a quick visual of cross tabulations you can employ a [mosaic plot](https://cran.r-project.org/web/packages/ggmosaic/vignettes/ggmosaic.html). Here is the code for creating a quick mosaic plot using `ggplot2`, which you likely already have installed if you've followed along with previous chapters. 
+Collinearity is the phenomenon whereby two or more predictor variables are highly correlated, such that the value/level of one can be predicted from the value/level of the other with a non-trivial degree of accuracy. Including both in an anlysis 1) violates the assumptions of the model; and 2) can actually result in diminished liklihood estimates for both predictors, masking real effects. As discussed [before](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html), in this Cape Breton data, `Education`, `Job`, and `Age.Group` are all collinear to various degrees. For example, if `Job` is `Student`, then the level of  `Education` can be predicted (it will also be `Student`), and vice versa. For both, `Age.Group` can be predicted too (`Young`). These types of correlations are easy to see for social categories, but somewhat more difficult to tease out for linguistic categories. The first step is always a thorough [cross tabulation](https://lingmethodshub.github.io/content/R/lvc_r/060_lvcr.html) of your independent variables. For a quick visual of cross tabulations you can employ a [mosaic plot](https://cran.r-project.org/web/packages/ggmosaic/vignettes/ggmosaic.html). Here is the code for creating a quick mosaic plot using `ggplot2`, which you likely already have installed if you've followed along with previous chapters. 
 
 ```{r, eval=FALSE}
 # Install ggmosaic package
 install.packages("ggmosaic")
 ```
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE,fig.dim = c(8, 8),out.width="75%"}
 library(ggmosaic)
 library(ggplot2)
 # Create a quick mosaic plot of Phoneme and Before
@@ -208,7 +227,7 @@ In a mosaic plot the size of the box for each combination of variables correspon
 
 Lets look at another mosaic plot. 
 
-```{r, message=FALSE,warning=FALSE}
+```{r, message=FALSE,warning=FALSE, fig.dim = c(8, 8),out.width="75%"}
 # Create a quick mosaic plot of Phoneme and Before
 ggplot(td)+
   geom_mosaic(aes(product(Dep.Var, Before, After.New), fill = Dep.Var))+
@@ -218,14 +237,14 @@ ggplot(td)+
 This plot is a little bit hard to read. To make the *x*-axis labels a little easier to read, you can use the binary version of `Dep.Var`. You'll remember that `1` is `Deletion` and `0` is `Realized`.
 
 
-```{r, message=FALSE,warning=FALSE}
+```{r, message=FALSE,warning=FALSE, fig.dim = c(8, 8),out.width="75%"}
 # Create a quick mosaic plot of Phoneme and Before
 ggplot(td)+
   geom_mosaic(aes(product(Dep.Var.Binary, Before, After.New), fill = Dep.Var.Binary))+
   theme_mosaic()
 ```
 
-This mosaic plot show that there are very few tokens with a preceding `Stop` and a following `Pause`. Though no apparent collinearity is present, this mosaic plot does reveal some interesting potential interactions. The effect of preceding /s/, liquids, and nasals appears to be specific to pre-consonental contexts, and perhaps also pre-vowel contexts for nasals. This suggests further exploration of the data is warranted --- perhaps by creating separate `glmer()` models for each of the following contexts, by complexifying your full model by creating a `Before` and `After.New` interaction group, or by simplifying your full model by [collapsing these two categories](040_lvcr.qmd) into simpler grouped categories, e.g., `Pre-Pause`, `Liquid-Consonant`, `Liquid-Vowel`,`Nasal-Consonant`, `Nasal-Vowel`, `S-Consonant`, `S-Vowel`, `Other-Consonant`, `Other-Vowel`, or similar.
+This mosaic plot show that there are very few tokens with a preceding `Stop` and a following `Pause`. Though no apparent collinearity is present, this mosaic plot does reveal some interesting potential interactions. The effect of preceding /s/, liquids, and nasals appears to be specific to pre-consonental contexts, and perhaps also pre-vowel contexts for nasals. This suggests further exploration of the data is warranted --- perhaps by creating separate `glmer()` models for each following context, by complexifying your full model by creating a `Before` and `After.New` interaction group, or by simplifying your full model by [collapsing these two categories](https://lingmethodshub.github.io/content/R/lvc_r/040_lvcr.html) into simpler grouped categories, e.g., `Pre-Pause`, `Liquid-Consonant`, `Liquid-Vowel`, `Nasal-Consonant`, `Nasal-Vowel`, `S-Consonant`, `S-Vowel`, `Other-Consonant`, `Other-Vowel`, or similar.
 ```{r}
 # Create a new model using insights from the mosaic plots
 td<-td %>%
@@ -257,7 +276,7 @@ It is important, however,  to point out that collinearity does not reduce the pr
 So how can you test whether your predictors are collinear? There are two measures beyond just looking at the correlation matrix (which can point to either collinearity or interaction).
 
 
-The first method to test collinearity is to find the **Condition Number** ($\kappa$ a.k.a. kappa). The function to calculate this comes from a (package)[https://rdrr.io/github/jasongraf1/JGmermod/] created by linguist Jason Grafmiller, which adapts the `collin.fnc()` function from R. Harald Baayen's [`languageR`](https://cran.r-project.org/web/packages/languageR/index.html) package to work with `lme4` mixed models. To install this package you need to first install the `devtools()` package, and then you can download it. We will return to the original `td.glmer.parsimonious` to do this test. 
+The first method to test collinearity is to find the **Condition Number** ($\kappa$ a.k.a. kappa). The function to calculate this comes from a [package](https://rdrr.io/github/jasongraf1/JGmermod/) created by linguist Jason Grafmiller, which adapts the `collin.fnc()` function from Baayen's [`languageR`](https://cran.r-project.org/web/packages/languageR/index.html) package to work with `lme4` mixed models. To install this package you need to first install the `devtools()` package, and then you can download it. We will return to the original `td.glmer.parsimonious` to do this test. 
 
 ```{r, eval=FALSE}
 # Install JGermod
@@ -270,7 +289,7 @@ library(JGmermod)
 collin.fnc.mer(td.glmer.parsimonious)$cnumber
 ``` 
 
-The Condition Number here is less than $6$ indicating no collinearity ([Baayen 2008: 182](https://doi.org/10.1017/CBO9780511801686); [Belsley, *et al* 1980]([Baayen](https://doi.org/10.1017/CBO9780511801686)). According to Baayen (citing Belsley *et al* 1980), when the condition number is between $0$ and $6$, there is no collinearity to speak of. Medium collinearity is indicated by condition numbers around $15$, and condition numbers of $30$ or more indicate potentially harmful collinearity. 
+The Condition Number here is less than $6$ indicating no collinearity @Baayen2008 [p. 182]. According to Baayen [citing @Belsley1980], when the condition number is between $0$ and $6$, there is no collinearity to speak of. Medium collinearity is indicated by condition numbers around $15$, and condition numbers of $30$ or more indicate potentially harmful collinearity. 
 
 The second measure of collinearity is determining the **Variable Inflation Factor** (VIF), which estimates how much the variance of a regression coefficient is inflated due to (multi)collinearity. The function `check_collinearity()` from the `performance` package is used to calculate the VIF. 
 
@@ -281,18 +300,79 @@ install.packages("performance")
 library(performance)
 check_collinearity(td.glmer.parsimonious)
 ```
-According to the [`performance` package documentation](https://rdrr.io/cran/performance/man/check_collinearity.html), a `VIF` less than $5$ indicates a low correlation of that predictor with other predictors. A value between $5$ and $10$ indicates a moderate correlation, while VIF values larger than $10$ are a sign for high, not tolerable correlation of model predictors [(James et al. 2013)](https://link.springer.com/book/10.1007/978-1-4614-7138-7). The `Increased SE` column in the output indicates how much larger the standard error is due to the association with other predictors conditional on the remaining variables in the model. 
+According to the [`performance` package documentation](https://rdrr.io/cran/performance/man/check_collinearity.html), a `VIF` less than $5$ indicates a low correlation of that predictor with other predictors. A value between $5$ and $10$ indicates a moderate correlation, while VIF values larger than $10$ are a sign for high, not tolerable correlation of model predictors [@James2013]. The `Increased SE` column in the output indicates how much larger the standard error is due to the association with other predictors conditional on the remaining variables in the model. 
 
-Based on the Condition Number ($\kappa<6$) and the VIF ($<5$) you can report that any (multi-) collinearity in your model is within acceptably low limits. You can add this to your manuscript table, as in @fig-lme4table2 (based on `td.glmer.parsimonious`), though you should always contextualize what these measures indicate (i.e., low collinearity) in the text too.
+Based on the Condition Number ($\kappa<6$) and the VIF ($<5$) you can report that any (multi-) collinearity in your model is within acceptably low limits. You can add this to your manuscript table, as in Table 1 (based on `td.glmer.parsimonious`), though you should always contextualize what these measures indicate (i.e., low collinearity) in the text too.
 
+::: {.content-visible when-format="html"}
 
-![Mixed effects logistic regression analysis of the contribution of external and internal factors to the probability of /t, d/ -deletion in Cape Breton English for two age groups](images/lme4table2.png){#fig-lme4table2 width="80%"}
+![Mixed-effects logistic regression testing the fixed effect of Following Context,  Morpheme Type, Preceding Context, Stress and Phoneme and a random intercept of Speaker on the deletion of word-final (t, d) in Cape Breton English](images/lme4table2.png){#fig-lme4table2 width="80%"}
 
+:::
+
+::: {.content-visible when-format="pdf"}
+
+```{=latex}
+  \begin{table}[h]
+\noindent
+\begin{center}
+\begin{threeparttable}
+\caption{Mixed-effects logistic regression testing the fixed effect of \textsc{Following Context},  \textsc{Morpheme Type}, \textsc{Preceding Context}, \textsc{Stress} and \textsc{Phoneme} and a random intercept of \emph{Speaker} on the deletion of word-final \textipa{/t, d/} in Cape Breton English}
+\label{tab:treatmentglmer}
+\begin{tabular}{lrrrcrc}
+\toprule
+\multicolumn{5}{l}{AIC = 1114, Marginal $R^2$ = .40, Conditional $R^2$ = .52}&\multicolumn{2}{c}{Observations}\\
+\cmidrule(lr){6-7} 
+Fixed Effects: & \multicolumn{1}{c}{Estimate} & \multicolumn{1}{c}{Std. Error}&\multicolumn{1}{c}{\textit{z}-value}&\multicolumn{1}{c}{\textit{p}-value} &\multicolumn{1}{c}{\textit{n}}&\multicolumn{1}{c}{\% Deletion} \\
+\midrule
+\textsc{Intercept} (Grand Mean) & -0.277 & 0.207 & -1.34 &&1,189 &32\\
+\textsc{Following Context} &&&&&\\
+\quad\textit{Consonant} & 1.840&0.157&11.71&$\ast$$\ast$$\ast$ & 372 & 54\\
+\quad\textit{Vowel} & -0.665&0.161&-4.13&$\ast$$\ast$$\ast$ & 259 & 28\\
+\quad\textit{Pause} & -1.175&0.144&-8.14&$\ast$$\ast$$\ast$ & 558 & 20\\
+\textsc{Morpheme Type} &&&&&\\
+\quad\textit{Semi-Weak Simple Past}&1.466&0.207&7.10&$\ast$$\ast$$\ast$&116&63\\
+\quad\textit{Mono-morpheme} & 0.426&0.140&3.05&$\ast$$\ast$$\ast$ & 762 & 37\\
+\quad\textit{Weak Simple Past} & -1.892&0.213&-8.87&$\ast$$\ast$$\ast$ & 311 & 10\\
+\textsc{Stress} &&&&&\\
+\quad\textit{Unstressed}&0.799&0.137&5.81  &$\ast$$\ast$$\ast$ & 142 & 47\\
+\quad\textit{Stressed} & -1.598&0.275&-5.81&$\ast$$\ast$$\ast$ & 1,047 & 31\\
+\textsc{Preceding Context} &&&&&\\
+\quad\textit{\textipa{/s/}}&0.731&0.190&3.85&$\ast$$\ast$$\ast$ &332 & 53\\
+\quad\textit{Nasal} & 0.526&0.193&2.72&$\ast$$\ast$ & 209 & 39\\
+\quad\textit{Other Fricative} & 0.117&0.278&0.42&& 130 & 15\\
+\quad\textit{Liquid} & -0.575  &0.202&-2.84&$\ast$$\ast$ & 269 & 42\\
+\quad\textit{Stop} & -0.799&0.189&-4.22&$\ast$$\ast$$\ast$ & 249 & 27\\
+\textsc{Phoneme} &&&&&\\
+\quad\textit{\textipa{/d/}}&0.287&0.128&2.25&$\ast$&878 &34\\
+\quad\textit{\textipa{/t/}} &  -0.287&0.128&-2.25&$\ast$ & 311 & 29\\
+\midrule
+\multicolumn{5}{l}{Random Effects:} & \textit{sd} & \textit{n}\\
+\midrule
+\textsc{Speaker} &&&&& 0.892&  66\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \hfill$\ast\ast\ast$~$p<0.001$,  $\ast\ast$~$p<0.01$, $\ast$~$p<0.05$\\[-10pt]
+\item  Sum contrast coding. Estimate coefficients reported in log-odds. 
+\item Model significantly better than null model (AIC = 1,456, $\chi^2$ = 362, df = 10, $\ast\ast\ast$)
+\item Correlation of Fixed Effects $\le|0.54|$, $\kappa = 5.2$, Variable Inflation Factor $\le4.93$ 
+\end{tablenotes}
+\end{threeparttable}
+\end{center}
+\end{table} 
+```
+
+:::
 
 
 
 Keep in mind that if there are interaction terms (e.g., `Sex*Age.Group`) in your model high VIF values are expected. This is because you are explicitly expecting and testing a correlation between two predictors. The (multi-) collinearity among two components of the interaction term is also called "inessential ill-conditioning", which leads to inflated VIF values.
 
-Also keep in mind that (multi-) collinearity might arise when a third, unobserved variable has a causal effect on two or more predictors' effect on the dependant variable. For example, correlated Education and Job Type effects may be caused by an underlying age effect, if older speakers are generally less educated and blue-collar workers and young speakers are generally more educated and white collar workers.  In such cases, the actual relationship that matters is the association between the unobserved variable and the dependant variable. If confronted with a case like this, you should revisit what independent predictors are included in the model. Non-inferential tools that can include (multi-) collinear descriptors (like [Conditional Inference Trees](080_lvcr.qmd) or [Random Forests](090_lvcr.qmd)) may help you.    
+Also keep in mind that (multi-) collinearity might arise when a third, unobserved variable has a causal effect on two or more predictors' effect on the dependant variable. For example, correlated Education and Job Type effects may be caused by an underlying age effect, if older speakers are generally less educated and blue-collar workers and young speakers are generally more educated and white collar workers.  In such cases, the actual relationship that matters is the association between the unobserved variable and the dependant variable. If confronted with a case like this, you should revisit what independent predictors are included in the model. Non-inferential tools that can include (multi-) collinear descriptors (like [Conditional Inference Trees](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html) or [Random Forests](https://lingmethodshub.github.io/content/R/lvc_r/090_lvcr.html)) may help you.    
 
+### References
+
+::: {#refs}
+:::
 
