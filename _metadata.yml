@@ -5,4 +5,17 @@ citation:
   collection-title: "Linguistics Methods Hub"
   container-title: "Linguistics Methods Hub"
 
+author:
+  - name: 
+      given: Matt Hunt 
+      family: Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: Matt Hunt Gardner
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
+
 doi: "10.5281/zenodo.7160718"  

@@ -24,16 +24,6 @@ format:
       - Data/latex-packages.tex
 filters:
   - parse-latex
-author:
-  - name: Matt Hunt Gardner
-    orcid: 0000-0002-1878-4232
-    email: matt.gardner@ling-phil.ox.ac.uk
-    corresponding: Matt Hunt Gardner
-    affiliations:
-      - name: University of Oxford 
-        department: Linguistics, Philology, & Phonetics
-        city: Oxford
-        country: UK
 description: "An introduction to using this tutorial. The relationship between *R* and *Goldvarb*. Token and script files. *R* vs. *R Studio*. How to install packages."
 image: "images/tweet.png"
 twitter-card:
