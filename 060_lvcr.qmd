@@ -2,37 +2,6 @@
 title: "Crosstabs: Counts, Proportions, and More"
 date: "2022-9-27"
 license: "CC-BY-SA 4.0"
-format: 
-  html:
-    code-overflow: scroll
-  pdf:
-    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
-    keep-tex: true
-    latex-auto-install: false
-    documentclass: article
-    classoption: [12pt, letterpaper]
-    toc: true
-    geometry:
-      - margin = 1in
-    mainfont: Charis SIL
-    mathfont: Monaco
-    colorlinks: true
-    links-as-notes: true
-    reference-location: section
-    include-in-header: 
-      - Data/latex-packages.tex
-filters:
-  - parse-latex
-author:
-  - name: Matt Hunt Gardner
-    orcid: 0000-0002-1878-4232
-    email: matt.gardner@ling-phil.ox.ac.uk
-    corresponding: true
-    affiliations:
-      - name: University of Oxford 
-        department: Linguistics, Philology, & Phonetics
-        city: Oxford
-        country: UK
 description: "Getting token counts and proportions. Getting mean, median, standard deviation, and quartiles. Dealing with decimals and exponential notation. "
 ---
 ```{r}
