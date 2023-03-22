@@ -5,20 +5,34 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [12pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  # - name:
-  #     given: Matt Hunt
-  #     family: Gardner
-  name: "Matt Hunt Gardner"
-  orcid: 0000-0002-1878-4232
-  email: matt.gardner@ling-phil.ox.ac.uk
-  corresponding: true
-  affiliations:
-    - name: University of Oxford 
-      department: Linguistics, Philology, & Phonetics
-      city: Oxford
-      country: UK
+  - name: Matt Hunt Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
 description: "Modifying data, but using the `tidyverse`"
 ---
 ```{r}
@@ -28,7 +42,7 @@ source("renv/activate.R")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r include=FALSE}
@@ -94,9 +108,12 @@ The pipe operator `%>%`[^1] is introduced by the `magrittr` package[^2] and it i
 
 [^2]: Loading `dplyr` will also let you use it.
 
-For example, lets find the mean year of birth in our data.[^3] We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.
+For example, lets find the mean year of birth in our data. We already know that when the pre-vowel contexts are removed, the mean year of birth is 1969.
 
-[^3]: If you don't have the `td` dataset loaded in *R*, go back to the [Interim Summary](%22050_lvcr.qmd%22) and run the code.
+::: {.callout-tip}
+## Get the data first
+If you don't have the `td` data loaded in *R*, go back to [Getting Your Data into *R*](https://lingmethodshub.github.io/content/R/lvc_r/020_lvcr.html) and run the code. 
+:::
 
 ```{r}
 # Find mean YOB using mean() function
@@ -109,8 +126,9 @@ The functionality of `%>%` might seem trivial at this point; however, when you n
 
 ### Tibbles
 
-A *tibble* is an updated version of a *data frame*. *Tibbles* keep the features that have stood the test of time, and drop the features that used to be convenient but are now frustrating (i.e. converting character vectors to factors). For our purposes, the difference between the two is negligible, but you should be aware that *tibbles* look a bit different from *data frames*.
+A *tibble* is an updated version of a *data frame*. *Tibbles* keep the features that have stood the test of time, and drop the features that used to be convenient but are now frustrating (i.e. converting character vectors to factors). For our purposes, the difference between the two is negligible, but you should be aware that *tibbles* look a bit different from *data frames*. Run these two commands and compare. 
 
+::: {.content-visible when-format="html"}
 ```{r,attr.output='style="max-height: 500px;"', R.options = list(width = 1000)}
 as.data.frame(td)
 ```
@@ -118,6 +136,19 @@ as.data.frame(td)
 ```{r,attr.output='style="max-height: 500px;"', R.options = list(width = 1000)}
 as_tibble(td)
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r, eval=FALSE}
+as.data.frame(td)
+```
+
+```{r,eval=FALSE}
+as_tibble(td)
+```
+:::
+
 
 Notice that the *tibble* lists the dimensions of the tibble at the top, as well as the class of each of the columns. It also only displays the first 10 rows. You'll also notice that the row numbers have reset when we converted `td` to a *tibble*. If we want to view the entire tibble, we can use the `print()` function and specify the `n=` plus the number of rows we want to see, including all rows (`n=Inf`). You can see below how the pipe operator makes doing this pretty easy.
 
@@ -173,39 +204,45 @@ td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=
 then...
 
 ```{r}
-# Subset data to remove previous 'Vowel' contexts
-td <- td %>% # pass td to next function
-      filter(Before != "Vowel") # filter td to include everything that is not "Vowel" in the column Before
-# Re-code 'H' to be 'Consonant' in a new column
-td <- td %>% # pass td to next function
-      mutate(After.New = recode(After, "H" = "Consonant")) # create a new column called After.New that equals a re-code of After in which H is re-coded as Consonant
-# Center Year of Birth
-td <- td %>% # pass td to next function
-     mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE))) # create a new column called Center.Age equal to the YOB column but scaled
-# Create Age.Group
-td <- td %>% # pass td to next function
+# Subset data to remove previous 'Vowel' contexts:
+## filter td to include everything that is not "Vowel" in the column Before
+td <- td %>% 
+      filter(Before != "Vowel") 
+
+# Re-code 'H' to be 'Consonant' in a new column:
+## create a new column called After.New that equals a re-code of After in which H is re-coded as Consonant
+td <- td %>% 
+      mutate(After.New = recode(After, "H" = "Consonant"))
+
+# Center Year of Birth:
+## create a new column called Center.Age equal to the YOB column but scaled
+td <- td %>% 
+     mutate(Center.Age = as.numeric(scale(YOB, scale = FALSE))) 
+
+# Create Age.Group:
+## cut YOB into discrete categories. 
+td <- td %>%
       mutate(Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
-                                  labels = c("Old", "Middle", "Young"))) # cut the YOB into discrete categories. 
+                                  labels = c("Old", "Middle", "Young"))) 
 ```
 
 Before we continue, a note about the `cut()` function. The `breaks=` option is a concatenated list of boundaries. It should start and end with `-Inf` and `Inf` (negative and positive infinity) as these will be the lower and upper bounds. The other values are the boundaries or cut-off points. By default `cut()` has the setting `right=TRUE`, which means the boundary values are considered the last value in a group (e.g., rightmost value). Above, this means `1944` will be the highest value in the `Old` category and `1979` will the the highest value in the `Middle` category. To reverse this you can add the option `right=FALSE` in which case 1944 would be the lowest value in the `Middle` category (e.g. leftmost value) and 1979 would be the lowest value in the `Young` category.
 
 Let's continue.
 
-```{r, tidy=FALSE}
-# Combine Age and Sex
-
-td <-td %>% # pass td to next function
-     unite("Age_Sex", c(Age.Group, Sex), sep= "_", remove = FALSE) # using the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted
+```{r}
+# Combine Age and Sex: use the unite() function from the tidyr package, if remove=TRUE the original Age.Group and Sex columns will be deleted
+td <-td %>% 
+     unite("Age_Sex", c(Age.Group, Sex), sep= "_", remove = FALSE) 
     
-# Break Phoneme.Dep.Var into two columns
-td <-td %>% # pass td to next function
+# Break Phoneme.Dep.Var into two columns:
+# same as before, but with td passed to mutate() by the %>% operator
+td <-td %>%
  mutate(Phoneme = sub("^(.)(--.*)$", "\\1", 
         Phoneme.Dep.Var), 
         Dep.Var.Full = sub("^(.--)(.*)$", "\\2", 
         Phoneme.Dep.Var), 
-        Phoneme.Dep.Var = NULL) # Same as before, but with td passed to mutate() by the %>% operator
-
+        Phoneme.Dep.Var = NULL) 
 ```
 
 At this point we have done everything except partition the data and re-center YOB in the partitioned data frames. You may ask, "How is this better?". Well, the answer is that because all these modifications feed into one another, we can actually include them all together in one serialized operation. Behold!
@@ -225,22 +262,26 @@ td <- read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=
 
 then...
 
-```{r, tidy=TRUE}
-# Subset data to remove previous 'Vowel' contexts, then modify several columns with mutate, then convert any character column to a factor column
+```{r, tidy=FALSE}
+# Subset data to remove previous 'Vowel' contexts, 
+# then modify several columns with mutate, 
+# then convert any character column to a factor column
 td <- td %>%
       filter(Before != "Vowel")%>%
-      mutate(After.New = recode(After, "H" = "Consonant"),  
-             Center.Age = as.numeric(scale(YOB, scale = FALSE)),
-             Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
-                                  labels = c("Old", "Middle", "Young")),
-             Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var),
-             Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var),
-             Phoneme.Dep.Var = NULL)%>%
+      mutate(
+        After.New = recode(After, "H" = "Consonant"), 
+        Center.Age = as.numeric(scale(YOB, scale = FALSE)), 
+        Age.Group = cut(YOB, breaks = c(-Inf, 1944, 1979, Inf), 
+                        labels = c("Old", "Middle", "Young")), 
+        Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var), 
+        Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var), 
+        Phoneme.Dep.Var = NULL
+        )%>%
       mutate_if(is.character, as.factor)
   
 ```
 
-Now, doesn't the above look so much cleaner and easier to follow?
+Now, doesn't the above look so much cleaner and easier to follow? You'll notice that after some lines there is a `#`. This an optional way to signal the end of a line of code when your code is broken over more than one line. Above, the `mutate()` function could have been written in one single continuous line, but breaking it up over multiple lines makes seeing each mutation much easier. 
 
 To partition the data we still need separate functions. Also, remember to re-centre any continuous variables after partioning.
 

@@ -5,11 +5,27 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
+  - name: Matt Hunt Gardner
     orcid: 0000-0002-1878-4232
     email: matt.gardner@ling-phil.ox.ac.uk
     corresponding: true
@@ -20,13 +36,13 @@ author:
         country: UK
 description: "Doing a mixed-effects logistic regression analysis suitable for comparing to a *Goldvarb* analysis. Part 1: The Setup"
 crossref:
-  fig-title: Table  
+  fig-title: Figure  
   fig-prefix: Table
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -97,16 +113,20 @@ There are two styles of mixed-effects logistic regression models commonly used b
 
 ![Treatment contrasts (left) versus sum contrasts (right), ©️ Derek Denis, 2014](images/treatmentsum.png){#fig-contrasts}
 
-In [Part 2](112_lvcr.qmd) you will do an analyses with sum contrasts, then in [Part 4](116_lvcr.qmd) you will do the same analysis, but with treatment contrasts. While sum contrasts are consistent with a *Goldvarb*-type analysis, you can probe the constraint hierarchy of your fixed effects using treatment contrasts in a way not otherwise possible. 
+In [Part 2](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html) you will do an analyses with sum contrasts, then in [Part 4](https://lingmethodshub.github.io/content/R/lvc_r/116_lvcr.html) you will do the same analysis, but with treatment contrasts. While sum contrasts are consistent with a *Goldvarb*-type analysis, you can probe the constraint hierarchy of your fixed effects using treatment contrasts in a way not otherwise possible. 
 
 ## Making Your Depandent Variable Binary
 
-I recommend labelling application value tokens with `1` and non-application values as `0` because *R* eventually does this behind the scenes anyway. For example, with the `ctree()` function ([Conditional Inference Trees](080_lvcr.qmd)) and `glmer()` function below, the dependent variable used is `Dep.Var`. This variable has two levels `Realization` and `Deletion`. Before using these values in either model, *R* will convert each level to `0` and `1` in alphabetical order. So here `Deletion` becomes `0` and `Realization` becomes `1`. This causes complications for us because, for both `ctree()` and `glmer()`, likelihood is expressed as the likelihood of `1`, and `1` here is the non-application value. You don't want to use the likelihood of the non-application value in your manuscript tables and charts! You want to include values in your tables and charts that reflect the probability of, in this case, `0`.[^1] 
+I recommend labelling application value tokens with `1` and non-application values as `0` because *R* eventually does this behind the scenes anyway. For example, with the `ctree()` function ([Conditional Inference Trees](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html)) and `glmer()` function below, the dependent variable used is `Dep.Var`. This variable has two levels `Realization` and `Deletion`. Before using these values in either model, *R* will convert each level to `0` and `1` in alphabetical order. So here `Deletion` becomes `0` and `Realization` becomes `1`. This causes complications for us because, for both `ctree()` and `glmer()`, likelihood is expressed as the likelihood of `1`, and `1` here is the non-application value. You don't want to use the likelihood of the non-application value in your manuscript tables and charts! You want to include values in your tables and charts that reflect the probability of, in this case, `0`.[^2] 
 
-^[1]: I also recognize that labelling the application value as `1` can get confusing when the phenomenon in question is `Deletion`. This is the advantage of having two `Dep.Var` columns: one with the dependant variable clearly labled (e.g., `Deletion` and `Realized`), and another column with the dependent variable in binary format (e.g., `1` and `0`). Having both ensures you are never confused as to what the simplified binary coding means. 
+[^2]: I also recognize that labelling the application value as `1` can get confusing when the phenomenon in question is `Deletion`. This is the advantage of having two `Dep.Var` columns: one with the dependant variable clearly labeled (e.g., `Deletion` and `Realized`), and another column with the dependent variable in binary format (e.g., `1` and `0`). Having both ensures you are never confused as to what the simplified binary coding means. 
 
-There are two ways to overcome the above problem. You can change the ordering of the factors in the `Dep.Var` column so that the non-application value will be converted to `0` and the application value will be converted to `1`. This is exactly what was done when constructing the `ctree()` in [Conditional Inference Trees](080_lvcr.qmd) by changing the order of the levels in `Dep.Var` to `Realized` then `Deletion` (so `Realized` becomes `0` and `Deletion` becomes `1`). Alternatively, you can create a new column with `Realization` tokens coded as `0` and `Deletion` tokens coded as `1` (see the tip below), then use that new column in your models. The one disadvantage to this method is that in your figures, like the `ctree()` figure created in [Conditional Inference Trees](080_lvcr.qmd), the names of the two levels of `Dep.Var` on the figure itself will be `1` and `0`. For the `glmer()` function this doesn't really matter.
+There are two ways to overcome the above problem. You can change the ordering of the factors in the `Dep.Var` column so that the non-application value will be converted to `0` and the application value will be converted to `1`. This is exactly what was done when constructing the `ctree()` in [Conditional Inference Trees](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html) by changing the order of the levels in `Dep.Var` to `Realized` then `Deletion` (so `Realized` becomes `0` and `Deletion` becomes `1`). Alternatively, you can create a new column with `Realization` tokens coded as `0` and `Deletion` tokens coded as `1` (see the tip below), then use that new column in your models. The one disadvantage to this method is that in your figures, like the `ctree()` figure created in [Conditional Inference Trees](https://lingmethodshub.github.io/content/R/lvc_r/080_lvcr.html), the names of the two levels of `Dep.Var` on the figure itself will be `1` and `0`. For the `glmer()` function this doesn't really matter.
 
+::: {.callout-tip}
+## Get the data first
+If you don't have the `td` data loaded in *R*, go back to [Doing it all again, but `tidy`](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and run the code.
+:::
 
 ```{r}
 

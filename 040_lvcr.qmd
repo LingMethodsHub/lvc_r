@@ -5,20 +5,34 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [12pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  # - name:
-  #     given: Matt Hunt
-  #     family: Gardner
-  name: "Matt Hunt Gardner"
-  orcid: 0000-0002-1878-4232
-  email: matt.gardner@ling-phil.ox.ac.uk
-  corresponding: true
-  affiliations:
-    - name: University of Oxford 
-      department: Linguistics, Philology, & Phonetics
-      city: Oxford
-      country: UK
+  - name: Matt Hunt Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
 description: "Modifying data, including removing rows, re-coding variables, centering continuous variables, dividing continuous variables, changing the order of variables, reversing the order of variables, combining columns, splitting columns, and partitioning data sets."
 ---
 ```{r}
@@ -29,7 +43,7 @@ source("renv/activate.R")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 If you followed the previous section you now have an object in *R* called `td` in which all character columns are converted to factors. If not, you can load it now with either of the following codes.
@@ -239,7 +253,7 @@ levels(td$Phoneme.Dep.Var)
 
 The first part of every value is either `t` or `d`, then there are two hyphens, then a word describing the realization of (t) or (d). If you split `Phoneme.Dep.Var` at the hyphens you'll be left with two values: one that is either `t` or `d`, and another that describes the realization of (t) or (d). So, for the new `Phoneme` column you want the one character before the hyphens from `Phoneme.Dep.Var`, and for the new `Dep.Var.Full` column, you want all the characters --- however many there are -- that come after the two hyphens.
 
-```{r}
+```{r, message = FALSE}
 # Break Phoneme.Dep.Var into two columns
 library(dplyr)
 td <-mutate(td, Phoneme = sub("^(.)(--.*)$", "\\1", Phoneme.Dep.Var), Dep.Var.Full = sub("^(.--)(.*)$", "\\2", Phoneme.Dep.Var), Phoneme.Dep.Var = NULL)
@@ -254,7 +268,7 @@ The procedure here is somewhat complicated. I always have to double-check how th
 Above, inside the `mutate()` function, first you specify the data frame object you want to mutate (here `td`), and then how to mutate it. The mutations include creating a new column called `Phoneme` and then telling *R* what do put in it, creating a new column called `Dep.Var.Full` and then telling *R* what to put in it, and then taking the `Phoneme.Dep.Var` column and making it equal `NULL` --- in other words, deleting it. For the `Phoneme` and `Dep.Var.Full` columns you specify what values to insert in each cell using the `sub()` function, which returns a "sub" or divided section of a value within some cell. The `sub()` function's first argument is a pattern of *regular expressions* to search for, the second is a character string to replace the pattern with, and the third is the column in which to search for the pattern.
 
 ::: callout-note
-I don't have *R*'s regular expressions memorized; I always have to look them up [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)
+I don't have *R*'s regular expressions memorized; I always have to look them up [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
 :::
 
 For the \texttt{sub()} functions meant to create values for `Phoneme` and for `Dep.Var.Full` you tell *R* to search `Phoneme.Dep.Var` for the pattern `"^.--.*$"`. This series of regular expressions describes the following pattern: a text string beginning with one single character, followed by two hyphens, and then any number of characters. The quotation marks `" "` indicate a text string. The `^` and `$` indicate the beginning and end of a text string, respectively.[^1] The period `.` indicates a single character and the asterisk`*` indicates zero or more of whatever comes before that asterisk. So `.*` means any one or more characters. The two hyphens `--` are just two hyphens. The parentheses in the regular expressions relate to the second substitution element. In the `sub()` function responsible for creating values for the new `Phoneme` column, you break the values that match the regular expression pattern into two parts: the one character before the two hyphens `(.)` and then everything after it `(--.*)`; then you tell *R* to substitute (or rather place) the first of those two elements `\\1` as text `" "` in the new column. In the `sub()` function responsible for creating the values for the new `Dep.Var.Full` column, you break the values that match the regular expression pattern into two parts: the two hyphens and the one character that comes before them `(.--)` and then the one or more characters that come after the hyphens `(.*)`; then tell *R* to to substitute (or rather place) the second of those elements `\\2` as text `" "` in the new column.

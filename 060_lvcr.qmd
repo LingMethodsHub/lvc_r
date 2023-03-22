@@ -5,20 +5,34 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [12pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  # - name:
-  #     given: Matt Hunt
-  #     family: Gardner
-  name: "Matt Hunt Gardner"
-  orcid: 0000-0002-1878-4232
-  email: matt.gardner@ling-phil.ox.ac.uk
-  corresponding: true
-  affiliations:
-    - name: University of Oxford 
-      department: Linguistics, Philology, & Phonetics
-      city: Oxford
-      country: UK
+  - name: Matt Hunt Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
 description: "Getting token counts and proportions. Getting mean, median, standard deviation, and quartiles. Dealing with decimals and exponential notation. "
 ---
 ```{r}
@@ -28,7 +42,7 @@ source("renv/activate.R")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -61,9 +75,24 @@ It took me two years to figure out how to do cross-tabs in *R* the way that *Gol
 
 ## Token Counts
 
-A good starting point is the function `table()`. This function returns token numbers.[^1]
+A good starting point is the function `table()`. This function returns token numbers.
 
-[^1]: If you don't have the `td` dataset loaded in *R*, go back to [Doing it all again, but `tidy`](050_lvcr.qmd) and run the code.
+:::{.content-visible when-format="html"}
+
+::: {.callout-tip}
+## Get the data first
+If you don't have the `td` data loaded in *R*, go back to [Doing it all again, but `tidy`](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and run the code.
+:::
+:::
+
+
+:::{.content-visible when-format="pdf"}
+
+::: {.callout-tip}
+## Get the data first
+If you don't have the `td` data loaded in *R*, go back to [Doing it all again, but `tidy`](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and run the code.
+:::
+:::
 
 ```{r }
 # Get the number of tokens by level of Dep.Var
@@ -492,7 +521,7 @@ CrossTable(td$Sex, td$Dep.Var, prop.r=TRUE, prop.c=FALSE, prop.t=FALSE, prop.chi
 ```
 For the `CrossTable()` function you can set the denominator to row total with the option `prop.r=TRUE`. If instead you wanted to the proportion by column, you set `prop.c = TRUE`, and if you want the proportion across the entire table you can set `prop.t = TRUE`. You can actually set all of these to `TRUE` to get all three. There are other values that can be generated, including values for calculating chi-square (see the `CrossTable()` documentation [here](https://www.rdocumentation.org/packages/gmodels/versions/2.18.1.1/topics/CrossTable)). The above code includes the minimal number of options needed to generate the type of cross-table we generally want. 
 
-To produce proportions using the `tidy` method, we combine the `group_by()` and `summarize()` functions with the `mutate()` discussed in an [earlier section](040_lvcr.qmd).
+To produce proportions using the `tidy` method, we combine the `group_by()` and `summarize()` functions with the `mutate()` discussed in an [earlier section](https://lingmethodshub.github.io/content/R/lvc_r/040_lvcr.html).
 
 
 ```{r , message = FALSE}

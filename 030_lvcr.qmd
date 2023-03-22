@@ -5,19 +5,35 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-      # given: Matt Hunt
-      # family: Gardner
-  name: "Matt Hunt Gardner"
-  orcid: 0000-0002-1878-4232
-  email: matt.gardner@ling-phil.ox.ac.uk
-  corresponding: true
-  affiliations:
-    - name: University of Oxford 
-      department: Linguistics, Philology, & Phonetics
-      city: Oxford
-      country: UK
+  - name: Matt Hunt Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: true
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
 description: "Getting a snapshot of your data. Types of data and data structures. Getting the dimensions of your data. Introducting the (t/d) dataset. "
 ---
 
@@ -29,7 +45,7 @@ source("renv/activate.R")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ## Getting to know the (t, d) deletion data
@@ -48,7 +64,7 @@ td <- read.delim("Data/deletiondata.txt")
 
 Now that you have some data loaded into *R* you can start exploring it. At any time you can type `td` into the console window to see what that object actually represents. Try it.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r, eval=FALSE}
 td
 ```
 
@@ -75,17 +91,37 @@ When you import a data frame into *R*, *R* automatically decides what type of da
 For `numeric` or `integer` data (like `YOB`, or year of birth of the speakers in the `td` data), the `summary()` function will tell you the mean, the median, the minimum value, the maximum value, and the values of the first and third quartiles. The mean is the arithmetic mean, which is the sum of all the values in a column divided by the number of values in a column. Fifty percent of the values in the column are equal to or less than the mean and 50% of the values in the column are greater than or less than the mean. The mean can also be thought of as the 2nd quartile. The median is exact middle point of the values in the column ordered from smallest to largest. For *normally distributed* data, the mean and the median should be close to the same value. Not all data, however, is normally distributed, which is sometimes a problem, and sometimes not a problem. If a certain test expects numerical data to be normally distributed these instructions will explain what to do, but for now, it's just good to know what mean and median indicate. Twenty-five percent of the values in the column are equal to or less than the 1st quartile and 75% of the values in the column are equal to or less than the 3rd quartile. The minimum value is the lowest value in a column; the maximum value is the highest number in a column. These values can be used to construct a **box and whisker** plot:
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.cap="Box and whisker plot of `YOB` (Year of Birth) in the `td` data frame"}
+#| label: fig-yob
 library(ggpubr)
 library(ggplot2)
-library(plotly)
-p<-ggplot(td, aes(y=YOB))+
-  geom_boxplot(fill="lightblue1", color="dodgerblue")+
-   theme_pubclean()+
+ggplot(td, aes(y=YOB))+
+  geom_boxplot(fill="lightblue1", color="dodgerblue", outlier.colour = "red", outlier.shape = 1)+
+   theme_classic()+
   theme(axis.ticks.x=element_blank(),  axis.text.x=element_blank())
-ggplotly(p)
 ```
 
-The bottom **whisker** displays the minimum value of 1910. The bottom line of the **box** displays the first quartile value of 1952. The black bar in the middle of the **box** displays the second quartile value/mean of 1965. The top line of the *box* displays the third quartile value of 1991. The range from the first quartile to the third quartile is called the **interquartile range**. The top **whisker** displays the maximum value of 1999.
+
+
+
+The bottom **whisker** ends at the minimum value of 1910. The bottom line of the **box** displays the first quartile value of 1952. The thick bar in the middle of the **box** is at the second quartile value/mean of 1965. The top line of the *box* ends at the third quartile value of 1991. The range from the first quartile to the third quartile is called the **interquartile range**. The top **whisker** ends at the maximum value of 1999. Sometimes extremely high or extremely low values are more than $1.5\times$ the interquartile range from the top or bottom of the box. In these cases the whiskers will extend out to the last value within $1.5\times$ the interquartile range and anything beyond that will be an **outlier** and identified with a small circle, as in @fig-tokens.
+
+
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.cap="Box and whisker plot of the number of tokens per speaker in the `td` data frame"}
+#| label: fig-tokens
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+tokens<-td %>%
+          group_by(as.factor(Speaker))%>%
+          summarize(Tokens=n())
+library(ggpubr)
+library(ggplot2)
+ggplot(tokens, aes(y=Tokens))+
+  geom_boxplot(fill="lightblue1", color="dodgerblue", outlier.colour = "red", outlier.shape = 1, ylab="Number of Tokens Per Speaker")+
+   theme_classic()+
+  theme(axis.ticks.x=element_blank(),  axis.text.x=element_blank())
+```
 
 The function `names()` returns a vector (a series of items in a line, separated by commas) of the column names. This function can be useful as a quick way to get the names of each column. You will need to use these names quite often when writing other commands. `colnames()` returns the same information; `ls()` returns the same information, but ordered alphabetically.
 
@@ -109,13 +145,13 @@ str(td)
 
 `head()` will return the first six lines of the data frame. `tail()` provides the last six. For either you can change the number of lines reported using the option `n=`.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r}
 head(td)
 ```
 
 The numbers on the left side of the output are the row number in the data frame.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r}
 tail(td, n=10)
 ```
 
@@ -123,17 +159,20 @@ tail(td, n=10)
 
 There are other types of data beside `numerical` (like `YOB` in the `td` data) and `character` (like all other columns in the `td` data).
 
-| Data Type   | Description                                                                                    | Example                                                                               |
-|-------------|------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| `logical`   | either `TRUE` or `FALSE`                                                                       | The answer to a question like "is `x` a number?", etc.                                |
-| `numeric`   | any real number, positive or negative, with or without decimal values                          | Vowel formant measurements, position in an audio file, household income, etc.         |
-| `double`    | any real number, positive or negative, with or without decimal values (identical to `numeric`) | Vowel formant measurements, position in an audio file, household income, etc.         |
-| `integer`   | whole numbers and their negative counterparts                                                  | year of birth, year of data collection, number of occurrences of something, etc.      |
-| `complex`   | data that includes imaginary or unknown elements                                               | the pythagorian theroem, i.e., `a^2 + b^2 = c^2`, where `a`, `b`, and `c` are unknown |
-| `character` | single characters (like `'F'`) or **strings** (like `"female"`)                                | gender, speaker name, etc.                                                            |
-| `raw`       | raw bytes                                                                                      | Anything expressed in bytes                                                           |
-
-::: callout-noted
+\begin{table}
+\caption{Types of data in \textit{R}}
+\begin{tabular}{lp{.33\textwidth}p{.33\textwidth}}
+\toprule
+ Data Type & Description & Example\\                                                                  \texttt{logical} & either \texttt{TRUE} or \texttt{FALSE} & The answer to a question like "is \texttt{x} a number?", etc.\\       
+ \texttt{numeric} & any real number, positive or negative, with or without decimal values & Vowel formant measurements, position in an audio file, household income, etc.\\ 
+\texttt{double}& any real number, positive or negative, with or without decimal values (identical to \texttt{numeric}) & Vowel formant measurements, position in an audio file, household income, etc.\\
+\texttt{integer}& whole numbers and their negative counterparts & year of birth, year of data collection, number of occurrences of something, etc.\\
+\texttt{complex} & data that includes imaginary or unknown elements & the pythagorian theroem, i.e., $a^2 + b^2 = c^2$, where $a$, $b$, and $c$ are unknown\\
+\texttt{character} & single characters (like \texttt{'F'}) or \textbf{strings} (like \texttt{"female"}) & gender, speaker name, etc.\\ 
+\texttt{raw} & raw bytes  & Anything expressed in bytes \\
+\end{tabular}
+\end{table}
+::: callout-note
 Character data is always enclosed in either single quotes `' '` or double quotes `" "`. It is common practice to use single quotes for single characters and double quotes for strings, though either type of quotation marks will work with either data type.
 
 `double` is short for "double precision floating point numbers". Don't worry about the difference between `numeric` and `double`, because it doesn't really matter.
@@ -157,7 +196,7 @@ print(class(char_variable))
 
 ### Types of Data Structures
 
-A **vector** and **list** are the most basic types of data structures. A **vector** is a collection of elements, most commonly a collection of `character`, `logical`, `integer`, or `numeric` values. Values can be combined into a vector using the concatenating function `c()`
+A **vector** and a **list** are the most basic types of data structures. A **vector** is a collection of elements, most commonly a collection of `character`, `logical`, `integer`, or `numeric` values. Values can be combined into a vector using the concatenating function `c()`
 
 ```{r}
 simple.vector <- c("Labov", "Fishman")
@@ -174,7 +213,7 @@ str(simple.vector)
 
 **Lists** are like **vectors** but can contain a mixture of different data types. Characters must be in quotation marks. Numbers in quotation marks will be categorized as characters. Numeric data is numbers without quotation marks. Integers are specificed by adding `L` after the number. Logical values are either `TRUE` or `FALSE` in all capital letters.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r}
 simple.list<-list("Labov", "Fishman","2001", 1963, 1.5, 1974L, TRUE)
 print(simple.list)
 length(simple.list)
@@ -186,7 +225,7 @@ You will notice that the results of the `str()` function show that `Labov`, `Fis
 
 Lists can be bigger than just one group of data. Items in a list can also be more complex than a single value.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r}
 complex.list <- list(a = "John Baugh", b = simple.vector, c=simple.list, d=head(td))
 print(complex.list)
 str(complex.list)
@@ -194,7 +233,7 @@ str(complex.list)
 
 In the list `complex.list` column `a` contains only one value: `John Baugh`. Column `b` contains our `simple.vector`, column `c` contains our `simple.list`, and column `d` includes the first six rows of the `td` data (which itself has columns). To access the values from columns within columns you can use multiple `$` operators.
 
-```{r,attr.output='style="max-height: 100px;"', R.options = list(width = 1000)}
+```{r}
 print(complex.list$a)
 print(complex.list$d)
 print(complex.list$d$Job)

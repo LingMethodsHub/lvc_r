@@ -1,6 +1,2 @@
 project:
-  title: "LVC_R"
-  render:
-    - "!renv/"
-editor: source
-
+  title: "Doing LVC with *R*"

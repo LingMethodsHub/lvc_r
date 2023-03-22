@@ -5,20 +5,35 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    momofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  #- name:
-      # given: Matt Hunt
-      # family: Gardner
-  name: "Matt Hunt Gardner"
-  orcid: 0000-0002-1878-4232
-  email: matt.gardner@ling-phil.ox.ac.uk
-  corresponding: true
-  affiliations:
-    - name: University of Oxford 
-      department: Linguistics, Philology, & Phonetics
-      city: Oxford
-      country: UK
+  - name: Matt Hunt Gardner
+    orcid: 0000-0002-1878-4232
+    email: matt.gardner@ling-phil.ox.ac.uk
+    corresponding: Matt Hunt Gardner
+    affiliations:
+      - name: University of Oxford 
+        department: Linguistics, Philology, & Phonetics
+        city: Oxford
+        country: UK
 description: "An introduction to using this tutorial. The relationship between *R* and *Goldvarb*. Token and script files. *R* vs. *R Studio*. How to install packages."
 image: "images/tweet.png"
 twitter-card:
@@ -35,7 +50,7 @@ source("renv/activate.R")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 If you have not installed *R* or have never used *R* before, please check out *Swirl* <https://swirlstats.com/>, which will guide you through installing and learning the basic functionality of *R*. *Swirl* is a collection of interactive courses. Its *R Programming* beginner course will introduce you to *R* and several concepts discussed in this guide. Even if you have used *R* before, you should still go through the basic *R Programming* tutorial --- even I learned something new when testing it before recommending it here.
@@ -88,17 +103,21 @@ The following instructions assume you are using the core *R* program, not *R Stu
 
 To execute a command function that is in a script file simply put your cursor on the same line as that command and press the execution or **Run** command depending on your operating system and editor. In @fig-scriptfile the cursor is placed in the middle of line 2; pressing `Control+Return` on my Mac executes the command function highlighted in grey. You can also highlight a large portion, or even all of your script file, and press the execution command to execute multiple commands at once. There is also an execute all or **Source** command that will execute the entire script file.
 
+
 | Execute    | Mac OSX          | Windows PC   |
 |------------|------------------|--------------|
 | *R* Editor | `Command+Return` | `CTRL+R`     |
 | *R Studio* | `Command+Return` | `CTRL+Enter` |
 
-------------------------------------------------------------------------
+: Execute current line of code {#tbl-execute}
 
 | Execute    | Mac OSX            | Windows PC     |
 |------------|--------------------|----------------|
 | *R* Editor | `Command+E`        | `CTRL+Shift+R` |
 | *R Studio* | `Command+Option+R` | `CTRL+Alt+R`   |
+
+: Execute all code {#tbl-executeall}
+
 
 ### Installing Packages
 
@@ -108,7 +127,7 @@ Before you begin doing any kind of analysis in *R*, you'll first need several \`
 install.packages(c("dplyr","vcd","reshape2","ggplot2","partykit","lme4","car","multcomp", "MuMIn", "gmodels"), dependencies = TRUE)
 ```
 
-Above `install.packages()` is a function for installing packages. Inside the parentheses you tell *R* which packages to install. In this case you want to install multiple packages. Any time you need to combine multiple things in *R* you use the concatenating function `c()`. So the above function says combine the package names `dplyr`,`vcd`, `reshape2`, `ggplot2`, `partykit`, `lme4`, `car`, `multcomp`, and`MuNIn` and then install the packages with those names. The `dependencies = TRUE` specification tells *R* to install any additional packages that these packages depend on to function.
+Above `install.packages()` is a function for installing packages. Inside the parentheses you tell *R* which packages to install. In this case you want to install multiple packages. Any time you need to combine multiple things in *R* you use the concatenating function `c()`. So the above function says combine the package names `dplyr`, `vcd`, `reshape2`, `ggplot2`, `partykit`, `lme4`, `car`, `multcomp`, and `MuNIn` and then install the packages with those names. The `dependencies = TRUE` specification tells *R* to install any additional packages that these packages depend on to function.
 
 When you execute this function, *R* might ask you to pick a **CRAN Mirror**. This is just *R* asking you from where you want to download the packages. *CRAN* is the *Comprehensive R Archive Network* and mirrors are simply different institutions that offer identical copies of *R* files for downloading. Usually I just pick the option closest to me, which is the University of Toronto in Canada. If you've downloaded packages in the past you've likely already set your **CRAN Mirror**, and won't be prompted to do it again.
 
@@ -119,3 +138,7 @@ As *R* updates over time, so too must these packages. But packages don't update 
 ```{r eval=FALSE}
 update.packages(ask=FALSE)
 ```
+
+
+
+

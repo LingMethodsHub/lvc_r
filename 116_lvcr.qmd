@@ -5,11 +5,27 @@ license: "CC-BY-SA 4.0"
 format: 
   html:
     code-overflow: scroll
-# pdf: default
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: false
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    monofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 author:
-  - name:
-      given: Matt Hunt
-      family: Gardner
+  - name: Matt Hunt Gardner
     orcid: 0000-0002-1878-4232
     email: matt.gardner@ling-phil.ox.ac.uk
     corresponding: true
@@ -22,11 +38,13 @@ description: "Doing a mixed-effects logistic regression analysis suitable for co
 crossref:
   fig-title: Table  
   fig-prefix: Table
+  fig-labels: arabic
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens"), tidy = TRUE)
+knitr::opts_chunk$set(tidy='styler', tidy.opts=list(strict=TRUE, scope="tokens", width.cutoff=50), tidy = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -114,11 +132,11 @@ options(digits=2)
 
 
 
-Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](050_lvcr.qmd) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](110_lvcr.qmd). Next, you [set the global *R* options to employ sum contrast coding](112_lvcr.qmd).
+Before you proceed with this section, please make sure that you have your data loaded and modified based on the code [here](https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html) and that `Dep.Var` is [re-coded such that `Deletion` is the second factor](https://lingmethodshub.github.io/content/R/lvc_r/110_lvcr.html). Next, you [set the global *R* options to employ sum contrast coding](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html).
 
 # Treatment Contrasts (vs. reference value)
 
-Rather than compare levels of each parameter to the [mean of that parameter](112_lvcr.qmd), you can instead specify one level as the reference level and then compare every other level to it (see [Part 1](110_lvcr.qmd)). To do this you need to set the global contrasts to `contr.treatment`.
+Rather than compare levels of each parameter to the [mean of that parameter](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html), you can instead specify one level as the reference level and then compare every other level to it (see [Part 1](https://lingmethodshub.github.io/content/R/lvc_r/110_lvcr.html)). To do this you need to set the global contrasts to `contr.treatment`.
 
 ```{r}
 # Treatment Contrasts (vs. reference)
@@ -136,7 +154,7 @@ td.glmer.parsimonious <- glmer(Dep.Var ~ After.New + Morph.Type + Before + Stres
 summary(td.glmer.parsimonious)
 ```
 
-The treatment contrast output looks very much like the model you constructed using sum contrasts (you'll notice that the measures of model fit and the description of the random effects are identical), but there are a few key differences. Firstly, the listed levels of each parameter are now written-out rather than just being numbers. This makes treatment contrast results somewhat easier to interpret. The levels that are listed are all the levels other than the first in that level's factor order. The default order of factors is alphabetic, though you can change this (as you did [previously](112_lvcr.qmd) for `Dep.Var` and `Age.Group`). The first level in each parameter is set as the **reference level**. The reference level for `Before` is `Liquid`, the reference level for `After.New` is `Consonant`, the reference level for `Morph.Type` is `Mono`, the reference level for `Stress` is `Stressed`, and the reference level for `Phoneme` is `d`. 
+The treatment contrast output looks very much like the model you constructed using sum contrasts (you'll notice that the measures of model fit and the description of the random effects are identical), but there are a few key differences. Firstly, the listed levels of each parameter are now written-out rather than just being numbers. This makes treatment contrast results somewhat easier to interpret. The levels that are listed are all the levels other than the first in that level's factor order. The default order of factors is alphabetic, though you can change this (as you did [previously](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html) for `Dep.Var` and `Age.Group`). The first level in each parameter is set as the **reference level**. The reference level for `Before` is `Liquid`, the reference level for `After.New` is `Consonant`, the reference level for `Morph.Type` is `Mono`, the reference level for `Stress` is `Stressed`, and the reference level for `Phoneme` is `d`. 
 
 The `(Intercept)` value is the likelihood of a given token being the application value if that token is coded with all the reference levels. In other words, `0.902` is the likelihood, in log odds, of a token being `Deletion` if that token has a preceding liquid, a following consonant, is mono-morphemic, is stressed, and is an underlying /d/. The estimate for each level is the change in likelihood if that parameter changes to the given level. The difference in likelihood resulting from a token being unstressed, instead of stressed, but with all other parameter settings the same, is `1.598` In other words, a token with a preceding liquid, following consonant, that is mono-morphemic, that is an underlying /d/, and is unstressed is $2.500$ log odds ($0.902+1.598$) or $92\%$ probability.
 
@@ -144,16 +162,34 @@ The `(Intercept)` value is the likelihood of a given token being the application
 plogis(2.5)
 ```
 :::{.callout-warning}
-With treatment contrasts you **must** [center your continuous variables](040_lvcr.qmd).
+With treatment contrasts you **must** [center your continuous variables](https://lingmethodshub.github.io/content/R/lvc_r/040_lvcr.html).
 :::
 
 With sum contrasts the reference "level" is the mean for each parameter not a particular level of the parameter; this includes continuous factors. For this reason, whether or not you center continuous factors with sum contrast coding doesn't really matter. The reference level for treatment contrast coding is the first level of the parameter. For continuous variables this means the reference level is $0$. For some applications this might be okay --- for example, if your continuous variable is voice onset time. For most of your applications, though, where continuous factors represent age, this is not desirable. Zero is not a meaningful year of birth or a meaningful age. For this reason we center these factors, thereby changing the mean or average age to zero (so that $0$ equals something meaningful), and all other ages as differences from that mean.  This results in the intercept of a treatment contrast model being the overall likelihood when all the discrete parameters are set to their first value and the continuous parameters set to their mean value.
 
 The *p*-value for each level represents whether or not the resultant difference (e.g., estimate) is significantly different from zero.  The *p*-value for `BeforeStop` is $0.45350$. This is greater than $0.05$, and therefore you say there is not a significant difference in likelihood between tokens with a preceding liquid and tokens with a preceding stop. This changes the constraint hierarchy for this factor group to `S` > `Nasal` > `Other Fricative` > `Liquid/Stop`. It also justifies re-coding these two factors into a single parameter level.  
 
-![Treatment contrasts vs. sum contrasts](images/comparingcontrasts.png){#fig-contrasts width="80%"}
+```{=latex}
+\begin{table}
+\begin{center}
+\caption*{Treatment contrasts vs sum contrasts}	
+\begin{tabular}{rp{.33\textwidth}p{.37\textwidth}}
+\toprule
+& \multicolumn{1}{c}{Treatment Contrasts} & \multicolumn{1}{c}{Sum Contrasts}\\
+\midrule
+Point of comparison & Reference level & Mean of parameter\\
+Level estimate & Difference in likelihood \newline from reference level & Difference in likelihood \newline from parameter mean\\
+Intercept & Likelihood with all reference levels & Grand Mean\newline (mean of parameter means)\\
+Missing value & Reference level\newline(first level of factor) & Last level of factor\\
+Missing value estimate & 0 & 0 - sum of remaining estimates\\
+Continuous Parameters & Must center & Should center\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+```
 
-As before, the correlation of fixed effects suggests where there might be non-orthogonality. Values over $|0.3|$ should be investigated, those above $|0.7|$ should be seriously investigated. Calculating the Variable Inflation Factor (VIF) and Condition Number ($\kappa$) is, as always, useful in determining if these correlations are within acceptable limits of collinearity (as discussed in [Part 3](114_lvcr.qmd)). 
+As before, the correlation of fixed effects suggests where there might be non-orthogonality. Values over $|0.3|$ should be investigated, those above $|0.7|$ should be seriously investigated. Calculating the Variable Inflation Factor (VIF) and Condition Number ($\kappa$) is, as always, useful in determining if these correlations are within acceptable limits of collinearity (as discussed in [Part 3](https://lingmethodshub.github.io/content/R/lvc_r/114_lvcr.html)). 
 
 ```{r}
 # Calculate the Variable Inflation Factor
@@ -164,16 +200,73 @@ library(JGmermod)
 collin.fnc.mer(td.glmer.parsimonious)$cnumber
 
 ```
-The highest VIF is (still) lower than $5$, indicating low collinearity but $\kappa = 7.6$, which is slightly above the threshold of $6$ indicating low-to-moderate collinearity. This latter value further suggests investigating the across-parameter correlations (see [Part 3](114_lvcr.qmd)). For the moment, however, you will keep using the `td.glmer.parsimonious` model. 
+The highest VIF is (still) lower than $5$, indicating low collinearity but $\kappa = 7.6$, which is slightly above the threshold of $6$ indicating low-to-moderate collinearity. This latter value further suggests investigating the across-parameter correlations (see [Part 3](https://lingmethodshub.github.io/content/R/lvc_r/114_lvcr.html)). For the moment, however, you will keep using the `td.glmer.parsimonious` model. 
 
 You could choose to report the results of this treatment contrast analysis in your manuscript. If you do, a *Goldvarb*-style table wouldn't be appropriate. Instead a `lme4`-style table is needed.
 
+::: {.content-visible when-format="html"}
 
 ![Mixed-effects logistic regression testing the fixed effect of Following Context, Morpheme Type, Preceding Context, Stress, and Phoneme and a random intercept of Speaker on the deletion of word-final (t, d) in Cape Breton English](images/lme4table3.png){#fig-lme4table3 width="80%"}
 
+:::
+
+::: {.content-visible when-format="pdf"}
+
+```{=latex}
+ \begin{table}[h]
+\noindent
+\begin{center}
+\begin{threeparttable}
+\caption{Mixed-effects logistic regression testing the fixed effect of \textsc{Following Context},  \textsc{Morpheme Type}, \textsc{Preceding Context}, \textsc{Stress} and \textsc{Phoneme} and a random intercept of \emph{Speaker} on the deletion of word-final \textipa{/t, d/} in Cape Breton English}
+\label{tab:treatmentglmer}
+\begin{tabular}{lrrrcrc}
+\toprule
+\multicolumn{5}{l}{AIC = 1114, Marginal $R^2$ = .40, Conditional $R^2$ = .52}&\multicolumn{2}{c}{Observations}\\
+\cmidrule(lr){6-7} 
+Fixed Effects: & \multicolumn{1}{c}{Estimate} & \multicolumn{1}{c}{Std. Error}&\multicolumn{1}{c}{\textit{z}-value}&\multicolumn{1}{c}{\textit{p}-value} &\multicolumn{1}{c}{\textit{n}}&\multicolumn{1}{c}{\% Deletion} \\
+\midrule
+\textsc{Intercept} (all reference values) & 4.846 & 0.265 & 3.40 &$\ast$$\ast$$\ast$   &&\\
+\textsc{Following Context} (vs. \textit{Consonant}) & &&& & 372 & 54\\
+\quad\textit{Vowel} & -2.506&0.284&-8.82&$\ast$$\ast$$\ast$ & 259 & 28\\
+\quad\textit{Pause} & -3.015&0.255&-11.82&$\ast$$\ast$$\ast$ & 558 & 20\\
+\textsc{Morpheme Type} (vs. \textit{Semi-Weak Simple Past})&&&&&116&63\\
+\quad\textit{Mono-morpheme} & 1.039&0.281&-3.70&$\ast$$\ast$$\ast$ & 762 & 37\\
+\quad\textit{Weak Simple Past} & -3.358&0.396&-8.48&$\ast$$\ast$$\ast$ & 311 & 10\\
+\textsc{Stress} (vs. \textit{Unstressed}) &&&  && 142 & 47\\
+\quad\textit{Stressed} & -1.598&0.275&-5.81&$\ast$$\ast$$\ast$ & 1,047 & 31\\
+\textsc{Preceding Context} (vs.\textit{\textipa{/s/}})&&&& &332 & 53\\
+\quad\textit{Nasal} & -0.206&0.283&-0.73& & 209 & 39\\
+\quad\textit{Other Fricative} & -0.614&0.377&-1.63&& 130 & 15\\
+\quad\textit{Liquid} & -1.306  &0.317&-4.11&$\ast$$\ast$ & 269 & 42\\
+\quad\textit{Stop} & -1.530&0.290&-5.27&$\ast$$\ast$$\ast$ & 249 & 27\\
+\textsc{Phoneme} (vs. \textit{\textipa{/d/}})&&&&&878 &34\\
+\quad\textit{\textipa{/t/}} &  -0.573&0.255&-2.25&$\ast$ & 311 & 29\\
+\midrule
+\multicolumn{5}{l}{Random Effects:} & \textit{sd} & \textit{n}\\
+\midrule
+\textsc{Speaker} &&&&& 0.892&  66\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \hfill$\ast\ast\ast$~$p<0.001$,  $\ast\ast$~$p<0.01$, $\ast$~$p<0.05$\\[-10pt]
+\item  Treatment contrast coding. Estimate coefficients reported in log-odds. Total \textit{N} = 1,189. 
+\item Model significantly better than null model (AIC = 1,456, $\chi^2$ = 362, df = 10, $\ast\ast\ast$)
+\item Correlation of Fixed Effects $\le|0.61|$, $\kappa = 7.6$, Variable Inflation Factor $\le4.93$ 
+\item Simultaneous test of the General Linear Hypothesis:
+\item ~~~~~Mono-morpheme vs. Weak Simple Past = 0, Estimate: -2.319, Std. Error.: 0.296, \textit{z}-value: -7.84, $\ast\ast\ast$
+\item ~~~~~Nasal vs. Liquid = 0, Estimate: 1.100, Std. Error: 0.276, \textit{z}-value: 3.99, $\ast\ast$
+\item ~~~~~Nasal vs. Stop = 0, Estimate: -1.325, St. Error: 0.304, \textit{z}-value: -4.36, $\ast\ast\ast$
+\item ~~~~All other contrasts non-significant
+\end{tablenotes}
+\end{threeparttable}
+\end{center}
+\end{table} 
+```
+
+:::
 
 
-The order of parameters in @fig-lme4table3 is based on the the relative ordering presented in Table \ref{tab:wald1}. The parameter levels are also ordered by their estimates. You'll notice that all the estimates are negative and they don't match up to the results reported above. This is because, before creating this table, each factor was reordered based on level estimates so that the reference level, i.e., first level, was also the level that most favoured the application value. I find this makes understanding the constraint hierarchy easier. It also means that the intercept represents the likelihood of the the application value when it is most likely. Alternatively, you could re-arrange the factor levels so that the least likely levels were the reference levels. This would result in estimates that were all positive and showed how much switching levels improved the likelihood. What you choose to do is entirely up to you and the story you want to tell with your analysis. 
+The order of parameters in Table 1 is based on the the relative ordering in of the [Wald $\chi^2$ test](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html). The parameter levels are also ordered by their estimates. You'll notice that all the estimates are negative and they don't match up to the results reported in the `glmer()` results above. This is because, before creating this table, each factor was reordered based on level estimates so that the reference level, i.e., first level, was also the level that most favoured the application value. This step is not needed, but I find this makes understanding the constraint hierarchy much easier for the reader. It also means that the intercept represents the likelihood of the application value when it is most likely. Alternatively, you could re-arrange the factor levels so that the least likely levels were the reference levels. This would result in estimates that were all positive and showed how much switching levels improved the likelihood. What you choose to do is entirely up to you and the story you want to tell with your analysis. 
 
 
 ```{r}
@@ -190,7 +283,7 @@ td.glmer <-glmer(Dep.Var~Before+After.New+Morph.Type+ Stress + Phoneme+(1|Speake
 summary(td.glmer)
 ```
 
-By reordering the levels of you verify some intuitions generated by [previous analyses](114_lvcr.qmd) about the constraint hierarchy for `Before`. There is not a significant difference between the reference level (`S`) and `Nasal` or between the reference level (`S`) and `Other Fricatives`. This suggests that your constraint hierarchy is actually `All Fricatives/Nasals` > `Liquids/Stops` (remember in the non-reordered `summary(td.glmer)` `Liquids` and `Stops` were not significantly different). This is an insight into the data that the `glmer()` model with sum contrasts couldn't have provided. 
+By reordering the levels of you verify some intuitions generated by [previous analyses](https://lingmethodshub.github.io/content/R/lvc_r/114_lvcr.html) about the constraint hierarchy for `Before`. There is not a significant difference between the reference level (`S`) and `Nasal` or between the reference level (`S`) and `Other Fricatives`. This suggests that your constraint hierarchy is actually `All Fricatives/Nasals` > `Liquids/Stops` (remember in the non-reordered `summary(td.glmer)` `Liquids` and `Stops` were not significantly different). This is an insight into the data that the `glmer()` model with sum contrasts couldn't have provided. 
 
 
 But what about the other parameter levels? For example, there is a significant difference between following consonant and following vowel. There is also a significant difference between following consonant and following pause. But is there a significant difference between following vowel and following pause? You could run a series of `glmer()` models in which you keep reordering the parameter levels to find out where the significant differences are. However, the `glmer()` model you've just constructed contains this information, you just need to know how to ask for it.
@@ -208,7 +301,7 @@ library(multcomp)
 summary(glht(td.glmer, d))
 ```
 
-The results indicate that the difference in likelihood of `After.NewVowel` and `After.NewPause` on the `Intercept` are not  significantly different from zero ($p>0.05$). This means that the real contrast for this factor group is consonant versus not-consonant. On the other hand, there is a significant difference between `Morph.TypeMono` and `Morph.TypePast` indicating that this factor group has a real three-way contrast between semi-weak simple past, mono-morphemes and weak simple past. Again, by performing a detailed analysis of the contrasts between factors **in addition to** an analysis of the contrasts between factors and their mean, you achieve a much more nuanced (and I argue superior) understanding of the three lines of evidence because you can pinpoint exactly where significant contrasts exist. 
+The results indicate that the difference in likelihood of `After.NewVowel` and `After.NewPause` on the `Intercept` are not  significantly different from zero ($p>0.05$). This means that the real contrast for this factor group is consonant versus not-consonant. On the other hand, there is a significant difference between `Morph.TypeMono` and `Morph.TypePast` indicating that this factor group has a real three-way contrast between semi-weak simple past, mono-morphemes, and weak simple past. Again, by performing a detailed analysis of the contrasts between factors **in addition to** an analysis of the contrasts between factors and their mean, you achieve a much more nuanced (and I argue superior) understanding of the three lines of evidence because you can pinpoint exactly where significant contrasts exist. 
 
 An easier method for generating the contrast matrix is provided below. For a different analysis replace `td.glmer.parsimonious` with your model name, and replace `Before`, `After.New`, etc. with your own predictors. You don't need to include all predictors. You could also include more. Just adjust the number of `k1`, `k2`, etc. objects you create. This method provides all the contrasts for a single predictor variable, unlike the method above, in which you specify the specific contrasts you are interested in. I have not included `Phoneme` or `Stress` here as they are binary, so the contrast between the two levels is represented in the `summary(td.glmer.parsimonious)` output already. 
 
@@ -220,11 +313,11 @@ k3<-glht(td.glmer.parsimonious, mcp(Morph.Type = "Tukey"))$linfct
 
 summary(glht(td.glmer.parsimonious, linfct=rbind(k1,k2,k3)))
 ```
-You can add the results from this `glht()` test to your manuscript table, as in @fig-lme4table3.
+You can add the results from this `glht()` test to your manuscript table, as in Table 1.
 
 ## Visualizing the fixed effects
 
-As in [Part 2](112_lvcr.qmd), you can use the `plot_model()` function to examine the fixed effects. 
+As in [Part 2](https://lingmethodshub.github.io/content/R/lvc_r/112_lvcr.html), you can use the `plot_model()` function to examine the fixed effects. 
 
 ```{r, message=FALSE}
 # Load required packages
@@ -248,3 +341,6 @@ Instead of colouring all the predictor levels similarly (as they are all below z
 # Plot fixed effects
 plot_model(td.glmer, transform = NULL, show.values = TRUE, value.offset=0.3, vline.color="black", title = "Likelihood of (t,d) deletion", group.terms = c(1,1,1,1,2,2,3,3,4,5)) + theme_classic()
 ```
+
+
+

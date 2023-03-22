@@ -1,0 +1,2118 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+  letterpaper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Charis SIL}
+  \setmathfont[]{Monaco}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin = 1in]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{tipa}
+\let\Oldtexttt\texttt
+\renewcommand\texttt[1]{{\ttfamily\color{BrickRed}#1}}
+\usepackage{authoraftertitle}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rfoot{\copyright Matt Hunt Gardner}
+\cfoot{\thepage}
+\lhead{Doing LVC with \textit{R}: \MyTitle}
+\rhead{}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+% Make links footnotes instead of hotlinks:
+\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
+\hypersetup{
+  pdftitle={Crosstabs: Counts, Proportions, and More},
+  pdfauthor={Matt Hunt Gardner},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Crosstabs: Counts, Proportions, and More}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{from
+\href{https://lingmethodshub.github.io/content/R/lvc_r/}{Doing LVC with
+\emph{R}}}
+\author{Matt Hunt Gardner}
+\date{3/10/23}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, sharp corners, frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+It took me two years to figure out how to do cross-tabs in \emph{R} the
+way that \emph{Goldvarb} does cross-tabs. Below I show you how to build
+cross-tabs from scratch.
+
+\hypertarget{token-counts}{%
+\subsection{Token Counts}\label{token-counts}}
+
+A good starting point is the function \texttt{table()}. This function
+returns token numbers.
+
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Get the data first}, coltitle=black, colframe=quarto-callout-tip-color-frame, toprule=.15mm, breakable, left=2mm, bottomrule=.15mm, colback=white, bottomtitle=1mm, opacitybacktitle=0.6, titlerule=0mm, arc=.35mm, opacityback=0, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
+
+If you don't have the \texttt{td} data loaded in \emph{R}, go back to
+\href{https://lingmethodshub.github.io/content/R/lvc_r/050_lvcr.html}{Doing
+it all again, but \texttt{tidy}} and run the code.
+
+\end{tcolorbox}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by level of Dep.Var}
+\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Deletion Realized 
+     386      803 
+\end{verbatim}
+
+This tells you that there are 386 \texttt{Deletion} tokens and 803 not
+deleted, or \texttt{Realized} tokens. If you add another factor group
+like \texttt{Age.Group}, you get the number of tokens for each level of
+\texttt{Dep.Var} for each level of that additional factor group. These
+two factor groups are returned as the rows and then columns in the
+table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by level of Dep.Var}
+\CommentTok{\# and Age.Group}
+\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          
+           Old Middle Young
+  Deletion  67    125   194
+  Realized 134    235   434
+\end{verbatim}
+
+If you add one more factor group, \texttt{Sex}, it divides the data in
+what \emph{R} calls ``pages''. The first page is the number of tokens
+for each level of \texttt{Dep.Var} by each level of \texttt{Age.Group}
+for female data (\texttt{Sex\ =\ F}), and then the same for the male
+data (\texttt{Sex\ =\ M}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Dep.Var, Sex, and}
+\CommentTok{\# Age.Group}
+\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, ,  = F
+
+          
+           Old Middle Young
+  Deletion  43     73    72
+  Realized 107    165   199
+
+, ,  = M
+
+          
+           Old Middle Young
+  Deletion  24     52   122
+  Realized  27     70   235
+\end{verbatim}
+
+You can add the option \texttt{deparse.level\ =\ 2} to include the names
+of the columns in the table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Dep.Var, Sex, and}
+\CommentTok{\# Age.Group}
+\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex, }\AttributeTok{deparse.level =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, , td$Sex = F
+
+          td$Age.Group
+td$Dep.Var Old Middle Young
+  Deletion  43     73    72
+  Realized 107    165   199
+
+, , td$Sex = M
+
+          td$Age.Group
+td$Dep.Var Old Middle Young
+  Deletion  24     52   122
+  Realized  27     70   235
+\end{verbatim}
+
+If you wrap the \texttt{table()} function in the \texttt{addmargins()}
+function you get the sums of each row and column, and another page for
+both the male and the female data together.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Dep.Var, Sex, and}
+\CommentTok{\# Age.Group, with column, row and page totals}
+\FunctionTok{addmargins}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex,}
+    \AttributeTok{deparse.level =} \DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, , td$Sex = F
+
+          td$Age.Group
+td$Dep.Var  Old Middle Young  Sum
+  Deletion   43     73    72  188
+  Realized  107    165   199  471
+  Sum       150    238   271  659
+
+, , td$Sex = M
+
+          td$Age.Group
+td$Dep.Var  Old Middle Young  Sum
+  Deletion   24     52   122  198
+  Realized   27     70   235  332
+  Sum        51    122   357  530
+
+, , td$Sex = Sum
+
+          td$Age.Group
+td$Dep.Var  Old Middle Young  Sum
+  Deletion   67    125   194  386
+  Realized  134    235   434  803
+  Sum       201    360   628 1189
+\end{verbatim}
+
+If you change the order of factor groups you include in the
+\texttt{table()} function you can change which factors are rows, which
+are columns, and which are pages. You can also keep adding factors as
+additional pages. The order is always: rows, columns, page 1, page 2,
+etc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Age.Group,}
+\CommentTok{\# Education, Sex, and Dep.Var, with row, column,}
+\CommentTok{\# and page totals}
+\FunctionTok{addmargins}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Education, td}\SpecialCharTok{$}\NormalTok{Sex,}
+\NormalTok{    td}\SpecialCharTok{$}\NormalTok{Dep.Var, }\AttributeTok{deparse.level =} \DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, , td$Sex = F, td$Dep.Var = Deletion
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old           2           41       0   43
+      Middle       68            5       0   73
+      Young        20            0      52   72
+      Sum          90           46      52  188
+
+, , td$Sex = M, td$Dep.Var = Deletion
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old           0           24       0   24
+      Middle       16           36       0   52
+      Young        48           24      50  122
+      Sum          64           84      50  198
+
+, , td$Sex = Sum, td$Dep.Var = Deletion
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old           2           65       0   67
+      Middle       84           41       0  125
+      Young        68           24     102  194
+      Sum         154          130     102  386
+
+, , td$Sex = F, td$Dep.Var = Realized
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old          30           77       0  107
+      Middle      153           12       0  165
+      Young        52            0     147  199
+      Sum         235           89     147  471
+
+, , td$Sex = M, td$Dep.Var = Realized
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old           0           27       0   27
+      Middle       30           40       0   70
+      Young        77           31     127  235
+      Sum         107           98     127  332
+
+, , td$Sex = Sum, td$Dep.Var = Realized
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old          30          104       0  134
+      Middle      183           52       0  235
+      Young       129           31     274  434
+      Sum         342          187     274  803
+
+, , td$Sex = F, td$Dep.Var = Sum
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old          32          118       0  150
+      Middle      221           17       0  238
+      Young        72            0     199  271
+      Sum         325          135     199  659
+
+, , td$Sex = M, td$Dep.Var = Sum
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old           0           51       0   51
+      Middle       46           76       0  122
+      Young       125           55     177  357
+      Sum         171          182     177  530
+
+, , td$Sex = Sum, td$Dep.Var = Sum
+
+            td$Education
+td$Age.Group Educated Not Educated Student  Sum
+      Old          32          169       0  201
+      Middle      267           93       0  360
+      Young       197           55     376  628
+      Sum         496          317     376 1189
+\end{verbatim}
+
+The above function produces 9 ``pages'', one for each combination of
+\texttt{Sex} (two levels) and \texttt{Dep.Var} (two levels), plus the
+sum of each (one additional level each), and the sum for both. With more
+than three factor groups like this it is very useful to have the column
+names included in the output. Scroll to the sixth page, for example (the
+one that begins
+\texttt{,\ ,\ td\$Sex\ =\ Sum,\ td\$Dep.Var\ =\ Realized}). It shows the
+number of tokens by \texttt{Age.Group} and \texttt{Education} (the first
+two factor groups in the function), when \texttt{Sex} equals
+\texttt{Sum} (e.g., \texttt{M} and \texttt{F} combined) and
+\texttt{Dep.Var} equals \texttt{Realized}.
+
+One advantage of doing cross-tabs in \emph{R}, rather than
+\emph{Goldvarb}, is that you can simultaneously cross more than two
+factor groups at once. But, the presentation of these factors in pages
+may not be the most useful. The function \texttt{ftable()} in the
+package \texttt{vcd} presents the cross-tab in a more condensed format.
+The last factor group in the \texttt{table()} function will be the
+variable for the columns in \texttt{ftable()}, so you always want to
+make that the dependent variable. Below is the \texttt{ftable()} for the
+cross-tab of \texttt{Age.Group}, \texttt{Education}, \texttt{Sex}, and
+\texttt{Dep.Var}. You can see, for example, that there are 52
+\texttt{Deletion} tokens from young, student, female speakers and that
+there are no tokens from old, educated men.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Age.Group,}
+\CommentTok{\# Education, Sex, and Dep.Var, with row, column}
+\CommentTok{\# and page totals, presented in a flattened table}
+\FunctionTok{library}\NormalTok{(vcd)}
+\FunctionTok{ftable}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Education, td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Dep.Var))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                       Deletion Realized
+                                        
+Old    Educated     F         2       30
+                    M         0        0
+       Not Educated F        41       77
+                    M        24       27
+       Student      F         0        0
+                    M         0        0
+Middle Educated     F        68      153
+                    M        16       30
+       Not Educated F         5       12
+                    M        36       40
+       Student      F         0        0
+                    M         0        0
+Young  Educated     F        20       52
+                    M        48       77
+       Not Educated F         0        0
+                    M        24       31
+       Student      F        52      147
+                    M        50      127
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Do the same but include the margin values}
+\FunctionTok{ftable}\NormalTok{(}\FunctionTok{addmargins}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Education,}
+\NormalTok{    td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Dep.Var)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                         Deletion Realized  Sum
+                                               
+Old    Educated     F           2       30   32
+                    M           0        0    0
+                    Sum         2       30   32
+       Not Educated F          41       77  118
+                    M          24       27   51
+                    Sum        65      104  169
+       Student      F           0        0    0
+                    M           0        0    0
+                    Sum         0        0    0
+       Sum          F          43      107  150
+                    M          24       27   51
+                    Sum        67      134  201
+Middle Educated     F          68      153  221
+                    M          16       30   46
+                    Sum        84      183  267
+       Not Educated F           5       12   17
+                    M          36       40   76
+                    Sum        41       52   93
+       Student      F           0        0    0
+                    M           0        0    0
+                    Sum         0        0    0
+       Sum          F          73      165  238
+                    M          52       70  122
+                    Sum       125      235  360
+Young  Educated     F          20       52   72
+                    M          48       77  125
+                    Sum        68      129  197
+       Not Educated F           0        0    0
+                    M          24       31   55
+                    Sum        24       31   55
+       Student      F          52      147  199
+                    M          50      127  177
+                    Sum       102      274  376
+       Sum          F          72      199  271
+                    M         122      235  357
+                    Sum       194      434  628
+Sum    Educated     F          90      235  325
+                    M          64      107  171
+                    Sum       154      342  496
+       Not Educated F          46       89  135
+                    M          84       98  182
+                    Sum       130      187  317
+       Student      F          52      147  199
+                    M          50      127  177
+                    Sum       102      274  376
+       Sum          F         188      471  659
+                    M         198      332  530
+                    Sum       386      803 1189
+\end{verbatim}
+
+Of course we can use the pipe \texttt{\%\textgreater{}\%} to make things
+a bit easier
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the number of tokens by Age.Group,}
+\CommentTok{\# Education, Sex, and Dep.Var, with row, column}
+\CommentTok{\# and page totals, presented in a flattened table}
+\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Education, td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{addmargins}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{ftable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                         Deletion Realized  Sum
+                                               
+Old    Educated     F           2       30   32
+                    M           0        0    0
+                    Sum         2       30   32
+       Not Educated F          41       77  118
+                    M          24       27   51
+                    Sum        65      104  169
+       Student      F           0        0    0
+                    M           0        0    0
+                    Sum         0        0    0
+       Sum          F          43      107  150
+                    M          24       27   51
+                    Sum        67      134  201
+Middle Educated     F          68      153  221
+                    M          16       30   46
+                    Sum        84      183  267
+       Not Educated F           5       12   17
+                    M          36       40   76
+                    Sum        41       52   93
+       Student      F           0        0    0
+                    M           0        0    0
+                    Sum         0        0    0
+       Sum          F          73      165  238
+                    M          52       70  122
+                    Sum       125      235  360
+Young  Educated     F          20       52   72
+                    M          48       77  125
+                    Sum        68      129  197
+       Not Educated F           0        0    0
+                    M          24       31   55
+                    Sum        24       31   55
+       Student      F          52      147  199
+                    M          50      127  177
+                    Sum       102      274  376
+       Sum          F          72      199  271
+                    M         122      235  357
+                    Sum       194      434  628
+Sum    Educated     F          90      235  325
+                    M          64      107  171
+                    Sum       154      342  496
+       Not Educated F          46       89  135
+                    M          84       98  182
+                    Sum       130      187  317
+       Student      F          52      147  199
+                    M          50      127  177
+                    Sum       102      274  376
+       Sum          F         188      471  659
+                    M         198      332  530
+                    Sum       386      803 1189
+\end{verbatim}
+
+Another \texttt{tidy} way to find out the number of tokens by the
+different levels of a factor group is using the \texttt{group\_by()} and
+\texttt{tally()} functions. First, we specify how to group the data,
+i.e., what combination of factors we want to investigate. In this case,
+we want the number of tokens for every combination of
+\texttt{Age.Group}, \texttt{Education}, \texttt{Sex} and
+\texttt{Dep.Var}. Next we use the \texttt{tally()} function to provide
+the token counts for each of those combinations. The results are very
+similar to those produced by \texttt{ftable(table())}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Group data by Age, Education, and Sex then}
+\CommentTok{\# tally each group}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Age.Group, Education, Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{tally}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 24 x 5
+# Groups:   Age.Group, Education, Sex [12]
+   Age.Group Education    Sex   Dep.Var      n
+   <fct>     <fct>        <fct> <fct>    <int>
+ 1 Old       Educated     F     Deletion     2
+ 2 Old       Educated     F     Realized    30
+ 3 Old       Not Educated F     Deletion    41
+ 4 Old       Not Educated F     Realized    77
+ 5 Old       Not Educated M     Deletion    24
+ 6 Old       Not Educated M     Realized    27
+ 7 Middle    Educated     F     Deletion    68
+ 8 Middle    Educated     F     Realized   153
+ 9 Middle    Educated     M     Deletion    16
+10 Middle    Educated     M     Realized    30
+# ... with 14 more rows
+\end{verbatim}
+
+As the results of \texttt{tally()} is a \emph{tibble}, only the first 10
+rows will be printed. To print all the rows add \texttt{print(n=Inf)} at
+the end.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Group data by Age, Education, and Sex, tally}
+\CommentTok{\# each group, then print all rows}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Age.Group, Education, Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{tally}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 24 x 5
+# Groups:   Age.Group, Education, Sex [12]
+   Age.Group Education    Sex   Dep.Var      n
+   <fct>     <fct>        <fct> <fct>    <int>
+ 1 Old       Educated     F     Deletion     2
+ 2 Old       Educated     F     Realized    30
+ 3 Old       Not Educated F     Deletion    41
+ 4 Old       Not Educated F     Realized    77
+ 5 Old       Not Educated M     Deletion    24
+ 6 Old       Not Educated M     Realized    27
+ 7 Middle    Educated     F     Deletion    68
+ 8 Middle    Educated     F     Realized   153
+ 9 Middle    Educated     M     Deletion    16
+10 Middle    Educated     M     Realized    30
+11 Middle    Not Educated F     Deletion     5
+12 Middle    Not Educated F     Realized    12
+13 Middle    Not Educated M     Deletion    36
+14 Middle    Not Educated M     Realized    40
+15 Young     Educated     F     Deletion    20
+16 Young     Educated     F     Realized    52
+17 Young     Educated     M     Deletion    48
+18 Young     Educated     M     Realized    77
+19 Young     Not Educated M     Deletion    24
+20 Young     Not Educated M     Realized    31
+21 Young     Student      F     Deletion    52
+22 Young     Student      F     Realized   147
+23 Young     Student      M     Deletion    50
+24 Young     Student      M     Realized   127
+\end{verbatim}
+
+The above code gives us the number of \texttt{Realized} and
+\texttt{Deletion} tokens for each combination of \texttt{Age.Group},
+\texttt{Education}, and \texttt{Sex}. What if we want the total number
+of tokens for each combination, rather than the number of each level of
+\texttt{Dep.Var}. In this case, you can just drop \texttt{Dep.Var} from
+the \texttt{group\_by()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get total number of tokens per group by}
+\CommentTok{\# removing Dep.Var}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Age.Group, Education, Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{tally}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 12 x 4
+# Groups:   Age.Group, Education [7]
+   Age.Group Education    Sex       n
+   <fct>     <fct>        <fct> <int>
+ 1 Old       Educated     F        32
+ 2 Old       Not Educated F       118
+ 3 Old       Not Educated M        51
+ 4 Middle    Educated     F       221
+ 5 Middle    Educated     M        46
+ 6 Middle    Not Educated F        17
+ 7 Middle    Not Educated M        76
+ 8 Young     Educated     F        72
+ 9 Young     Educated     M       125
+10 Young     Not Educated M        55
+11 Young     Student      F       199
+12 Young     Student      M       177
+\end{verbatim}
+
+We know now that there are 32 tokens from \texttt{Old},
+\texttt{Educated}, \texttt{F} (female) speakers. The previous
+\texttt{tally()} shows us that 2 of the tokens are \texttt{Deletion} and
+30 are of \texttt{Realized}.
+
+An alternative to \texttt{tally()} is the much more flexible
+\texttt{summarize()} function.\footnote{\texttt{summarise()} and
+  \texttt{summarize()} are synonyms.} With this function you can apply a
+summary statistic function to each combination of the grouping
+variables. If no summary statistic function is created, the a tibble of
+the combination of the groups is produced.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a tibble of all combinations of}
+\CommentTok{\# Age.Group, Education, and Sex (for which there}
+\CommentTok{\# are rows of data)}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Age.Group, Education, Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 12 x 3
+# Groups:   Age.Group, Education [7]
+   Age.Group Education    Sex  
+   <fct>     <fct>        <fct>
+ 1 Old       Educated     F    
+ 2 Old       Not Educated F    
+ 3 Old       Not Educated M    
+ 4 Middle    Educated     F    
+ 5 Middle    Educated     M    
+ 6 Middle    Not Educated F    
+ 7 Middle    Not Educated M    
+ 8 Young     Educated     F    
+ 9 Young     Educated     M    
+10 Young     Not Educated M    
+11 Young     Student      F    
+12 Young     Student      M    
+\end{verbatim}
+
+To get the count, or number of rows, of each combination, we create a
+new column in the tibble that is the output of \texttt{summarize()} and
+assign to it the value of the count function \texttt{n()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a tibble of grouping variables, then add}
+\CommentTok{\# a new column \textquotesingle{}Tokens\textquotesingle{} with the value of the}
+\CommentTok{\# count function}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Age.Group, Education, Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Tokens =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 24 x 5
+# Groups:   Age.Group, Education, Sex [12]
+   Age.Group Education    Sex   Dep.Var  Tokens
+   <fct>     <fct>        <fct> <fct>     <int>
+ 1 Old       Educated     F     Deletion      2
+ 2 Old       Educated     F     Realized     30
+ 3 Old       Not Educated F     Deletion     41
+ 4 Old       Not Educated F     Realized     77
+ 5 Old       Not Educated M     Deletion     24
+ 6 Old       Not Educated M     Realized     27
+ 7 Middle    Educated     F     Deletion     68
+ 8 Middle    Educated     F     Realized    153
+ 9 Middle    Educated     M     Deletion     16
+10 Middle    Educated     M     Realized     30
+11 Middle    Not Educated F     Deletion      5
+12 Middle    Not Educated F     Realized     12
+13 Middle    Not Educated M     Deletion     36
+14 Middle    Not Educated M     Realized     40
+15 Young     Educated     F     Deletion     20
+16 Young     Educated     F     Realized     52
+17 Young     Educated     M     Deletion     48
+18 Young     Educated     M     Realized     77
+19 Young     Not Educated M     Deletion     24
+20 Young     Not Educated M     Realized     31
+21 Young     Student      F     Deletion     52
+22 Young     Student      F     Realized    147
+23 Young     Student      M     Deletion     50
+24 Young     Student      M     Realized    127
+\end{verbatim}
+
+The \texttt{summarize()} function can be used with a number of summary
+statistic functions, including, but not limited to, the following:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule()
+Type & Some Useful Functions \\
+\midrule()
+\endhead
+Center & \texttt{mean()}, \texttt{median()} \\
+Spread & \texttt{sd()}, \texttt{IQR()} \\
+Range & \texttt{min()}, \texttt{max()} \\
+Position & \texttt{first()}, \texttt{last()}, \texttt{nth()} \\
+Count & \texttt{n()}, \texttt{n\_distinct()} \\
+Logical & \texttt{any()}, \texttt{all()} \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{summary-statistics-for-continous-variables}{%
+\subsection{Summary Statistics for Continous
+Variables}\label{summary-statistics-for-continous-variables}}
+
+This seems like an appropriate place to describe how to summarize values
+that are continous, like \texttt{YOB}. Normally in variationist
+sociolinguistics we are very concerned with frequency and proportion of
+usage, and we will explore how to generate those statistics in the
+following section. Here, however, let's explore the functions available
+to use inside \texttt{summarize()}. These functions can be used on their
+own, also. For example, the first two, \texttt{mean()} and
+\texttt{median()} provide the arithmetic mean (basically the average) of
+a set of numbers while the \texttt{median()} provides the exact middle
+number of a set of values organized from smallest to largest (if there
+are an even number of values, \texttt{median()} returns the halfway
+point between the two middle numbers).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean year of birth}
+\FunctionTok{mean}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{YOB)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1969.447
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get median year of birth}
+\FunctionTok{median}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{YOB)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1984
+\end{verbatim}
+
+We already know that the mean year of birth for the \texttt{td} data set
+is 1969.447. You can also see that the middle number of all years of
+birth organized from oldest to youngest is 1984. If we wanted to find
+the mean or median year of birth for either just male or just female
+speakers, we have two options. We can use the base filter technique, or
+we can use the \texttt{tidy} method to group the data and summarize it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean year of birth of just female speakers}
+\FunctionTok{mean}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{YOB[td}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"F"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1963.487
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean year of birth of just male speaker}
+\FunctionTok{mean}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{YOB[td}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"M"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1976.857
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean year of birth for each level of Sex}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 2
+  Sex   Mean.YOB
+  <fct>    <dbl>
+1 F        1963.
+2 M        1977.
+\end{verbatim}
+
+\hypertarget{dealing-with-decimals}{%
+\subsubsection{Dealing with Decimals}\label{dealing-with-decimals}}
+
+\emph{Tibbles} are intended to be succinct and concise, so they provide
+very few values after the decimal place by default. If you require more
+decimal values, the easiest (trust me) thing to do is to convert the
+tibble into a \emph{data frame}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean year of birth by Sex, converted to}
+\CommentTok{\# data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex Mean.YOB
+1   F 1963.487
+2   M 1976.857
+\end{verbatim}
+
+\emph{data frames} will display whole numbers, and numbers with decimals
+up to the total number of digits set by \texttt{options()} function.
+Keep in mind, though, that changing this value changes the global
+options for \emph{R}. An alternative is to use the \texttt{format()}
+function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 6}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{6}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex, converted to}
+\CommentTok{\# data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex Mean.YOB
+1   F  1963.49
+2   M  1976.86
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 10}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{10}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex, converted to}
+\CommentTok{\# data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex    Mean.YOB
+1   F 1963.487102
+2   M 1976.856604
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 3}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex, converted to}
+\CommentTok{\# data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex Mean.YOB
+1   F     1963
+2   M     1977
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 3}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex, converted to}
+\CommentTok{\# data frame but showing 10 significant digits}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{format}\NormalTok{(}\AttributeTok{digits =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex    Mean.YOB
+1   F 1963.487102
+2   M 1976.856604
+\end{verbatim}
+
+For very large numbers \emph{R} will often display values in exponential
+notation. We can alter this by setting the value of \texttt{scipen}
+inside the \texttt{option()} function. Again, though, remember that this
+is a global change for your whole \emph{R} session. For \texttt{scipen}
+positive values increase the likelihood of using real numbers, negative
+values increase the likelihood of using exponential notation. To ensure
+printouts are always real numbers, set \texttt{scipen} to 9999 (this is
+the default). To ensure printouts are always exponential notation, set
+\texttt{scipen} to -9999. To demonstrate, below we multiply mean
+\texttt{YOB} by 10000.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 6, alter the likelihood of use of real}
+\CommentTok{\# number rather than scientific notation by 0}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{6}\NormalTok{, }\AttributeTok{scipen =} \DecValTok{0}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex multiplied by}
+\CommentTok{\# 100000, converted to data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB) }\SpecialCharTok{*} \FloatTok{1e+05}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex  Mean.YOB
+1   F 196348710
+2   M 197685660
+\end{verbatim}
+
+With \texttt{scipen} set to 0, we still get real numbers as the values
+\texttt{Mean.YOB} are not too big. To ensure we have real numbers,
+though, we change the \texttt{scipen} value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 6, alter the likelihood of use of real}
+\CommentTok{\# number rather than scientific notation by 9999}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{6}\NormalTok{, }\AttributeTok{scipen =} \DecValTok{9999}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex multiplied by}
+\CommentTok{\# 100000, converted to data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB) }\SpecialCharTok{*} \DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex Mean.YOB
+1   F 19634871
+2   M 19768566
+\end{verbatim}
+
+If, instead we prefer exponential notation, we use the maximum negative
+\texttt{scipen} value, -9999/
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 6, alter the likelihood of use of real}
+\CommentTok{\# number rather than scientific notation by {-}9999}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{6}\NormalTok{, }\AttributeTok{scipen =} \SpecialCharTok{{-}}\DecValTok{9999}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex multiplied by}
+\CommentTok{\# 100000, converted to data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB) }\SpecialCharTok{*} \DecValTok{10000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex    Mean.YOB
+1   F 1.96349e+07
+2   M 1.97686e+07
+\end{verbatim}
+
+Above, the value \texttt{1.96349e+07} means \(1.96349 \times 10^7\). The
+easiest way to calculate this is to simply move the decimal places 7
+spaces to the right (as the exponent is positive), which gives
+\texttt{19634900}. Notice some precision is lost because our number of
+\texttt{digits} is only 6.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 10, alter the likelihood of use of real}
+\CommentTok{\# number rather than scientific notation by {-}9999}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \FloatTok{1e+01}\NormalTok{, }\AttributeTok{scipen =} \SpecialCharTok{{-}}\FloatTok{9.999e+03}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex multiplied by}
+\CommentTok{\# 100000, converted to data frame}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB) }\SpecialCharTok{*} \FloatTok{1e+04}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex        Mean.YOB
+1   F 1.963487102e+07
+2   M 1.976856604e+07
+\end{verbatim}
+
+Now, with more \texttt{digits} we have more precision;
+\(1.963487102 \times 10^7 = 19634671.02\). If the exponential values are
+negative, move the decimal place to the left. For example,
+\(1.963487102 \times 10^-7 = 0.0000001963467102\).
+
+Similarly, we can set whether or not we want scientific notation using
+the \texttt{format()} function. The \texttt{scientific} option can be
+either \texttt{TRUE} or \texttt{FALSE}, or a value like \texttt{scipen}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change number of significant digits displayed}
+\CommentTok{\# to 3, alter the likelihood of use of real}
+\CommentTok{\# number rather than scientific notation by 9999}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \FloatTok{3e+00}\NormalTok{, }\AttributeTok{scipen =} \FloatTok{9.999e+03}\NormalTok{)}
+\CommentTok{\# Get mean year of birth by sex multiplied by}
+\CommentTok{\# 100000, converted to data frame, digits}
+\CommentTok{\# formatted to 10 significant digits, and}
+\CommentTok{\# exponential notation}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB) }\SpecialCharTok{*} \FloatTok{1e+04}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{format}\NormalTok{(}\AttributeTok{digits =} \FloatTok{1e+01}\NormalTok{, }\AttributeTok{scientific =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex        Mean.YOB
+1   F 1.963487102e+07
+2   M 1.976856604e+07
+\end{verbatim}
+
+\hypertarget{more-summary-statistics-for-continous-variables}{%
+\subsection{More Summary Statistics for Continous
+Variables}\label{more-summary-statistics-for-continous-variables}}
+
+The other summary statistics for continuous variables include spread
+functions and the range functions. Some spread functions are
+\texttt{sd()}, which returns the standard deviation; and \texttt{IQR()}
+which returns the interquartile range.\footnote{If we order the data
+  from lowest to highest values, 50\% of the data will be less than the
+  mean, and 50\% of the data will be higher than the mean. The mean is
+  also called the 2nd quartile. The first quartile is halfway between
+  the mean and the lowest value in the data. The third quartile is
+  halfway betwen the mean and the highest value in the data. The
+  interquartile range is the difference between the 3rd quartile and the
+  1st quartile and represents the spread of the middle 50\% of the data.}
+Some range functions include: \texttt{min()}, which returns the lowest
+value; \texttt{max()}, which returns the highest value. To find the
+maximum spread (from highest to lowest), we can either subtract the
+\texttt{min()} value from the \texttt{max()} value, or employ the
+\texttt{diff()} function plus the \texttt{range()} function (which
+produces a vector containing the minimum and maximum values).
+
+We can include these functions inside the same \texttt{summarize()}
+function as we used above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get mean, standard deviation, interquartile}
+\CommentTok{\# range, minimum value, maximum value, and range}
+\CommentTok{\# of values (twice) for year of birth}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean.YOB =} \FunctionTok{mean}\NormalTok{(YOB), }\AttributeTok{SD.YOB =} \FunctionTok{sd}\NormalTok{(YOB),}
+        \AttributeTok{IQR.YOB =} \FunctionTok{IQR}\NormalTok{(YOB), }\AttributeTok{Min.YOB =} \FunctionTok{min}\NormalTok{(YOB), }\AttributeTok{Max.YOB =} \FunctionTok{max}\NormalTok{(YOB),}
+        \AttributeTok{Range =} \FunctionTok{max}\NormalTok{(YOB) }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(YOB), }\AttributeTok{Range2 =} \FunctionTok{diff}\NormalTok{(}\FunctionTok{range}\NormalTok{(YOB)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 8
+  Sex   Mean.YOB SD.YOB IQR.YOB Min.YOB Max.YOB Range Range2
+  <fct>    <dbl>  <dbl>   <dbl>   <int>   <int> <int>  <int>
+1 F        1963.   26.5      45    1915    1999    84     84
+2 M        1977.   19.6      33    1921    1994    73     73
+\end{verbatim}
+
+Based on these values, we can make the following statements:
+
+\begin{itemize}
+\item
+  Among females in the (t, d) data, the average or mean year of birth is
+  1963 \(\pm\) 26.5 years.
+\item
+  The oldest female speakers was born in 1915, and the youngest female
+  speaker was born in 1999.
+\item
+  Fifty-percent of women were born in the 45 years centered around 1963.
+\item
+  The female data represents 84 years of
+  \href{https://en.wikipedia.org/wiki/Apparent-time_hypothesis}{apparent
+  time}.
+\end{itemize}
+
+\hypertarget{position-functions-with-summarize}{%
+\subsection{\texorpdfstring{Position functions with
+\texttt{summarize()}}{Position functions with summarize()}}\label{position-functions-with-summarize}}
+
+The position functions \texttt{first()}, \texttt{last()}, and
+\texttt{nth()} also work on the data created by \texttt{group\_by()} and
+\texttt{summarize()}. \texttt{first()} returns the first value,
+\texttt{last()} returns the last value, and \texttt{nth()} returns the
+value after a specific number of rows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get first six rows of just Sex and Dep.Var}
+\CommentTok{\# columns of td}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  Sex  Dep.Var
+1   F Realized
+2   F Deletion
+3   F Deletion
+4   F Deletion
+5   M Realized
+6   M Deletion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get last six rows of just Sex and Dep.Var}
+\CommentTok{\# columns of td}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{tail}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     Sex  Dep.Var
+1184   F Realized
+1185   F Realized
+1186   F Realized
+1187   M Realized
+1188   M Deletion
+1189   M Realized
+\end{verbatim}
+
+Above we use the \texttt{select()} function to choose just the
+\texttt{Sex} and \texttt{Dep.Var} columns and run the \texttt{head()}
+and \texttt{tail()} functions in order to see the first and last six
+values for both in the data. We do this just for comparisons sake. Now,
+lets use the position functions an compare them to our results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get first, last, second, and second to last}
+\CommentTok{\# value of Dep.Var by Sex}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{First =} \FunctionTok{first}\NormalTok{(Dep.Var), }\AttributeTok{Last =} \FunctionTok{last}\NormalTok{(Dep.Var),}
+        \AttributeTok{Second =} \FunctionTok{nth}\NormalTok{(Dep.Var, }\DecValTok{2}\NormalTok{), }\AttributeTok{Second.Last =} \FunctionTok{nth}\NormalTok{(Dep.Var,}
+            \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 5
+  Sex   First    Last     Second   Second.Last
+  <fct> <fct>    <fct>    <fct>    <fct>      
+1 F     Realized Realized Deletion Realized   
+2 M     Realized Realized Deletion Deletion   
+\end{verbatim}
+
+Compare the male values with those from the \texttt{head()} and
+\texttt{tail()} functions above. The first (row 5) is \texttt{Realized},
+the last (row 1198) is \texttt{Realized}. The second (row 6) is
+\texttt{Deletion}, and the second to last (row 1188) is also
+\texttt{Deletion}.
+
+\hypertarget{count-functions-with-summarize}{%
+\subsubsection{\texorpdfstring{Count functions with
+\texttt{summarize()}}{Count functions with summarize()}}\label{count-functions-with-summarize}}
+
+We've already looked at \texttt{n()} above, but there is also the
+\texttt{n\_distinct()} function, which reports the number of distinct
+values. We can use this, for example, to find the number of speakers in
+each social category. To do this using base \emph{R} filtering is a lot
+more complicated to code (so much so its not even worth doing). One
+example is shown below. It would need to be repeated for every
+combination of sex, education, and age group.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example using base R filtering, finding the}
+\CommentTok{\# number of unique speakers who are female,}
+\CommentTok{\# educated, and middle aged}
+
+\FunctionTok{n\_distinct}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Speaker[td}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"F"} \SpecialCharTok{\&}\NormalTok{ td}\SpecialCharTok{$}\NormalTok{Education }\SpecialCharTok{==}
+    \StringTok{"Educated"} \SpecialCharTok{\&}\NormalTok{ td}\SpecialCharTok{$}\NormalTok{Age.Group }\SpecialCharTok{==} \StringTok{"Middle"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Much easier way to find number of unique}
+\CommentTok{\# speakers for every combination of Sex,}
+\CommentTok{\# Education, and Age. Group}
+
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Education, Age.Group) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Speaker.Count =} \FunctionTok{n\_distinct}\NormalTok{(Speaker)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 12 x 4
+# Groups:   Sex, Education [6]
+   Sex   Education    Age.Group Speaker.Count
+   <fct> <fct>        <fct>             <int>
+ 1 F     Educated     Old                   1
+ 2 F     Educated     Middle               12
+ 3 F     Educated     Young                 3
+ 4 F     Not Educated Old                   6
+ 5 F     Not Educated Middle                1
+ 6 F     Student      Young                11
+ 7 M     Educated     Middle                3
+ 8 M     Educated     Young                 6
+ 9 M     Not Educated Old                   5
+10 M     Not Educated Middle                7
+11 M     Not Educated Young                 3
+12 M     Student      Young                 8
+\end{verbatim}
+
+You'll notice that there are is no value for older educated males. This
+is because there are no speakers in the data from this group.
+
+\hypertarget{logical-functions}{%
+\subsubsection{Logical functions}\label{logical-functions}}
+
+The two logical functions only work on data that is logical (i.e., is
+\texttt{TRUE} or \texttt{FALSE}). \texttt{any()} returns the answer to
+the question ``Are any values \texttt{TRUE}?'' and \texttt{all()}
+returns the answer to the question ``Are all values \texttt{TRUE}?''.
+There are no logical values in the \texttt{td} data set, so lets make
+some as an example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a new column in which all values are}
+\CommentTok{\# FALSE}
+\NormalTok{td}\SpecialCharTok{$}\NormalTok{Logical.Test }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
+\CommentTok{\# Modify the new column so for any tokens from}
+\CommentTok{\# young female speakers are coded as TRUE instead}
+\CommentTok{\# of FALSE}
+\NormalTok{td}\SpecialCharTok{$}\NormalTok{Logical.Test[td}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"F"} \SpecialCharTok{\&}\NormalTok{ td}\SpecialCharTok{$}\NormalTok{Age.Group }\SpecialCharTok{==} \StringTok{"Young"}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+
+\CommentTok{\# Get logical value (TRUE or FALSE) of whether}
+\CommentTok{\# any tokens and all tokens of Logical.Test are}
+\CommentTok{\# TRUE, by Sex}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Any.True =} \FunctionTok{any}\NormalTok{(Logical.Test), }\AttributeTok{All.True =} \FunctionTok{all}\NormalTok{(Logical.Test))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 3
+  Sex   Any.True All.True
+  <fct> <lgl>    <lgl>   
+1 F     TRUE     FALSE   
+2 M     FALSE    FALSE   
+\end{verbatim}
+
+Above we created a logical column in which only tokens from young
+females are set to \texttt{TRUE}. The \texttt{any()} function returns
+\texttt{TRUE} for \texttt{F} but not for \texttt{M} because there is at
+least one \texttt{TRUE} value in the female data. Conversely, the
+\texttt{all()} function returns \texttt{FALSE} for \texttt{F} because
+not all of the female values are \texttt{TRUE}.
+
+\hypertarget{proportions}{%
+\subsection{Proportions}\label{proportions}}
+
+Finding out the proportion of a variant is just like finding out the
+number of tokens. Using the base \emph{R} methods, you simply wrap the
+\texttt{table()} function in a \texttt{prop.table()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Deletion Realized 
+   0.325    0.675 
+\end{verbatim}
+
+Usually proportions are expressed as hundredths. To force \emph{R} to
+express numbers in hundredths, you can use the \texttt{options()}
+function to set the number of significant digits displayed to two.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Display values rounded to nearest hundredth.}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# Proportion of each level of Dep.Var}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Deletion Realized 
+    0.32     0.68 
+\end{verbatim}
+
+In the example above there is only one dimension: \texttt{Dep.Var}. The
+\texttt{prop.table()} outer function takes the \texttt{table()} inner
+function and divides the number of tokens in each cell by some total
+(e.g.~denominator). The default denominator is the total number of
+tokens in the whole table. Because, in the example above, the total
+number of tokens in the one dimension table is the same as the total
+number of \texttt{Dep.Var} tokens, you don't need to specify anything
+further. In the example below, however, there are two dimensions:
+\texttt{Dep.Var} and \texttt{Age.Group}. If you do not specify which
+total to use as a denominator, the proportions expressed use the total
+number of tokens in the table as the denominator.\footnote{You'll notice
+  that the values in this table are expressed in thousandths instead of
+  hundredths. This is because the proportion for \texttt{Deletion} and
+  \texttt{Old} tokens requires three decimal places to have two
+  meaningful digits.} If you want to know the percentage of deletion
+tokens that come from \texttt{Young}, \texttt{Middle} and \texttt{Old}
+speakers, you set \texttt{margin\ =\ 1}, meaning that you want the total
+(e.g., denominator) to be the sum of the tokens for the first variable
+in the function, (e.g., rows total). If instead you want to know the
+percentage of \texttt{Young} tokens (or \texttt{Middle} tokens, or
+\texttt{Old} tokens) that are \texttt{Deletion}, and the percentage that
+are \texttt{Realized}, you set \texttt{margin\ =\ 2}, or rather set the
+denominator to the sum of the second factor group in the function (e.g.,
+column total). This follows \emph{R}'s global pattern of rows, columns,
+page 1, page 2, etc. You can verify this by adding up the proportions in
+each table below. In the first table all of the proportions add up to 1.
+In the second table, on the other hand, the proportions add up to 1
+going across the rows. In the third table they add up to 1 going down
+the columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var and}
+\CommentTok{\# Age.Group (all values sum to 1)}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          
+             Old Middle Young
+  Deletion 0.056  0.105 0.163
+  Realized 0.113  0.198 0.365
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Age.Group for each}
+\CommentTok{\# level of Dep.Var (each row sums to 1)}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group), }\AttributeTok{margin =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          
+            Old Middle Young
+  Deletion 0.17   0.32  0.50
+  Realized 0.17   0.29  0.54
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var for each}
+\CommentTok{\# level of Age.Group (each column sums to 1)}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Dep.Var, td}\SpecialCharTok{$}\NormalTok{Age.Group), }\AttributeTok{margin =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          
+            Old Middle Young
+  Deletion 0.33   0.35  0.31
+  Realized 0.67   0.65  0.69
+\end{verbatim}
+
+In order to achieve the three-dimension cross-tabs you get from
+\emph{Goldvarb}, with one dependent variable and two independent
+variables, you must set up the \texttt{prop.table(table())} function
+with your variables in the following order: \emph{independent variable
+1}, \emph{independent variable 2}, \emph{dependent variable}. You must
+also specify a particular \texttt{margin}, e.g., denominator. In a
+\emph{Goldvarb}-style cross-tab each cell is the number of tokens for
+one level of the dependent variable (e.g., the application or
+non-application value) divided by the total number of tokens for that
+cell. In an \emph{R} proportion table the total number of tokens per
+cell is the number of tokens for the value of the row and the column at
+the same time --- not the row total, or the column total. To specify
+that you want the denominator to be the cell total you set \emph{margin
+= c(1,2)}, where the \texttt{c()} concatenating function specifies both
+row (1) and column (2). The result is a separate page for proportions of
+each level of \texttt{Dep.Var}. The proportions for the corresponding
+cells in each page add up to 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var for each}
+\CommentTok{\# level of Age.Group and Sex (all corresponding}
+\CommentTok{\# cells sum to 1)}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Dep.Var),}
+    \AttributeTok{margin =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, ,  = Deletion
+
+        
+            F    M
+  Old    0.29 0.47
+  Middle 0.31 0.43
+  Young  0.27 0.34
+
+, ,  = Realized
+
+        
+            F    M
+  Old    0.71 0.53
+  Middle 0.69 0.57
+  Young  0.73 0.66
+\end{verbatim}
+
+You can keep adding factor groups to your proportion table, but you must
+do two things. You must keep the dependent variable, \texttt{Dep.Var},
+as the rightmost variable in the function, and you must include all the
+other variables in the margin specification. For example, below you add
+\texttt{Education} as the third variable, and add 3 to the margin
+specification. There will be a separate page for each combination of the
+levels of \texttt{Education} and \texttt{Dep.Var}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var for each}
+\CommentTok{\# level of Age.Group, Sex and Education}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Education,}
+\NormalTok{    td}\SpecialCharTok{$}\NormalTok{Dep.Var), }\AttributeTok{margin =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, ,  = Educated,  = Deletion
+
+        
+             F     M
+  Old    0.062      
+  Middle 0.308 0.348
+  Young  0.278 0.384
+
+, ,  = Not Educated,  = Deletion
+
+        
+             F     M
+  Old    0.347 0.471
+  Middle 0.294 0.474
+  Young        0.436
+
+, ,  = Student,  = Deletion
+
+        
+             F     M
+  Old               
+  Middle            
+  Young  0.261 0.282
+
+, ,  = Educated,  = Realized
+
+        
+             F     M
+  Old    0.938      
+  Middle 0.692 0.652
+  Young  0.722 0.616
+
+, ,  = Not Educated,  = Realized
+
+        
+             F     M
+  Old    0.653 0.529
+  Middle 0.706 0.526
+  Young        0.564
+
+, ,  = Student,  = Realized
+
+        
+             F     M
+  Old               
+  Middle            
+  Young  0.739 0.718
+\end{verbatim}
+
+Again, you can make these larger tables easier to read by flattening the
+pages using \texttt{ftable()}. Here the \texttt{NaN} means there is no
+data in the cell.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Proportion of each level of Dep.Var for each}
+\CommentTok{\# level of Age.Group, Sex and Education,}
+\CommentTok{\# presented as a flattened table. Here the \textasciigrave{}NaN\textquotesingle{}}
+\CommentTok{\# just means there is no data in the cell.}
+\FunctionTok{library}\NormalTok{(vcd)}
+\FunctionTok{ftable}\NormalTok{(}\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Age.Group, td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Education,}
+\NormalTok{    td}\SpecialCharTok{$}\NormalTok{Dep.Var), }\AttributeTok{margin =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                       Deletion Realized
+                                        
+Old    F Educated         0.062    0.938
+         Not Educated     0.347    0.653
+         Student            NaN      NaN
+       M Educated           NaN      NaN
+         Not Educated     0.471    0.529
+         Student            NaN      NaN
+Middle F Educated         0.308    0.692
+         Not Educated     0.294    0.706
+         Student            NaN      NaN
+       M Educated         0.348    0.652
+         Not Educated     0.474    0.526
+         Student            NaN      NaN
+Young  F Educated         0.278    0.722
+         Not Educated       NaN      NaN
+         Student          0.261    0.739
+       M Educated         0.384    0.616
+         Not Educated     0.436    0.564
+         Student          0.282    0.718
+\end{verbatim}
+
+There are a number of functions specifically designed to create
+cross-tables that are somewhat easier to use, but can be somewhat less
+flexible. Generally, they are most useful for one independent variable
+and one dependent variable. I tend to use the \texttt{CrossTable()}
+function from the \texttt{gmodels} package frequently.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load gmodels}
+\FunctionTok{library}\NormalTok{(gmodels)}
+
+\CommentTok{\# Generate cross tab of Sex and Dep.Var in which}
+\CommentTok{\# the row proportions are displayed, but table}
+\CommentTok{\# proportions, column proportions, and}
+\CommentTok{\# contribution to chi{-}square are suppressed, with}
+\CommentTok{\# 0 decimal values displayed, and missing}
+\CommentTok{\# combinations included.}
+\FunctionTok{CrossTable}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Sex, td}\SpecialCharTok{$}\NormalTok{Dep.Var, }\AttributeTok{prop.r =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prop.c =} \ConstantTok{FALSE}\NormalTok{,}
+    \AttributeTok{prop.t =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{prop.chisq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{format =} \StringTok{"SPSS"}\NormalTok{,}
+    \AttributeTok{digits =} \DecValTok{0}\NormalTok{, }\AttributeTok{missing.include =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+   Cell Contents
+|-------------------------|
+|                   Count |
+|             Row Percent |
+|-------------------------|
+
+Total Observations in Table:  1189 
+
+             | td$Dep.Var 
+      td$Sex | Deletion  | Realized  | Row Total | 
+-------------|-----------|-----------|-----------|
+           F |      188  |      471  |      659  | 
+             |       29% |       71% |       55% | 
+-------------|-----------|-----------|-----------|
+           M |      198  |      332  |      530  | 
+             |       37% |       63% |       45% | 
+-------------|-----------|-----------|-----------|
+Column Total |      386  |      803  |     1189  | 
+-------------|-----------|-----------|-----------|
+
+ 
+\end{verbatim}
+
+For the \texttt{CrossTable()} function you can set the denominator to
+row total with the option \texttt{prop.r=TRUE}. If instead you wanted to
+the proportion by column, you set \texttt{prop.c\ =\ TRUE}, and if you
+want the proportion across the entire table you can set
+\texttt{prop.t\ =\ TRUE}. You can actually set all of these to
+\texttt{TRUE} to get all three. There are other values that can be
+generated, including values for calculating chi-square (see the
+\texttt{CrossTable()} documentation
+\href{https://www.rdocumentation.org/packages/gmodels/versions/2.18.1.1/topics/CrossTable}{here}).
+The above code includes the minimal number of options needed to generate
+the type of cross-table we generally want.
+
+To produce proportions using the \texttt{tidy} method, we combine the
+\texttt{group\_by()} and \texttt{summarize()} functions with the
+\texttt{mutate()} discussed in an
+\href{https://lingmethodshub.github.io/content/R/lvc_r/040_lvcr.html}{earlier
+section}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate tibble of combination of Sex and}
+\CommentTok{\# Dep.Var with token counts and proportion of}
+\CommentTok{\# each level of Dep.Var by Sex}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Dep.Var) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop =}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 4 x 4
+# Groups:   Sex [2]
+  Sex   Dep.Var  Count  Prop
+  <fct> <fct>    <int> <dbl>
+1 F     Deletion   188 0.285
+2 F     Realized   471 0.715
+3 M     Deletion   198 0.374
+4 M     Realized   332 0.626
+\end{verbatim}
+
+After grouping the data by \texttt{Sex} and \texttt{Dep.Var}, we create
+a new column \texttt{Count} with values equal to the number of tokens
+for the particular combination, then we create a new column using
+\texttt{mutate()} and a math equation to generate proportions. It is
+important here that your dependent variable \texttt{Dep.Var} is the last
+grouping variable. If we change the order, instead of generating the
+proportion of \texttt{Realized} and \texttt{Deletion} tokens, it will
+instead return the percentage of \texttt{Realized} tokens that are
+\texttt{M} and the percentage that are \texttt{F}, which is the
+incorrect denominator for our purposes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate tibble of combination of Dep.Var and}
+\CommentTok{\# Sex with token counts and proportion of each}
+\CommentTok{\# level of Sex by Dep.Var}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Dep.Var, Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop =}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 4 x 4
+# Groups:   Dep.Var [2]
+  Dep.Var  Sex   Count  Prop
+  <fct>    <fct> <int> <dbl>
+1 Deletion F       188 0.487
+2 Deletion M       198 0.513
+3 Realized F       471 0.587
+4 Realized M       332 0.413
+\end{verbatim}
+
+Unlike the \texttt{CrossTable()} function, we can include multiple
+independent variables. To include every combination (including those for
+which there are no tokens), we can add \texttt{.drop\ =\ FALSE} to the
+\texttt{group\_by()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate tibble of combination of Sex,}
+\CommentTok{\# Edcuation, Age.Group, and Dep.Var with all}
+\CommentTok{\# combinations included, with token counts and}
+\CommentTok{\# proportion of each level of Dep.Var by each}
+\CommentTok{\# combination of other variables}
+\NormalTok{td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Education, Age.Group, Dep.Var, }\AttributeTok{.drop =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop =}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 36 x 6
+# Groups:   Sex, Education, Age.Group [18]
+   Sex   Education    Age.Group Dep.Var  Count     Prop
+   <fct> <fct>        <fct>     <fct>    <int>    <dbl>
+ 1 F     Educated     Old       Deletion     2   0.0625
+ 2 F     Educated     Old       Realized    30   0.938 
+ 3 F     Educated     Middle    Deletion    68   0.308 
+ 4 F     Educated     Middle    Realized   153   0.692 
+ 5 F     Educated     Young     Deletion    20   0.278 
+ 6 F     Educated     Young     Realized    52   0.722 
+ 7 F     Not Educated Old       Deletion    41   0.347 
+ 8 F     Not Educated Old       Realized    77   0.653 
+ 9 F     Not Educated Middle    Deletion     5   0.294 
+10 F     Not Educated Middle    Realized    12   0.706 
+11 F     Not Educated Young     Deletion     0 NaN     
+12 F     Not Educated Young     Realized     0 NaN     
+13 F     Student      Old       Deletion     0 NaN     
+14 F     Student      Old       Realized     0 NaN     
+15 F     Student      Middle    Deletion     0 NaN     
+16 F     Student      Middle    Realized     0 NaN     
+17 F     Student      Young     Deletion    52   0.261 
+18 F     Student      Young     Realized   147   0.739 
+19 M     Educated     Old       Deletion     0 NaN     
+20 M     Educated     Old       Realized     0 NaN     
+21 M     Educated     Middle    Deletion    16   0.348 
+22 M     Educated     Middle    Realized    30   0.652 
+23 M     Educated     Young     Deletion    48   0.384 
+24 M     Educated     Young     Realized    77   0.616 
+25 M     Not Educated Old       Deletion    24   0.471 
+26 M     Not Educated Old       Realized    27   0.529 
+27 M     Not Educated Middle    Deletion    36   0.474 
+28 M     Not Educated Middle    Realized    40   0.526 
+29 M     Not Educated Young     Deletion    24   0.436 
+30 M     Not Educated Young     Realized    31   0.564 
+31 M     Student      Old       Deletion     0 NaN     
+32 M     Student      Old       Realized     0 NaN     
+33 M     Student      Middle    Deletion     0 NaN     
+34 M     Student      Middle    Realized     0 NaN     
+35 M     Student      Young     Deletion    50   0.282 
+36 M     Student      Young     Realized   127   0.718 
+\end{verbatim}
+
+Notice that for the missing combinations the \texttt{count()} is 0, and
+the percentage is \texttt{NaN}, which stands for ``not a number'', the
+result of trying to divide 0 by something. \texttt{NaN} is similar to
+\texttt{NA}, but \texttt{NA} stands for ``no data'', and is used for
+empty cells.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Assign the tibble generated in the previous}
+\CommentTok{\# code to an object called results}
+\NormalTok{results }\OtherTok{\textless{}{-}}\NormalTok{ td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Education, Age.Group, Dep.Var, }\AttributeTok{.drop =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop =}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count))}
+
+\CommentTok{\# Recode all NaN in results to 0}
+\NormalTok{results}\SpecialCharTok{$}\NormalTok{Prop[}\FunctionTok{is.nan}\NormalTok{(results}\SpecialCharTok{$}\NormalTok{Prop)] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\CommentTok{\# Print results}
+\FunctionTok{print}\NormalTok{(results, }\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 36 x 6
+# Groups:   Sex, Education, Age.Group [18]
+   Sex   Education    Age.Group Dep.Var  Count   Prop
+   <fct> <fct>        <fct>     <fct>    <int>  <dbl>
+ 1 F     Educated     Old       Deletion     2 0.0625
+ 2 F     Educated     Old       Realized    30 0.938 
+ 3 F     Educated     Middle    Deletion    68 0.308 
+ 4 F     Educated     Middle    Realized   153 0.692 
+ 5 F     Educated     Young     Deletion    20 0.278 
+ 6 F     Educated     Young     Realized    52 0.722 
+ 7 F     Not Educated Old       Deletion    41 0.347 
+ 8 F     Not Educated Old       Realized    77 0.653 
+ 9 F     Not Educated Middle    Deletion     5 0.294 
+10 F     Not Educated Middle    Realized    12 0.706 
+11 F     Not Educated Young     Deletion     0 0     
+12 F     Not Educated Young     Realized     0 0     
+13 F     Student      Old       Deletion     0 0     
+14 F     Student      Old       Realized     0 0     
+15 F     Student      Middle    Deletion     0 0     
+16 F     Student      Middle    Realized     0 0     
+17 F     Student      Young     Deletion    52 0.261 
+18 F     Student      Young     Realized   147 0.739 
+19 M     Educated     Old       Deletion     0 0     
+20 M     Educated     Old       Realized     0 0     
+21 M     Educated     Middle    Deletion    16 0.348 
+22 M     Educated     Middle    Realized    30 0.652 
+23 M     Educated     Young     Deletion    48 0.384 
+24 M     Educated     Young     Realized    77 0.616 
+25 M     Not Educated Old       Deletion    24 0.471 
+26 M     Not Educated Old       Realized    27 0.529 
+27 M     Not Educated Middle    Deletion    36 0.474 
+28 M     Not Educated Middle    Realized    40 0.526 
+29 M     Not Educated Young     Deletion    24 0.436 
+30 M     Not Educated Young     Realized    31 0.564 
+31 M     Student      Old       Deletion     0 0     
+32 M     Student      Old       Realized     0 0     
+33 M     Student      Middle    Deletion     0 0     
+34 M     Student      Middle    Realized     0 0     
+35 M     Student      Young     Deletion    50 0.282 
+36 M     Student      Young     Realized   127 0.718 
+\end{verbatim}
+
+The easiest way to convert \texttt{NaN} (or \texttt{Na}) to 0 is to
+assign the above to a variable, then replace \texttt{NaN} with 0 using
+the function \texttt{is.nan()}. If there were \texttt{NA} values, you
+can do the same thing as above, but replace \texttt{is.nan()} with
+\texttt{is.na()}
+
+When we report proportions in sociolinguistics manuscripts, we often
+only report the proportion of one level of the dependent variable
+(called the application value). To only display one of the two levels of
+\texttt{Dep.Var} --- for instance, if we just want to show the rates of
+\texttt{Deletion}, which we might decide is our application value --- we
+can use the \texttt{subset()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create the results object, but subsetted to}
+\CommentTok{\# include only Deletion tokens}
+\NormalTok{results }\OtherTok{\textless{}{-}}\NormalTok{ td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Education, Age.Group, Dep.Var, }\AttributeTok{.drop =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop =}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{subset}\NormalTok{(Dep.Var }\SpecialCharTok{==} \StringTok{"Deletion"}\NormalTok{)}
+
+\CommentTok{\# Recode NaN to 0}
+\NormalTok{results}\SpecialCharTok{$}\NormalTok{Prop[}\FunctionTok{is.nan}\NormalTok{(results}\SpecialCharTok{$}\NormalTok{Prop)] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\CommentTok{\# Print results}
+\FunctionTok{print}\NormalTok{(results, }\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 18 x 6
+# Groups:   Sex, Education, Age.Group [18]
+   Sex   Education    Age.Group Dep.Var  Count   Prop
+   <fct> <fct>        <fct>     <fct>    <int>  <dbl>
+ 1 F     Educated     Old       Deletion     2 0.0625
+ 2 F     Educated     Middle    Deletion    68 0.308 
+ 3 F     Educated     Young     Deletion    20 0.278 
+ 4 F     Not Educated Old       Deletion    41 0.347 
+ 5 F     Not Educated Middle    Deletion     5 0.294 
+ 6 F     Not Educated Young     Deletion     0 0     
+ 7 F     Student      Old       Deletion     0 0     
+ 8 F     Student      Middle    Deletion     0 0     
+ 9 F     Student      Young     Deletion    52 0.261 
+10 M     Educated     Old       Deletion     0 0     
+11 M     Educated     Middle    Deletion    16 0.348 
+12 M     Educated     Young     Deletion    48 0.384 
+13 M     Not Educated Old       Deletion    24 0.471 
+14 M     Not Educated Middle    Deletion    36 0.474 
+15 M     Not Educated Young     Deletion    24 0.436 
+16 M     Student      Old       Deletion     0 0     
+17 M     Student      Middle    Deletion     0 0     
+18 M     Student      Young     Deletion    50 0.282 
+\end{verbatim}
+
+Finally, if we also want to add the total number of tokens per category
+(something we usually report alongside the application value) we can add
+another column using \texttt{mutate()}. Also, if we want the percentage
+instead of proportion, we can add \texttt{100\ *} to the proportion
+equation (as percentage is proportion \(\times 100\))
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate results object with percentage instead}
+\CommentTok{\# of proportion and a column with total tokens}
+\CommentTok{\# per combination.}
+\NormalTok{results }\OtherTok{\textless{}{-}}\NormalTok{ td }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex, Education, Age.Group, Dep.Var, }\AttributeTok{.drop =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Percentage =} \DecValTok{100} \SpecialCharTok{*}\NormalTok{ Count}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(Count), }\AttributeTok{Total.N =} \FunctionTok{sum}\NormalTok{(Count)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{subset}\NormalTok{(Dep.Var }\SpecialCharTok{==} \StringTok{"Deletion"}\NormalTok{)}
+
+\CommentTok{\# Recode NaN to 0}
+\NormalTok{results}\SpecialCharTok{$}\NormalTok{Percentage[}\FunctionTok{is.nan}\NormalTok{(results}\SpecialCharTok{$}\NormalTok{Percentage)] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\CommentTok{\# Print results}
+\FunctionTok{print}\NormalTok{(results, }\AttributeTok{n =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 18 x 7
+# Groups:   Sex, Education, Age.Group [18]
+   Sex   Education    Age.Group Dep.Var  Count Percentage Total.N
+   <fct> <fct>        <fct>     <fct>    <int>      <dbl>   <int>
+ 1 F     Educated     Old       Deletion     2       6.25      32
+ 2 F     Educated     Middle    Deletion    68      30.8      221
+ 3 F     Educated     Young     Deletion    20      27.8       72
+ 4 F     Not Educated Old       Deletion    41      34.7      118
+ 5 F     Not Educated Middle    Deletion     5      29.4       17
+ 6 F     Not Educated Young     Deletion     0       0          0
+ 7 F     Student      Old       Deletion     0       0          0
+ 8 F     Student      Middle    Deletion     0       0          0
+ 9 F     Student      Young     Deletion    52      26.1      199
+10 M     Educated     Old       Deletion     0       0          0
+11 M     Educated     Middle    Deletion    16      34.8       46
+12 M     Educated     Young     Deletion    48      38.4      125
+13 M     Not Educated Old       Deletion    24      47.1       51
+14 M     Not Educated Middle    Deletion    36      47.4       76
+15 M     Not Educated Young     Deletion    24      43.6       55
+16 M     Student      Old       Deletion     0       0          0
+17 M     Student      Middle    Deletion     0       0          0
+18 M     Student      Young     Deletion    50      28.2      177
+\end{verbatim}
+
+The above results show that there are 32 tokens from old, educated
+females, 2 of which (or 6.25\%) are \texttt{Deletion}.
+
+
+
+\end{document}
