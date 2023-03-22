@@ -1,7 +1,6 @@
 citation:
   volume: "Doing LVC with R"
   volume-title: "Doing LVC with R"
-  author: "Matt Hunt Gardner"
   collection-title: "Linguistics Methods Hub"
   container-title: "Linguistics Methods Hub"
 
@@ -17,5 +16,28 @@ author:
         department: Linguistics, Philology, & Phonetics
         city: Oxford
         country: UK
+
+format: 
+  html:
+    code-overflow: scroll
+  pdf:
+    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
+    keep-tex: true
+    latex-auto-install: false
+    documentclass: article
+    classoption: [10pt, letterpaper]
+    toc: true
+    geometry:
+      - margin = 1in
+    mainfont: Charis SIL
+    mathfont: Monaco
+    momofont: Monaco
+    colorlinks: true
+    links-as-notes: true
+    reference-location: section
+    include-in-header: 
+      - Data/latex-packages.tex
+filters:
+  - parse-latex
 
 doi: "10.5281/zenodo.7160718"  
