@@ -1,0 +1,252 @@
+---
+title: "The Data, with Examples"
+date: "2022-9-27"
+license: "CC-BY-SA 4.0"
+description: "Download the (t,d) deletion data and listen to several examples."
+bibliography: references.bib
+---
+
+Throughout this tutorial you will be using data adapted from @Gardner2017. Here is where you can download that data and listen to a few examples.
+
+# Download Data
+
+You can download the data here: <https://www.dropbox.com/s/pi8xz1kuo6cz60l/deletiondata.txt>
+
+# Example Audiofiles
+
+In the following examples, instances of word-final (t,d) have been transcribed using symbols from the [International Phonetic Alphabet](https://www.internationalphoneticassociation.org/content/full-ipa-chart). Any errors in transcription are my own.
+
+-   \[t\] indicates a released (but not aspirated) voiceless alveolar stop.
+
+-   \[d\] indicates a released voiced alveolar stop.
+
+-   \[tʰ\] indicates a released and aspirated voiceless alveolar stop.
+
+-   \[t͡θ\] indicates \[t\] with a voiceless interdental fricative \[θ\] release.
+
+-   \[t͡ð\] indicates \[t\] with a voiced interdental fricative \[ð\] release.
+
+-   \[t͡s\] indicates \[t\] with a voiceless alveloar fricative \[s\] release.
+
+-   \[t͡ʃ\] indicates a \[t\] with a voiceless post-alveloar fricative \[ʃ\] release.
+
+-   \[d͡θ\] indicates \[d\] with voiceless interdental fricative \[θ\] release.
+
+-   \[d͡ð\] indicates \[d\] with voiced interdental fricative \[ð\] release.
+
+-   [θ̱̲] indicates an apico-alveolar "slit" fricative [see @Gardner2013] without total occlusion.
+
+-   \[∅\] indicates deletion or no audible release.
+
+-   \[ɾ\] indicates an voiced alveolar tap/flap.
+
+-   \[ʔ\] indicates a glottal stop.
+
+## Example 1
+
+This example comes from a Cape Breton woman born in 1937.
+
+<figure>
+
+<figcaption>Sleeping in Grandma's Bed:</figcaption>
+
+<audio controls src="https://www.dropbox.com/s/p757zog9eloxcwz/GARF39-Extract.wav?raw=1">
+
+<a href="https://www.dropbox.com/s/p757zog9eloxcwz/GARF39-Extract.wav?raw=1"> Download audio </a>
+
+</audio>
+
+</figure>
+
+> **Woman 1:** Well, she was since dea\[∅\]. An\[∅\] I remember the firs\[∅\] nigh-\[ɾ\]I slep\[∅\] in there, I woke up a couple of times with the feeling of something going like this on the be\[d\]. An\[∅\] I tol\[∅\] Nana the nex\[∅\] mornining. I wasn'\[∅\] scared, because a\[∅\] that age, you're no-\[t͡s\]cared. Like, you know? And I tol\[∅\] her an\[∅\] she sai-\[ɾ\]"Oh," she sai-"\[d͡ð\]at was jus\[∅\] Grandma coming back,\<...\> upse\[ʔ\] you were sleeping in her be\[ʔ\]. Bu\[ʔ\], I don'\[∅\] know if that's wha-\[ɾ\]i\[ʔ\] was, or if she was coming in to check on me an\[∅\] I didn'\[∅\] wake up. I don'\[∅\] know. Like, you know, bu\[ʔ\] tha\[ʔ\] use-\[ɾ\]o be the ol\[∅\] battle axe's room anyway.
+
+## Example 2
+
+This example comes from a Cape Breton woman born in 1922. Present also is the same woman born in 1937 from Example 1.
+
+<figure>
+
+<figcaption>Squirt & Shirmp:</figcaption>
+
+<audio controls src="https://www.dropbox.com/s/nkawq8fbmagtugg/GREF22-Extract.wav?raw=1">
+
+<a href="https://www.dropbox.com/s/nkawq8fbmagtugg/GREF22-Extract.wav?raw=1"> Download audio </a>
+
+</audio>
+
+</figure>
+
+> **Woman 1:** (laugh) And tha\[∅\] was a, tha\[ʔ\] was qui-\[ɾ\]a jaun-\[t͡ð\]en.
+
+> **Woman 2:** An\[∅\] your uncle, your Uncle Frank, who was the younges\[∅\], um, like I sai\[d\], he was only nineteen, but he woul\[d\] be a teenager and he was ah, a Boy Scou\[θ̱̲\]. An\[∅\] he was overseas an\[d\], with the Scouts. An\[∅\] when he came back, he ha\[d\] little farm animals for me, 'cause I remember I was at Napean Stree\[∅\] then when -
+
+> **Woman 1:** Mm-hm.
+
+> **Woman 2:** A-\[t͡ð\]e time he came back.
+
+> **Woman 1:** Mm-hm.
+
+> **Woman 2:** You know? Bu\[t\], when he use\[ɾ\]o come over to our place, back in the wha\[ʔ\], there was a place for the coal, a building for the coal. Coal house we calle-\[ɾ\]i\[ʔ\]. An-\[t͡ð\]e back of tha\[∅\], an\[∅\] of course, they were bran bags then, he ma\[d\]e a partition, like a house, you know, kin-\[ɾ\]of buil\[t\] onto the back. An\[∅\] he ha-\[t\]wo rooms in i\[ʔ\]. And I was Squir\[ʔ\] an\[∅\] my sister was, was Shrimp, Squir\[∅\] an\[∅\] Shrimp.
+
+> **Interviewer:** (laugh)
+
+> **Woman 1:** (laugh)
+
+> **Woman 2:** An\[∅\], an\[∅\] "Don'\[t͡ʃ\]ou fool your Uncle Dudley." he use\[∅\] to say.
+
+> **Woman 1:** Uncle Dudley. (laugh)
+
+## Example 3
+
+This example comes from a Cape Breton woman born in 1953.
+
+<figure>
+
+<figcaption>Games with Friends:</figcaption>
+
+<audio controls src="https://www.dropbox.com/s/aq9fiqyalqoyutu/LATF53-Extract.wav?raw=1">
+
+<a href="https://www.dropbox.com/s/aq9fiqyalqoyutu/LATF53-Extract.wav?raw=1"> Download audio </a>
+
+</audio>
+
+</figure>
+
+> **Woman 3:** Bu-\[ɾ\]I think people see, I think people see drinking as a, as a recreation.
+
+> **Interviewer:** Right.
+
+> **Woman 3:** They, they ge\[ʔ\], even if, I use-\[t\]o entertain a\[ʔ\] leas\[tʰ\], anywhere from eigh-\[t\]o ten times a month.
+
+> **Interviewer:** Mm-hm.
+
+> **Woman 3:** We'\[d\] ge-\[tʰ\]ogether for dinner and we'\[ɾ\] have friends in. We'\[ɾ\] have a game, we ha-\[ɾ\]a boar\[d\] game tha\[ʔ\] we invente-\[t\]It was calle\[∅\] Marbles. I\[ʔ\] was almos\[∅\] like Trouble.
+
+> **Interviewer:** Yeah, yeah.
+
+> **Woman 3:** An\[∅\] two teams, and we'-\[d\]o tha\[∅\], ah, we'-\[d\]o tha\[∅\], we'\[ɾ\] have a game of Marbles at leas\[t\] one nigh-\[ɾ\]on the weeken\[∅\]. And maybe go to show. People don'\[∅\] ge-\[tʰ\]ogether as much anymore, I fin\[tʰ\]. They kin-\[tʰ\]of stay to themselves.
+
+> **Interviewer:** And, and when you say people, do you mean you and your friends now or observing your children?
+
+> **Woman 3:** I see, I see people in general, and I see my children. They see each other, like, my, my frien\[∅\], my sons travel to their friends' houses and whatever. Bu\[ʔ\] they don'\[∅\], they don'\[∅\] do as, do as many activities as wha\[∅\] we di\[t\].
+
+> **Interviewer:** They just sit and drink.
+
+> **Woman 3:** Sometimes, I think.
+
+> **Interviewer:** Yeah.
+
+> **Woman 3:** Although, I think my son has a group tha\[t\] come and do the, uhm, poker thing.
+
+> **Interviewer:** Yeah.
+
+> **Woman 3:** One night a month or whatever. Which I think is a goo-\[t͡θ\]ing. Because when you're sitting down and you're engage-\[ɾ\]in activities, you're also engage-\[ɾ\]in conversation.
+
+> **Interviewer:** Right.
+
+> **Woman 3:** And you're getting other people's opinions of things, an\[∅\], and that's not a ba-\[d͡θ\]ing.
+
+## Example 4
+
+This example comes from a Cape Breton man born in 1990.
+
+<figure>
+
+<figcaption>Video Games:</figcaption>
+
+<audio controls src="https://www.dropbox.com/s/32hksawyh63f97j/HAWM90_b-Extract.wav?raw=1">
+
+<a href="https://www.dropbox.com/s/32hksawyh63f97j/HAWM90_b-Extract.wav?raw=1"> Download audio </a>
+
+</audio>
+
+</figure>
+
+> **Interviewer:** When you were younger, what kind of games did you used to play?
+
+> **Man 1:** Um. Jus\[∅\] Nintendo games really.
+
+> **Interviewer:** Yeah? Was there any Nintendo game that you were really good at?
+
+> **Man 1:** Ah I dunno. I can\[∅\] really remember jus\[∅\] Mario games I guess.
+
+> **Interviewer:** Yeah?
+
+> **Man 1:** Mostly ones I playe\[θ̱̲\].
+
+> **Interviewer:** Which Nintendo did you have? Super Nintendo or regular Nintendo, or?
+
+> **Man 1:** I ha\[∅\] both.
+
+> **Interviewer:** Yeah?
+
+> **Man 1:** Yeah.
+
+> **Interviewer:** And are you like, like now do you, what do you play?
+
+> **Man 1:** Ah, PlayStation 3 an\[∅\] tha\[∅\].
+
+> **Interviewer:** Yeah?
+
+> **Man 1:** Yeah.
+
+> **Interviewer:** And is there any game on that that you're really good at?
+
+> **Man 1:** Ah I never playe-\[t\]oo many games for i\[ʔ\] ye\[θ̱̲\], jus\[∅\], I'dunno. I wouldn-\[t͡s\]ay I'm goo\[ɾ\]a\[t͡ð\]em, bu\[θ̱̲\]. All righ\[θ̱̲\].
+
+> **Interviewer:** What, um, what game are you playing right now?
+
+> **Man 1:** I was playing metal gear, soli\[∅\] four.
+
+> **Interviewer:** Yeah?
+
+> **Man 1:** Yeah.
+
+> **Interviewer:** And what do you do in that game?
+
+> **Man 1:** Um, you kill people.
+
+## Example 5
+
+This example comes from a Cape Breton man born in 1992.
+
+<figure>
+
+<figcaption>Chicken Lady:</figcaption>
+
+<audio controls src="https://www.dropbox.com/s/m8s8hz3uaz6z7ef/MARM92-Extract.wav?raw=1">
+
+<a href="https://www.dropbox.com/s/m8s8hz3uaz6z7ef/MARM92-Extract.wav?raw=1"> Download audio </a>
+
+</audio>
+
+</figure>
+
+> **Interviewer:** And why is it called the Chicken Lady?
+
+> **Man 2:** Ah, she owns chickens, and like she ha-\[ɾ\]a big, she ha-\[ɾ\]a bull or something once there too, she like doesn'\[∅\] come ou-\[ɾ\]-of her house, and it's jus\[∅\] like, it's an ol\[∅\] bea-\[ɾ\]up house too, it's jus\[∅\], and there's like cages aroun-\[ɾ\]i\[ʔ\] and stuff, it's jus\[∅\] creepy,
+
+> **Interviewer:** So do you like to you go there at night time, and?
+
+> **Man 2:** Ah, yeah, I have a few times bu\[θ̱̲\] it's like wicke\[ʔ\] creepy
+
+> **Interviewer:** Yeah, and do like people like try to like walk up or like take pictures
+
+> **Man 2:** Ah, no, no\[ʔ\] my friends, well, I wouldn'\[tʰ\]
+
+> **Interviewer:** Okay
+
+> **Man 2:** There's no way I'\[ʔ\] get close i\[θ̱̲\]. I think someone sai-\[t͡ʃ\]e came ou\[∅\] with a sho\[ʔ\] gun a-\[t͡s\]omeone once, bu\[θ̱̲\] tha\[ʔ\] wasn'\[∅\] while I was aroun\[tʰ\].
+
+> **Interviewer:** Have you ah have you ever seen a ghost?
+
+> **Man 2:** Ah, no
+
+> **Interviewer:** No? Do you believe in ghosts?
+
+> **Man 2:** I dunno, I I sometimes like when you see stuff on TV it's like really believable and tha\[θ̱̲\], bu\[θ̱̲\] sometimes I don'-\[t͡θ\]ink it's true, some stuff, so I guess I'-\[t͡s\]ay yeah, probably, 'cause like I dunno, some stuff is really believable, yeah.
+
+### References
+
+::: {#refs}
+:::
