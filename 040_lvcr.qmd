@@ -1,40 +1,14 @@
 ---
 title: "Modifying Data"
-date: "`r Sys.Date()`"
+date: "2022-9-27"
 license: "CC-BY-SA 4.0"
-format: 
-  html:
-    code-overflow: scroll
-  pdf:
-    subtitle: from [Doing LVC with *R*](https://lingmethodshub.github.io/content/R/lvc_r/) 
-    keep-tex: true
-    latex-auto-install: false
-    documentclass: article
-    classoption: [12pt, letterpaper]
-    toc: true
-    geometry:
-      - margin = 1in
-    mainfont: Charis SIL
-    mathfont: Monaco
-    colorlinks: true
-    links-as-notes: true
-    reference-location: section
-    include-in-header: 
-      - Data/latex-packages.tex
-filters:
-  - parse-latex
-author:
-  - name: Matt Hunt Gardner
-    orcid: 0000-0002-1878-4232
-    email: matt.gardner@ling-phil.ox.ac.uk
-    corresponding: true
-    affiliations:
-      - name: University of Oxford 
-        department: Linguistics, Philology, & Phonetics
-        city: Oxford
-        country: UK
 description: "Modifying data, including removing rows, re-coding variables, centering continuous variables, dividing continuous variables, changing the order of variables, reversing the order of variables, combining columns, splitting columns, and partitioning data sets."
 ---
+```{r}
+#| echo: false
+source("renv/activate.R")
+```
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -325,7 +299,8 @@ summary(td.midmenblue)
 
 Below is the full code for loading the data file and then re-coding it. As you progress through the next sections, if for any reason you have a problem, it may be useful to recreate the *R* object `td` from scratch. Going forward in these instructions, the `td` object will be the object as it exists at the end of this code.
 
-```{r eval=TRUE}
+```{r}
+#| eval: false
 td <-read.delim("https://www.dropbox.com/s/jxlfuogea3lx2pu/deletiondata.txt?dl=1")
 ```
 
