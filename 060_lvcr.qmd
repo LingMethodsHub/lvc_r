@@ -6,7 +6,7 @@ description: "Getting token counts and proportions. Getting mean, median, standa
 ---
 ```{r}
 #| echo: false
-source("renv/activate.R")
+# source("renv/activate.R")
 ```
 
 ```{r setup, include=FALSE}

@@ -6,7 +6,7 @@ description: "Modifying data, but using the `tidyverse`"
 ---
 ```{r}
 #| echo: false
-source("renv/activate.R")
+# source("renv/activate.R")
 ```
 
 ```{r setup, include=FALSE}

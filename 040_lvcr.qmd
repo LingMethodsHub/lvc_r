@@ -6,7 +6,7 @@ description: "Modifying data, including removing rows, re-coding variables, cent
 ---
 ```{r}
 #| echo: false
-source("renv/activate.R")
+#source("renv/activate.R")
 ```
 
 

@@ -12,7 +12,7 @@ open-graph:
 
 ```{r}
 #| echo: false
-source("renv/activate.R")
+#source("renv/activate.R")
 ```
 
 

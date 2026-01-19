@@ -7,7 +7,7 @@ description: "Getting a snapshot of your data. Types of data and data structures
 
 ```{r}
 #| echo: false
-source("renv/activate.R")
+#source("renv/activate.R")
 ```
 
 
